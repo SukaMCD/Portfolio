@@ -1,148 +1,43 @@
-# Portfolio Website
+# Astro Starter Kit: Minimal
 
-Portfolio website pribadi untuk menampilkan proyek, blog, dan informasi tentang Fabian Rizky Pratama. Website ini dibangun dengan desain modern, interaktif, dan responsif.
-
-🌐 **Live Website**: [fabiandev.my.id](https://fabiandev.my.id)
-
-## Fitur
-
-- **Responsive Design** - Optimal di desktop, tablet, dan mobile
-- **Modern UI/UX** - Desain glassmorphism dengan efek neon
-- **Interactive Cursor Effects** - Cursor glow dan click spark effects
-- **Smooth Animations** - Animasi scroll dan transisi yang halus
-- **Portfolio Showcase** - Menampilkan proyek-proyek dengan filter kategori
-- **Blog Section** - Artikel tentang teknologi dan development
-- **Contact Form** - Form kontak terintegrasi dengan EmailJS
-- **Maintenance Mode** - Mode maintenance yang dapat diaktifkan
-<!-- **Easter Egg** -->
-
-## Teknologi yang Digunakan
-
-### Frontend
-
-- **HTML5** - Struktur website
-- **CSS3** - Styling dengan glassmorphism dan neon effects
-- **JavaScript (Vanilla)** - Interaktivitas dan logika
-- **jQuery** - DOM manipulation dan event handling
-- **Bootstrap 4.5.3** - Framework CSS untuk responsive design
-- **AOS (Animate On Scroll)** - Library animasi scroll
-- **Slick Carousel** - Carousel untuk portfolio dan blog
-
-### Backend & Tools
-
-- **EmailJS** - Service untuk mengirim email dari form kontak
-- **Git** - Version control
-- **GitHub Pages** - Hosting dan deployment
-
-<!-- ## 📁 Struktur Folder
-
-```
-Portofolio/
-├── assets/              # File assets (CV, cursor files)
-│   ├── CV_Fabian_Rizky_Pratama.pdf
-│   └── light/           # Custom cursor files
-├── database/            # Data untuk portfolio dan blog
-│   ├── projects.js
-│   └── blogs.js
-├── image/               # Gambar dan foto
-├── js/                  # JavaScript modules
-│   └── cursor-effects.js  # Module cursor effects (glow & click spark)
-├── x7r4w2/              # Easter egg folder (dino game)
-│   ├── v7b2m9.html
-│   ├── l3n8t1.js
-│   └── s9k1p5.css
-├── config.js            # Konfigurasi maintenance mode
-├── index.html           # Halaman utama
-├── maintenance.html     # Halaman maintenance
-├── script.js            # JavaScript utama
-├── style.css            # Stylesheet utama
-├── CNAME                # Custom domain configuration
-└── README.md            # File ini
+```sh
+npm create astro@latest -- --template minimal
 ```
 
-## 🚀 Cara Setup
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-### 1. Clone Repository
+## 🚀 Project Structure
 
-```bash
-git clone https://github.com/username/Portofolio.git
-cd Portofolio
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-### 2. Setup Local Server
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-Karena menggunakan beberapa fitur yang memerlukan server (seperti fetch), disarankan menggunakan local server:
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-**Menggunakan XAMPP:**
-- Copy folder ke `htdocs/xampp/`
-- Akses via `http://localhost/Portofolio/`
+Any static assets, like images, can be placed in the `public/` directory.
 
-**Menggunakan Python:**
-```bash
-python -m http.server 8000
-```
+## 🧞 Commands
 
-**Menggunakan Node.js (http-server):**
-```bash
-npx http-server
-```
+All commands are run from the root of the project, from a terminal:
 
-### 3. Konfigurasi
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-**Maintenance Mode:**
-Edit file `config.js`:
-```javascript
-const isMaintenance = false; // true untuk aktifkan maintenance mode
-```
+## 👀 Want to learn more?
 
-**EmailJS (Contact Form):**
-1. Daftar di [EmailJS](https://www.emailjs.com/)
-2. Dapatkan Public Key dan Service ID
-3. Update konfigurasi di `script.js` (jika diperlukan)
-
-### 4. Custom Domain (Opsional)
-
-Jika ingin menggunakan custom domain:
-1. Edit file `CNAME` dengan domain Anda
-2. Setup DNS records di provider domain
-3. Konfigurasi di GitHub Pages settings
-
-``` -->
-
-<!-- ### Mengubah Cursor Effects
-
-Edit file `js/cursor-effects.js` atau panggil dengan konfigurasi custom:
-```javascript
-initCursorEffects({
-  sparkColor: "#00f2ff",
-  sparkSize: 12,
-  sparkRadius: 40,
-  sparkCount: 10,
-  duration: 500
-});
-``` -->
-
-## License
-
-Portfolio ini adalah proyek pribadi. Silakan gunakan sebagai referensi atau template untuk portfolio Anda sendiri.
-
-## 👤 Author
-
-**Fabian Rizky Pratama**
-
-- GitHub: [@SukaMCD](https://github.com/SukaMCD)
-- LinkedIn: [fabianrizkypratama](https://www.linkedin.com/in/fabianrizkypratama)
-- Instagram: [@sukamcd.dev](https://www.instagram.com/sukamcd.dev/)
-
-## Acknowledgments
-
-- Bootstrap untuk framework CSS
-- AOS untuk animasi scroll
-- Slick Carousel untuk carousel functionality
-- EmailJS untuk email service
-- Font Awesome untuk icons
-- Google Fonts (Inter) untuk typography
-
----
-
-⭐ Jika Anda menyukai portfolio ini, jangan lupa berikan star!
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

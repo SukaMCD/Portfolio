@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   SUKAMCD PORTFOLIO DESIGN SYSTEM v4.0
+   Themes: Charcoal/Silver & Off-White/Silver
+   ============================================================ */
+
+:root {
+  /* --- Charcoal/Silver (Dark Theme - Default) --- */
+  --bg-root:          #0b0b0d;
+  --bg-surface:       #111114;
+  --bg-elevated:      #18181c;
+  --bg-hover:         #1f1f25;
+  --bg-active:        #26262f;
+
+  /* Silver Accent System */
+  --silver-100:       #f4f4f6;
+  --silver-200:       #e4e4e8;
+  --silver-300:       #d4d4d8;
+  --silver-400:       #a1a1aa;
+  --silver-500:       #71717a;
+  --silver-600:       #52525b;
+  --silver-700:       #3f3f46;
+  --silver-glow:      rgba(212, 212, 216, 0.08);
+
+  /* Status Colors */
+  --emerald:          #10b981;
+  --emerald-glow:     rgba(16, 185, 129, 0.15);
+  --crimson:          #ef4444;
+  --crimson-glow:     rgba(239, 68, 68, 0.15);
+  --amber:            #f59e0b;
+  --amber-glow:       rgba(245, 158, 11, 0.15);
+
+  /* Borders */
+  --border-subtle:    rgba(255, 255, 255, 0.03);
+  --border-soft:      rgba(255, 255, 255, 0.06);
+  --border-silver:    rgba(212, 212, 216, 0.1);
+}
+
+/* --- Off-White/Silver (Light Theme) --- */
+.light {
+  --bg-root:          #fafaf9;
+  --bg-surface:       #f5f5f4;
+  --bg-elevated:      #e7e5e4;
+  --bg-hover:         #d6d3d1;
+  --bg-active:        #a8a29e;
+
+  /* Text & Contrast Adjustments (using Stone as dark gray base) */
+  --silver-100:       #1c1917;
+  --silver-200:       #292524;
+  --silver-300:       #44403c;
+  --silver-400:       #57534e;
+  --silver-500:       #78716c;
+  --silver-600:       #a8a29e;
+  --silver-700:       #d6d3d1;
+  --silver-glow:      rgba(120, 113, 108, 0.1);
+
+  /* Status Colors */
+  --emerald:          #059669;
+  --emerald-glow:     rgba(5, 150, 105, 0.15);
+  --crimson:          #dc2626;
+  --crimson-glow:     rgba(220, 38, 38, 0.15);
+  --amber:            #d97706;
+  --amber-glow:       rgba(217, 119, 6, 0.15);
+
+  /* Borders */
+  --border-subtle:    rgba(0, 0, 0, 0.03);
+  --border-soft:      rgba(0, 0, 0, 0.06);
+  --border-silver:    rgba(120, 113, 108, 0.15);
+}
+
+/* ============================================================
+   TAILWIND THEME CONFIG v4
+   ============================================================ */
+@theme {
+  --font-sans: "Outfit", var(--font-fallback-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
+  --font-mono: "Fira Code", var(--font-fallback-mono, monospace);
+
+  --color-bg-root: var(--bg-root);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-hover: var(--bg-hover);
+  --color-bg-active: var(--bg-active);
+
+  --color-silver-100: var(--silver-100);
+  --color-silver-200: var(--silver-200);
+  --color-silver-300: var(--silver-300);
+  --color-silver-400: var(--silver-400);
+  --color-silver-500: var(--silver-500);
+  --color-silver-600: var(--silver-600);
+  --color-silver-700: var(--silver-700);
+
+  --color-accent-emerald: var(--emerald);
+  --color-accent-crimson: var(--crimson);
+  --color-accent-amber: var(--amber);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-soft: var(--border-soft);
+  --color-border-silver: var(--border-silver);
+}
+
+/* ============================================================
+   GLOBAL STYLES & RESETS
+   ============================================================ */
+body {
+  background-color: var(--bg-root);
+  color: var(--silver-100);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--silver-600);
+}
+
+/* Custom Selection */
+::selection {
+  background-color: var(--silver-100);
+  color: var(--bg-root);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes pulse-emerald {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50%       { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+}
+
+@keyframes pulse-emerald-light {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
+  50%       { box-shadow: 0 0 0 5px rgba(5, 150, 105, 0); }
+}
+
+.animate-pulse-emerald {
+  animation: pulse-emerald 2s infinite;
+}
+.light .animate-pulse-emerald {
+  animation: pulse-emerald-light 2s infinite;
+}
+
+/* ============================================================
+   SPECIAL EFFECTS
+   ============================================================ */
+
+/* Gooey Liquid Container */
+.gooey-container {
+  filter: url('#gooey-effect');
+}
+
+/* Cyber grid background */
+.cyber-grid {
+  background-image: radial-gradient(var(--silver-700) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgba(var(--bg-surface), 0.7);
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--border-soft);
+}
+
+/* ============================================================
+   UNUSUAL VIEW TRANSITION THEME SWEEP (CIRCULAR REVEAL)
+   ============================================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Disable active transitions on DOM elements during snapshotting */
+.theme-transition,
+.theme-transition * {
+  transition: none !important;
+}
+
+/* GitHub Contribution Graph Blending */
+.github-chart-img {
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  filter: none;
+  transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
+}
+
+html:not(.light) .github-chart-img {
+  filter: invert(1);
+  mix-blend-mode: screen;
+}

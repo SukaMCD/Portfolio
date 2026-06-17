@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Fabian Rizky Pratama | Web Developer Portfolio",
+  description = "Portfolio Fabian Rizky Pratama, Web Developer yang berfokus pada PHP, Laravel, PostgreSQL, dan pengembangan web modern. Menampilkan proyek web, aplikasi, dan game development."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Fabian Rizky Pratama, Fabiandev, Fabian Dev, SukaMCD, Web Developer, Portfolio, Software Engineer, SMK Budi Luhur, Laravel, PHP, PostgreSQL, Godot, Flutter, Dart, Indonesia" />
+    <meta name="author" content="Fabian Rizky Pratama" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fabiandev.my.id" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://fabiandev.my.id/image/main.webp" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://fabiandev.my.id" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://fabiandev.my.id/image/main.webp" />
+
+    <link rel="canonical" href="https://fabiandev.my.id/" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- Inline script to determine the theme before content rendering to prevent flash of wrong theme -->
+    <script is:inline>
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+      }
+    </script>
+  </head>
+  <body class="bg-bg-root text-silver-100 min-h-screen relative transition-colors duration-300">
+    
+    <!-- Cyber grid background -->
+    <div class="absolute inset-0 cyber-grid opacity-[0.02] pointer-events-none z-0"></div>
+    
+    <!-- Main content slot -->
+    <slot />
+
+    <!-- SVG Filter for Gooey Toast Effects -->
+    <svg class="hidden" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs>
+        <filter id="gooey-effect">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+  </body>
+</html>
