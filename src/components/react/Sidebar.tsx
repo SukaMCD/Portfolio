@@ -93,7 +93,7 @@ export default function Sidebar({ activeTab, setActiveTab, openTerminal }: Sideb
             <ExternalLink className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-60 transition-opacity" />
           </a>
           <a
-            href="https://instagram.com/sukamcd"
+            href="https://instagram.com/sukamcd.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs text-silver-400 hover:text-silver-100 hover:bg-bg-hover transition-all duration-200 group"
