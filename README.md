@@ -10,7 +10,7 @@ Portofolio ini berisi rangkuman data profesional, keahlian, proyek-proyek yang t
 
 - **Ringkasan Profil (Overview)**: Memuat kartu informasi profil singkat, status ketersediaan kerja secara real-time, digital clock dinamis, serta status operasional sistem.
 - **Daftar Portofolio Proyek (Projects)**: Halaman interaktif yang menampilkan katalog proyek yang pernah dikembangkan (termasuk Leafly Tea, Lost Formula, Web App Kegiatan Guru, Kedai Cendana, Instagram Clone, dan Website Manajemen Sekolah) lengkap dengan filter kategori, pencarian, dan modal detail proyek.
-- **Grafik Tech Stack (Skills)**: Menampilkan visualisasi tingkat kemahiran teknologi pengembangan perangkat lunak (seperti Laravel, PHP, PostgreSQL, Flutter, Dart, Godot Engine, dan WordPress) menggunakan progress bar interaktif.
+- **Katalog Tech Stack (Skills & Tools)**: Menampilkan ekosistem teknologi pengembangan perangkat lunak (23 teknologi termasuk Arch Linux, Bootstrap, Bun, CSS, Dart, Figma, Firebase, Flutter, GCP, Git, GitHub, Go, Godot, HTML, JavaScript, Laravel, MySQL, npm, PHP, PostgreSQL, PowerShell, WordPress, dan Astro) lengkap dengan filter kategori dan pencarian instan.
 - **Statistik GitHub (GitHub Stats)**: Menampilkan total repositori, jumlah bintang (stars), garpu (forks), dan total kontribusi GitHub tahunan secara real-time dengan optimasi cache sessionStorage.
 - **Sistem Tiket Dukungan (Contact Us)**: Formulir kontak bertema formulir tiket bantuan teknis untuk mengirimkan pesan langsung ke email pribadi terintegrasi EmailJS API.
 
@@ -30,7 +30,7 @@ Portofolio ini berisi rangkuman data profesional, keahlian, proyek-proyek yang t
 │   │       ├── Header.tsx               # Jam digital dan status operasional sistem
 │   │       ├── GithubStats.tsx          # Statistik real-time repositori & kontribusi GitHub
 │   │       ├── ProjectsView.tsx         # Katalog portofolio proyek interaktif & detail modal
-│   │       ├── SkillsChart.tsx          # Visualisasi progress meter tech stack
+│   │       ├── SkillsChart.tsx          # Katalog ekosistem tech stack dengan filter & search
 │   │       ├── TicketContact.tsx        # Formulir Support Ticket terintegrasi EmailJS
 │   │       └── GooeyToast.tsx           # Notifikasi dengan efek cairan (gooey fluid)
 │   ├── layouts/
