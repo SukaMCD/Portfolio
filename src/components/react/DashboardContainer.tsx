@@ -4,6 +4,7 @@ import Header from './Header';
 import GithubStats from './GithubStats';
 import ProjectsView from './ProjectsView';
 import SkillsChart from './SkillsChart';
+import CertificatesView from './CertificatesView';
 import TicketContact from './TicketContact';
 import TerminalModal from './TerminalModal';
 import GooeyToast, { triggerToast } from './GooeyToast';
@@ -22,6 +23,7 @@ export default function DashboardContainer({ initialTab = 'overview' }: Dashboar
     const getTabFromPath = () => {
       const path = window.location.pathname.replace(/^\/|\/$/g, '');
       if (path === 'stack' || path === 'tech-stack') return 'stats';
+      if (path === 'certificate' || path === 'certificates') return 'certificates';
       if (['overview', 'projects', 'contact'].includes(path)) return path;
       return null;
     };
@@ -61,6 +63,8 @@ export default function DashboardContainer({ initialTab = 'overview' }: Dashboar
         return <ProjectsView />;
       case 'stats':
         return <SkillsChart />;
+      case 'certificates':
+        return <CertificatesView />;
       case 'contact':
         return <TicketContact />;
       default:

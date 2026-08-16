@@ -1,4 +1,4 @@
-import { LayoutGrid, FolderGit, Cpu, Mail, Terminal, Github, Linkedin, Instagram, ExternalLink } from 'lucide-react';
+import { LayoutGrid, FolderGit, Cpu, Award, Mail, Terminal, Github, Linkedin, Instagram, ExternalLink } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
@@ -11,6 +11,7 @@ export default function Sidebar({ activeTab, setActiveTab, openTerminal }: Sideb
     { id: 'overview', label: 'Overview', icon: LayoutGrid },
     { id: 'projects', label: 'Projects', icon: FolderGit },
     { id: 'stats', label: 'Tech Stack', icon: Cpu },
+    { id: 'certificates', label: 'Certificates', icon: Award },
     { id: 'contact', label: 'Contact Us', icon: Mail },
   ];
 

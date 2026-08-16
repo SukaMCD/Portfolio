@@ -24,6 +24,7 @@ export default function Header({ activeTab }: HeaderProps) {
       case 'overview': return 'Overview';
       case 'projects': return 'Projects';
       case 'stats': return 'Tech Stack';
+      case 'certificates': return 'Certificates';
       case 'contact': return 'Contact';
       default: return 'Portfolio';
     }
