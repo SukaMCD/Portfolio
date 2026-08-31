@@ -14,7 +14,8 @@ import {
   subscribeToAuthChange,
   formatDriveImageUrl,
   extractDriveFileId,
-  DEFAULT_FALLBACK_IMAGE
+  DEFAULT_FALLBACK_IMAGE,
+  parseDateToTimestamp
 } from '../../lib/firebase';
 import { triggerToast } from './GooeyToast';
 
@@ -158,16 +159,18 @@ export default function CertificatesView() {
     triggerToast('Logged out from Admin Mode', 'info');
   };
 
-  // Filter certificates by search term
-  const filteredCertificates = certificates.filter((cert) => {
-    const term = searchTerm.toLowerCase();
-    return (
-      cert.title.toLowerCase().includes(term) ||
-      cert.issuer.toLowerCase().includes(term) ||
-      (cert.credentialId && cert.credentialId.toLowerCase().includes(term)) ||
-      (cert.tags && cert.tags.some((tag) => tag.toLowerCase().includes(term)))
-    );
-  });
+  // Filter and sort certificates by latest date first
+  const filteredCertificates = [...certificates]
+    .sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date))
+    .filter((cert) => {
+      const term = searchTerm.toLowerCase();
+      return (
+        cert.title.toLowerCase().includes(term) ||
+        cert.issuer.toLowerCase().includes(term) ||
+        (cert.credentialId && cert.credentialId.toLowerCase().includes(term)) ||
+        (cert.tags && cert.tags.some((tag) => tag.toLowerCase().includes(term)))
+      );
+    });
 
   // Modal scrolling lock
   useEffect(() => {
@@ -283,7 +286,7 @@ export default function CertificatesView() {
                     <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center gap-1 z-10">
                       <button
                         onClick={() => openEditModal(cert)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                        className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-silver-100 flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
                         title="Edit certificate"
                       >
                         <Edit3 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
@@ -578,7 +581,7 @@ export default function CertificatesView() {
           <div className="relative max-w-4xl max-h-[85vh] w-auto">
             <button
               onClick={() => setPreviewImage(null)}
-              className="absolute -top-10 right-0 w-8 h-8 rounded-lg bg-bg-surface border border-border-soft text-silver-300 hover:text-white flex items-center justify-center cursor-pointer shadow-lg"
+              className="absolute -top-10 right-0 w-8 h-8 rounded-lg bg-bg-surface border border-border-soft text-silver-300 hover:text-silver-100 flex items-center justify-center cursor-pointer shadow-lg"
             >
               <X className="w-4 h-4" />
             </button>

@@ -86,6 +86,58 @@ export function formatDriveImageUrl(url?: string): string {
   return trimmed;
 }
 
+/**
+ * Helper to parse various portfolio date formats into comparable timestamps for sorting (latest first)
+ * Handles: "Feb, 2026", "24 Feb 2026", "2026", "25 Nov 2025", "14 Feb 2026", "2024-05-12", etc.
+ */
+export function parseDateToTimestamp(dateStr?: string): number {
+  if (!dateStr) return 0;
+  const str = dateStr.trim();
+
+  // Try direct standard parse
+  let ts = Date.parse(str);
+  if (!isNaN(ts)) return ts;
+
+  // Month mapping Indonesian -> English
+  const idToEn: Record<string, string> = {
+    'jan': 'Jan', 'januari': 'Jan', 'feb': 'Feb', 'februari': 'Feb', 'peb': 'Feb',
+    'mar': 'Mar', 'maret': 'Mar', 'apr': 'Apr', 'april': 'Apr',
+    'mei': 'May', 'jun': 'Jun', 'juni': 'Jun', 'jul': 'Jul', 'juli': 'Jul',
+    'agu': 'Aug', 'agustus': 'Aug', 'ags': 'Aug',
+    'sep': 'Sep', 'september': 'Sep', 'okt': 'Oct', 'oktober': 'Oct',
+    'nov': 'Nov', 'november': 'Nov', 'des': 'Dec', 'desember': 'Dec'
+  };
+
+  let normalized = str.toLowerCase();
+  for (const [id, en] of Object.entries(idToEn)) {
+    normalized = normalized.replace(new RegExp(`\\b${id}\\b`, 'g'), en);
+  }
+
+  // Handle "Feb, 2026" or "Month, Year"
+  if (/^[a-z]{3,9},\s*\d{4}$/i.test(normalized)) {
+    const parts = normalized.split(',').map(s => s.trim());
+    ts = Date.parse(`01 ${parts[0]} ${parts[1]}`);
+    if (!isNaN(ts)) return ts;
+  }
+
+  // Handle pure 4-digit year "2026"
+  if (/^\d{4}$/.test(str)) {
+    return new Date(parseInt(str, 10), 11, 31).getTime();
+  }
+
+  // Try parsing with normalized string
+  ts = Date.parse(normalized);
+  if (!isNaN(ts)) return ts;
+
+  // Extract 4-digit year as last resort
+  const yearMatch = str.match(/\b(20\d{2}|19\d{2})\b/);
+  if (yearMatch) {
+    return new Date(parseInt(yearMatch[1], 10), 0, 1).getTime();
+  }
+
+  return 0;
+}
+
 // Clean undefined/empty values so Firestore does not reject the document
 function cleanFirestoreData<T extends Record<string, any>>(data: T): Record<string, any> {
   const cleaned: Record<string, any> = {};
@@ -106,7 +158,8 @@ export function getLocalCertificates(): Certificate[] {
   try {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY_CERTIFICATES);
     if (saved !== null) {
-      return JSON.parse(saved);
+      const parsed: Certificate[] = JSON.parse(saved);
+      return parsed.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
     }
   } catch (e) {
     console.error('Failed reading localStorage certificates:', e);
@@ -120,7 +173,7 @@ function setLocalCertificates(certs: Certificate[]) {
 }
 
 /**
- * Fetch all certificates from Firestore or LocalStorage
+ * Fetch all certificates from Firestore or LocalStorage (sorted latest first)
  */
 export async function getCertificates(): Promise<Certificate[]> {
   if (db && isFirebaseConfigured) {
@@ -132,6 +185,9 @@ export async function getCertificates(): Promise<Certificate[]> {
       snapshot.forEach((doc) => {
         certs.push({ id: doc.id, ...doc.data() } as Certificate);
       });
+
+      // Sort latest first
+      certs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
 
       setLocalCertificates(certs);
       return certs;
@@ -218,7 +274,7 @@ export function getLocalProjects(): Project[] {
     if (saved !== null) {
       const parsed: Project[] = JSON.parse(saved);
       // Ensure all items have an ID and a safe image URL
-      return parsed.map((p, idx) => {
+      const mapped = parsed.map((p, idx) => {
         const rawImg = p.image?.trim();
         const safeImg = (rawImg && rawImg !== '/image/.webp' && rawImg !== '/image/' && rawImg !== '.webp')
           ? rawImg
@@ -229,6 +285,7 @@ export function getLocalProjects(): Project[] {
           image: safeImg,
         };
       });
+      return mapped.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
     }
   } catch (e) {
     console.error('Failed reading localStorage projects:', e);
@@ -242,7 +299,7 @@ function setLocalProjects(projs: Project[]) {
 }
 
 /**
- * Fetch all projects from Firestore or LocalStorage
+ * Fetch all projects from Firestore or LocalStorage (sorted latest first)
  */
 export async function getProjects(): Promise<Project[]> {
   if (db && isFirebaseConfigured) {
@@ -254,6 +311,9 @@ export async function getProjects(): Promise<Project[]> {
       snapshot.forEach((doc) => {
         projs.push({ id: doc.id, ...doc.data() } as Project);
       });
+
+      // Sort latest first
+      projs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
 
       setLocalProjects(projs);
       return projs;

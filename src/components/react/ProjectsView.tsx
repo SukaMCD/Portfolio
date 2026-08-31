@@ -30,7 +30,8 @@ import {
   subscribeToAuthChange,
   formatDriveImageUrl,
   extractDriveFileId,
-  DEFAULT_FALLBACK_IMAGE
+  DEFAULT_FALLBACK_IMAGE,
+  parseDateToTimestamp
 } from '../../lib/firebase';
 import { triggerToast } from './GooeyToast';
 
@@ -272,21 +273,23 @@ export default function ProjectsView() {
     };
   }, [selectedProject, isModalOpen]);
 
-  // Filter projects by search term and category
-  const filteredProjects = projects.filter((project) => {
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      project.title.toLowerCase().includes(term) ||
-      project.description.toLowerCase().includes(term) ||
-      (project.tags && project.tags.some((tag) => tag.toLowerCase().includes(term))) ||
-      (project.category && project.category.toLowerCase().includes(term));
+  // Filter and sort projects by latest date first
+  const filteredProjects = [...projects]
+    .sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date))
+    .filter((project) => {
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        project.title.toLowerCase().includes(term) ||
+        project.description.toLowerCase().includes(term) ||
+        (project.tags && project.tags.some((tag) => tag.toLowerCase().includes(term))) ||
+        (project.category && project.category.toLowerCase().includes(term));
 
-    const matchesCategory =
-      activeCategory === 'ALL' ||
-      (project.category && project.category.toUpperCase() === activeCategory);
+      const matchesCategory =
+        activeCategory === 'ALL' ||
+        (project.category && project.category.toUpperCase() === activeCategory);
 
-    return matchesSearch && matchesCategory;
-  });
+      return matchesSearch && matchesCategory;
+    });
 
   return (
     <div className="space-y-6">
@@ -412,7 +415,7 @@ export default function ProjectsView() {
                   <div className="absolute top-1.5 right-1.5 sm:top-4 sm:right-4 flex items-center gap-1 sm:gap-1.5 z-20">
                     <button
                       onClick={(e) => openEditModal(project, e)}
-                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-silver-100 flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
                       title="Edit project"
                     >
                       <Edit3 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
@@ -679,7 +682,7 @@ export default function ProjectsView() {
                   <button
                     type="button"
                     onClick={handleAddLinkRow}
-                    className="text-[9px] font-mono uppercase tracking-wider text-silver-300 hover:text-white flex items-center gap-1 font-bold cursor-pointer"
+                    className="text-[9px] font-mono uppercase tracking-wider text-silver-300 hover:text-silver-100 flex items-center gap-1 font-bold cursor-pointer"
                   >
                     <Plus className="w-3 h-3" />
                     <span>Add Link</span>
