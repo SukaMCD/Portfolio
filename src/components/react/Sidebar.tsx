@@ -16,7 +16,7 @@ export default function Sidebar({ activeTab, setActiveTab, openTerminal }: Sideb
   ];
 
   return (
-    <aside className="w-[calc(100%-2rem)] mx-4 mt-4 mb-2 lg:w-64 lg:mx-0 lg:my-6 lg:ml-6 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:self-start shrink-0 flex flex-col justify-between p-6 bg-bg-surface border border-border-soft rounded-2xl transition-all duration-300 z-20 shadow-md">
+    <aside className="hidden lg:flex w-64 lg:my-6 lg:ml-6 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:self-start shrink-0 flex-col justify-between p-6 bg-bg-surface border border-border-soft rounded-2xl transition-colors duration-300 z-20 shadow-md">
       <div className="space-y-8">
         
         {/* Profile Card */}

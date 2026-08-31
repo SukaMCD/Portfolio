@@ -101,7 +101,7 @@ function cleanFirestoreData<T extends Record<string, any>>(data: T): Record<stri
    CERTIFICATES CRUD
    ============================================================ */
 
-function getLocalCertificates(): Certificate[] {
+export function getLocalCertificates(): Certificate[] {
   if (typeof window === 'undefined') return [];
   try {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY_CERTIFICATES);
@@ -211,7 +211,7 @@ export async function deleteCertificate(id: string): Promise<void> {
    PROJECTS CRUD
    ============================================================ */
 
-function getLocalProjects(): Project[] {
+export function getLocalProjects(): Project[] {
   if (typeof window === 'undefined') return [];
   try {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY_PROJECTS);

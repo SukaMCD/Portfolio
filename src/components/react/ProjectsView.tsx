@@ -20,6 +20,7 @@ import {
 import { type Project, type ProjectLink } from '../../data/projects';
 import { 
   getProjects, 
+  getLocalProjects,
   createProject, 
   updateProject, 
   deleteProject, 
@@ -47,8 +48,8 @@ const POPULAR_CATEGORIES = [
 export default function ProjectsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('ALL');
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [projects, setProjects] = useState<Project[]>(() => getLocalProjects());
+  const [isLoading, setIsLoading] = useState(() => getLocalProjects().length === 0);
   const [isAdmin, setIsAdmin] = useState(false);
 
   // Detail Modal Drawer State
@@ -298,7 +299,7 @@ export default function ProjectsView() {
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono text-silver-500 uppercase tracking-wider">Projects</span>
             <span className="h-7 px-2.5 inline-flex items-center justify-center rounded-lg bg-bg-surface border border-border-soft text-silver-300 font-mono text-xs font-bold">
-              {projects.length}
+              {isLoading && projects.length === 0 ? '-' : projects.length}
             </span>
           </div>
 
@@ -370,18 +371,17 @@ export default function ProjectsView() {
 
       {/* ── Loading Skeleton State ── */}
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6">
           {[1, 2, 3, 4, 5, 6].map((n) => (
-            <div key={n} className="p-5 bg-bg-surface border border-border-soft rounded-2xl animate-pulse space-y-4 min-h-[340px] flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-full aspect-video rounded-xl bg-bg-elevated" />
-                <div className="h-4 bg-bg-elevated rounded w-2/3" />
-                <div className="space-y-1.5">
-                  <div className="h-2.5 bg-bg-elevated rounded w-full" />
-                  <div className="h-2.5 bg-bg-elevated rounded w-4/5" />
+            <div key={n} className="p-2.5 sm:p-5 bg-bg-surface border border-border-soft rounded-xl sm:rounded-2xl animate-pulse space-y-2 sm:space-y-3 flex flex-col justify-between">
+              <div className="space-y-1.5 sm:space-y-2.5">
+                <div className="w-full aspect-[16/10] sm:aspect-video rounded-md sm:rounded-xl bg-bg-elevated" />
+                <div className="h-3 bg-bg-elevated rounded w-2/3" />
+                <div className="space-y-1">
+                  <div className="h-1.5 bg-bg-elevated rounded w-full" />
                 </div>
               </div>
-              <div className="h-3 bg-bg-elevated rounded w-1/3" />
+              <div className="h-2 bg-bg-elevated rounded w-1/3" />
             </div>
           ))}
         </div>
@@ -396,7 +396,7 @@ export default function ProjectsView() {
         /* ── Grid of Projects ── */
         <div 
           key={activeCategory + searchTerm} 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch animate-[fadeIn_0.35s_ease-out_forwards]"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 items-stretch animate-[fadeIn_0.35s_ease-out_forwards]"
         >
           {filteredProjects.map((project, index) => {
             const rawImg = project.image?.trim();
@@ -405,31 +405,31 @@ export default function ProjectsView() {
               <div
                 key={project.id || index}
                 onClick={() => setSelectedProject(project)}
-                className="group cursor-pointer p-5 bg-bg-surface border border-border-soft hover:border-border-silver hover:bg-bg-hover hover:scale-[1.02] active:scale-[0.99] rounded-2xl flex flex-col justify-between min-h-[360px] shadow-lg transition-all duration-300 relative select-none"
+                className="group cursor-pointer p-2.5 sm:p-5 bg-bg-surface border border-border-soft hover:border-border-silver hover:bg-bg-hover hover:scale-[1.02] active:scale-[0.99] rounded-xl sm:rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-lg transition-all duration-300 relative select-none"
               >
                 {/* Admin Floating Quick Action Buttons */}
                 {isAdmin && (
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 z-20">
+                  <div className="absolute top-1.5 right-1.5 sm:top-4 sm:right-4 flex items-center gap-1 sm:gap-1.5 z-20">
                     <button
                       onClick={(e) => openEditModal(project, e)}
-                      className="w-7 h-7 rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
                       title="Edit project"
                     >
-                      <Edit3 className="w-3 h-3" />
+                      <Edit3 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </button>
                     <button
                       onClick={(e) => handleDelete(project, e)}
-                      className="w-7 h-7 rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-accent-crimson flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-accent-crimson flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
                       title="Delete project"
                     >
-                      <Trash2 className="w-3 h-3" />
+                      <Trash2 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </button>
                   </div>
                 )}
 
-                <div className="space-y-4">
+                <div className="space-y-1.5 sm:space-y-4">
                   {/* Image Container */}
-                  <div className="relative overflow-hidden rounded-xl border border-border-subtle aspect-video bg-bg-root">
+                  <div className="relative overflow-hidden rounded-md sm:rounded-xl border border-border-subtle aspect-[16/10] sm:aspect-video bg-bg-root">
                     <img
                       src={formattedImg}
                       alt={project.alt || project.title}
@@ -448,34 +448,34 @@ export default function ProjectsView() {
                         }
                       }}
                     />
-                    <span className="absolute top-2 left-2 px-2.5 py-1 rounded-lg bg-bg-root/80 backdrop-blur-md text-[8.5px] font-mono font-black uppercase tracking-wider text-silver-200 border border-border-soft shadow-md z-10">
+                    <span className="absolute top-1 left-1 sm:top-2 sm:left-2 px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg bg-bg-root/85 backdrop-blur-md text-[6.5px] sm:text-[8.5px] font-mono font-black uppercase tracking-wider text-silver-200 border border-border-soft shadow-sm z-10 truncate max-w-[85%]">
                       {project.category}
                     </span>
                   </div>
 
                   {/* Title & Description */}
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-black text-silver-100 group-hover:translate-x-1 transition-transform">
+                  <div className="space-y-0.5 sm:space-y-2">
+                    <h3 className="text-[11.5px] sm:text-sm font-black text-silver-100 group-hover:translate-x-0.5 transition-transform truncate">
                       {project.title}
                     </h3>
-                    <p className="text-[11px] text-silver-500 leading-relaxed line-clamp-3">
+                    <p className="text-[8.5px] sm:text-[11px] text-silver-500 leading-tight line-clamp-1 sm:line-clamp-3">
                       {project.description}
                     </p>
                     
                     {/* Technology Tags Preview */}
                     {project.tags && project.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {project.tags.slice(0, 3).map((tag) => (
+                      <div className="flex flex-wrap gap-1 sm:gap-1.5 pt-0.5">
+                        {project.tags.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className="px-2 py-0.5 rounded-lg border border-border-soft bg-bg-root text-[8.5px] font-mono text-silver-400 uppercase tracking-wide font-medium shadow-sm"
+                            className="px-1.5 py-0.5 rounded border border-border-soft bg-bg-root text-[6.5px] sm:text-[8.5px] font-mono text-silver-400 uppercase tracking-wide font-medium truncate"
                           >
                             {tag}
                           </span>
                         ))}
-                        {project.tags.length > 3 && (
-                          <span className="text-[8.5px] font-mono text-silver-500 font-bold self-center pl-0.5">
-                            +{project.tags.length - 3}
+                        {project.tags.length > 2 && (
+                          <span className="text-[6.5px] sm:text-[8.5px] font-mono text-silver-500 font-bold self-center">
+                            +{project.tags.length - 2}
                           </span>
                         )}
                       </div>
@@ -484,14 +484,14 @@ export default function ProjectsView() {
                 </div>
 
                 {/* Bottom Date & Details CTA */}
-                <div className="flex items-center justify-between border-t border-border-subtle pt-3.5 mt-5">
-                  <div className="flex items-center gap-1.5 text-[9px] font-mono text-silver-500 font-bold uppercase tracking-wider">
-                    <Calendar className="w-3.5 h-3.5" />
+                <div className="flex items-center justify-between border-t border-border-subtle pt-1.5 sm:pt-3.5 mt-2 sm:mt-5">
+                  <div className="flex items-center gap-1 text-[7.5px] sm:text-[9px] font-mono text-silver-500 font-bold uppercase tracking-wider">
+                    <Calendar className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
                     <span>{project.date?.includes(',') ? project.date.split(',')[1]?.trim() : project.date}</span>
                   </div>
                   
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-silver-400 group-hover:text-silver-100 transition-colors font-bold flex items-center gap-1">
-                    Details <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <span className="text-[7.5px] sm:text-[9px] font-mono uppercase tracking-widest text-silver-400 group-hover:text-silver-100 transition-colors font-bold flex items-center gap-0.5">
+                    <span className="hidden sm:inline">Details</span> <ArrowUpRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
                 </div>
               </div>

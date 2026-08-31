@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
+import MobileBottomNav from './MobileBottomNav';
 import Header from './Header';
 import GithubStats from './GithubStats';
 import ProjectsView from './ProjectsView';
@@ -8,7 +9,7 @@ import CertificatesView from './CertificatesView';
 import TicketContact from './TicketContact';
 import TerminalModal from './TerminalModal';
 import GooeyToast, { triggerToast } from './GooeyToast';
-import { ArrowUpRight, Sparkles, FolderKanban, Terminal } from 'lucide-react';
+import { ArrowUpRight, Sparkles, FolderKanban, Terminal, Github, Linkedin, Instagram } from 'lucide-react';
 
 interface DashboardContainerProps {
   initialTab?: string;
@@ -96,23 +97,23 @@ export default function DashboardContainer({ initialTab = 'overview' }: Dashboar
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-2.5 mt-6">
+            <div className="flex flex-row items-center gap-2 sm:gap-2.5 mt-6">
               <button
                 onClick={() => {
                   setActiveTab('projects');
                   triggerToast('Navigated to Project Manager', 'info');
                 }}
-                className="px-5 py-2.5 rounded-xl bg-silver-100 hover:bg-silver-200 text-bg-root font-black uppercase text-[10px] font-mono tracking-widest flex items-center gap-1.5 cursor-pointer shadow-md transition-all select-none"
+                className="flex-1 sm:flex-initial px-3.5 sm:px-5 py-2.5 rounded-xl bg-silver-100 hover:bg-silver-200 text-bg-root font-black uppercase text-[9.5px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all select-none text-center whitespace-nowrap"
               >
                 <span>View My Work</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
               </button>
               <button
                 onClick={() => {
                   setActiveTab('contact');
                   triggerToast('Support Ticket system ready', 'info');
                 }}
-                className="px-5 py-2.5 rounded-xl bg-bg-elevated border border-border-soft hover:border-silver-500 text-silver-400 hover:text-silver-100 font-bold uppercase text-[10px] font-mono tracking-widest flex items-center gap-1.5 cursor-pointer shadow-md transition-all select-none"
+                className="flex-1 sm:flex-initial px-3.5 sm:px-5 py-2.5 rounded-xl bg-bg-elevated border border-border-soft hover:border-silver-500 text-silver-400 hover:text-silver-100 font-bold uppercase text-[9.5px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all select-none text-center whitespace-nowrap"
               >
                 <span>Open Ticket</span>
               </button>
@@ -223,7 +224,40 @@ export default function DashboardContainer({ initialTab = 'overview' }: Dashboar
                 Tertarik untuk bekerja sama? Buka tiket support untuk mendiskusikan penawaran kerja, kolaborasi, atau proyek lepas.
               </p>
             </div>
-            <ArrowUpRight className="w-5 h-5 text-silver-500 shrink-0" />
+          </div>
+        </div>
+
+        {/* Mobile Social Connect Cards */}
+        <div className="lg:hidden p-5 bg-bg-surface border border-border-soft rounded-2xl shadow-lg space-y-3">
+          <p className="text-[9.5px] font-mono uppercase tracking-widest text-silver-500 font-bold">Connect With Me</p>
+          <div className="grid grid-cols-3 gap-2">
+            <a
+              href="https://github.com/SukaMCD"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-bg-elevated border border-border-soft text-xs text-silver-300 font-medium hover:text-silver-100 transition-colors"
+            >
+              <Github className="w-3.5 h-3.5 shrink-0" />
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://linkedin.com/in/fabian-rizky-pratama"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-bg-elevated border border-border-soft text-xs text-silver-300 font-medium hover:text-silver-100 transition-colors"
+            >
+              <Linkedin className="w-3.5 h-3.5 shrink-0" />
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href="https://instagram.com/sukamcd.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-bg-elevated border border-border-soft text-xs text-silver-300 font-medium hover:text-silver-100 transition-colors"
+            >
+              <Instagram className="w-3.5 h-3.5 shrink-0" />
+              <span>Instagram</span>
+            </a>
           </div>
         </div>
 
@@ -235,7 +269,7 @@ export default function DashboardContainer({ initialTab = 'overview' }: Dashboar
     <div className="min-h-screen bg-bg-root transition-colors duration-300">
       <div className="w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row min-h-screen">
         
-        {/* Sidebar navigation */}
+        {/* Sidebar navigation for desktop */}
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -244,14 +278,20 @@ export default function DashboardContainer({ initialTab = 'overview' }: Dashboar
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0">
-          <Header activeTab={activeTab} />
+          <Header activeTab={activeTab} openTerminal={() => setIsTerminalOpen(true)} />
           
           {/* Render Tab Panel */}
-          <main className="flex-grow px-4 pb-4 pt-2 sm:px-6 sm:pb-6 sm:pt-4 overflow-y-auto z-10">
+          <main className="flex-grow px-3 pb-28 pt-3 sm:px-6 sm:pb-6 sm:pt-4 overflow-y-auto z-10">
             {renderActiveTabContent()}
           </main>
         </div>
       </div>
+
+      {/* Mobile App Fixed Bottom Navigation */}
+      <MobileBottomNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
 
       {/* Retro CLI Terminal Modal */}
       <TerminalModal

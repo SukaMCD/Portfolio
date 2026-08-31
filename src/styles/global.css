@@ -103,6 +103,10 @@
 /* ============================================================
    GLOBAL STYLES & RESETS
    ============================================================ */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background-color: var(--bg-root);
   color: var(--silver-100);

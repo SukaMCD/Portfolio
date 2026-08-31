@@ -133,25 +133,25 @@ export default function GithubStats() {
     return (
       <div className="space-y-6">
         {/* Skeletons header */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="p-5 bg-bg-surface border border-border-soft rounded-2xl animate-pulse space-y-3">
-              <div className="w-1/3 h-3.5 bg-silver-700 rounded-md"></div>
-              <div className="w-1/2 h-6 bg-silver-600 rounded-md"></div>
+            <div key={i} className="p-3 sm:p-4 bg-bg-elevated/50 border border-border-soft rounded-xl sm:rounded-2xl animate-pulse space-y-2">
+              <div className="w-2/3 h-2.5 bg-silver-700 rounded"></div>
+              <div className="w-1/2 h-5 bg-silver-600 rounded"></div>
             </div>
           ))}
         </div>
 
         {/* Skeletons repos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 scrollbar-none">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="p-5 bg-bg-surface border border-border-soft rounded-2xl animate-pulse h-40 flex flex-col justify-between">
+            <div key={i} className="p-3.5 sm:p-4 bg-bg-elevated/40 border border-border-soft rounded-xl sm:rounded-2xl animate-pulse shrink-0 w-[230px] sm:w-[260px] md:w-auto h-32 sm:h-40 flex flex-col justify-between">
               <div className="space-y-2">
-                <div className="w-1/4 h-3.5 bg-silver-700 rounded-md"></div>
-                <div className="w-3/4 h-5 bg-silver-600 rounded-md"></div>
-                <div className="w-full h-3.5 bg-silver-700 rounded-md"></div>
+                <div className="w-1/4 h-2.5 bg-silver-700 rounded"></div>
+                <div className="w-3/4 h-4 bg-silver-600 rounded"></div>
+                <div className="w-full h-2.5 bg-silver-700 rounded"></div>
               </div>
-              <div className="w-1/2 h-3.5 bg-silver-700 rounded-md mt-4"></div>
+              <div className="w-1/2 h-2.5 bg-silver-700 rounded mt-2"></div>
             </div>
           ))}
         </div>
@@ -161,7 +161,7 @@ export default function GithubStats() {
 
   if (error || !profile) {
     return (
-      <div className="p-10 border border-dashed border-accent-crimson/30 bg-accent-crimson/5 rounded-2xl text-center space-y-4 select-none">
+      <div className="p-8 border border-dashed border-accent-crimson/30 bg-accent-crimson/5 rounded-2xl text-center space-y-4 select-none">
         <AlertCircleIcon className="w-8 h-8 text-accent-crimson mx-auto animate-bounce" />
         <div>
           <h3 className="text-xs font-black uppercase tracking-wider text-silver-100">GitHub API Connection Error</h3>
@@ -186,77 +186,82 @@ export default function GithubStats() {
     <div className="space-y-6">
       
       {/* ── Summary Stats Cards ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
         
         {/* Total Repos */}
-        <div className="p-5 bg-bg-surface border border-border-soft rounded-2xl flex items-center justify-between shadow-md">
-          <div className="space-y-1">
-            <span className="text-[9px] font-mono text-silver-500 uppercase tracking-wider font-bold">Public Repositories</span>
-            <div className="text-2xl font-black text-silver-100 font-mono tracking-tight">{profile.public_repos}</div>
+        <div className="p-3 sm:p-4 bg-bg-elevated/50 border border-border-soft rounded-xl sm:rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-1 shadow-sm">
+          <div className="space-y-0.5 min-w-0">
+            <span className="text-[7.5px] sm:text-[9px] font-mono text-silver-500 uppercase tracking-wider font-bold truncate block">Repositories</span>
+            <div className="text-lg sm:text-2xl font-black text-silver-100 font-mono tracking-tight">{profile.public_repos}</div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-bg-elevated border border-border-soft flex items-center justify-center text-silver-400">
-            <Folder className="w-5 h-5" />
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-bg-surface border border-border-soft flex items-center justify-center text-silver-400 shrink-0 self-end sm:self-auto">
+            <Folder className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </div>
         </div>
 
         {/* Total Stars */}
-        <div className="p-5 bg-bg-surface border border-border-soft rounded-2xl flex items-center justify-between shadow-md">
-          <div className="space-y-1">
-            <span className="text-[9px] font-mono text-silver-500 uppercase tracking-wider font-bold">Total Star Gazers</span>
-            <div className="text-2xl font-black text-silver-100 font-mono tracking-tight">{totalStars}</div>
+        <div className="p-3 sm:p-4 bg-bg-elevated/50 border border-border-soft rounded-xl sm:rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-1 shadow-sm">
+          <div className="space-y-0.5 min-w-0">
+            <span className="text-[7.5px] sm:text-[9px] font-mono text-silver-500 uppercase tracking-wider font-bold truncate block">Star Gazers</span>
+            <div className="text-lg sm:text-2xl font-black text-silver-100 font-mono tracking-tight">{totalStars}</div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-bg-elevated border border-border-soft flex items-center justify-center text-accent-amber">
-            <Star className="w-5 h-5 fill-accent-amber/20" />
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-bg-surface border border-border-soft flex items-center justify-center text-accent-amber shrink-0 self-end sm:self-auto">
+            <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-accent-amber/20" />
           </div>
         </div>
 
         {/* Total Forks */}
-        <div className="p-5 bg-bg-surface border border-border-soft rounded-2xl flex items-center justify-between shadow-md">
-          <div className="space-y-1">
-            <span className="text-[9px] font-mono text-silver-500 uppercase tracking-wider font-bold">Total Project Forks</span>
-            <div className="text-2xl font-black text-silver-100 font-mono tracking-tight">{totalForks}</div>
+        <div className="p-3 sm:p-4 bg-bg-elevated/50 border border-border-soft rounded-xl sm:rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-1 shadow-sm">
+          <div className="space-y-0.5 min-w-0">
+            <span className="text-[7.5px] sm:text-[9px] font-mono text-silver-500 uppercase tracking-wider font-bold truncate block">Forks</span>
+            <div className="text-lg sm:text-2xl font-black text-silver-100 font-mono tracking-tight">{totalForks}</div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-bg-elevated border border-border-soft flex items-center justify-center text-silver-300">
-            <GitFork className="w-5 h-5" />
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-bg-surface border border-border-soft flex items-center justify-center text-silver-300 shrink-0 self-end sm:self-auto">
+            <GitFork className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </div>
         </div>
       </div>
 
       {/* ── Top Repos List ── */}
       <div>
-        <h3 className="text-xs font-black uppercase tracking-wider text-silver-400 mb-4 select-none">
-          Active GitHub Mainframes
-        </h3>
+        <div className="flex items-center justify-between mb-3 select-none">
+          <h3 className="text-xs font-black uppercase tracking-wider text-silver-400">
+            Active GitHub Mainframes
+          </h3>
+          <span className="md:hidden text-[8.5px] font-mono text-silver-500 font-semibold">
+            Swipe →
+          </span>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 scrollbar-none snap-x snap-mandatory">
           {topRepos.map((repo) => (
             <a
               key={repo.id}
               href={repo.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-5 bg-bg-surface border border-border-soft hover:border-border-silver hover:bg-bg-hover hover:scale-[1.02] rounded-2xl flex flex-col justify-between h-44 shadow-lg transition-all duration-300 relative select-none"
+              className="group p-3.5 sm:p-4 bg-bg-elevated/40 border border-border-soft hover:border-border-silver hover:bg-bg-hover rounded-xl sm:rounded-2xl flex flex-col justify-between shrink-0 w-[230px] sm:w-[260px] md:w-auto min-h-[135px] sm:h-40 shadow-sm snap-center select-none transition-all duration-300"
             >
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[8px] font-mono font-bold uppercase tracking-widest text-silver-500">
+                  <span className="text-[7.5px] sm:text-[8px] font-mono font-bold uppercase tracking-widest text-silver-500">
                     {repo.language || 'Documentation'}
                   </span>
-                  <ExternalLink className="w-3.5 h-3.5 text-silver-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ExternalLink className="w-3 h-3 text-silver-500 opacity-60 group-hover:opacity-100 transition-opacity" />
                 </div>
                 
-                <h4 className="text-sm font-black text-silver-100 truncate group-hover:translate-x-1 transition-transform">
+                <h4 className="text-xs sm:text-sm font-black text-silver-100 truncate group-hover:translate-x-0.5 transition-transform">
                   {repo.name}
                 </h4>
                 
-                <p className="text-[10px] text-silver-500 leading-normal line-clamp-3">
+                <p className="text-[9.5px] sm:text-[10px] text-silver-500 leading-normal line-clamp-2">
                   {repo.description || 'No description provided for this repository.'}
                 </p>
               </div>
 
               {/* Bottom stats indicators */}
-              <div className="flex items-center justify-between border-t border-border-subtle pt-3 text-[9px] font-mono text-silver-500 font-bold uppercase tracking-wider mt-4">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between border-t border-border-subtle pt-2.5 text-[8.5px] sm:text-[9px] font-mono text-silver-500 font-bold uppercase tracking-wider mt-2.5">
+                <div className="flex items-center gap-2.5">
                   <div className="flex items-center gap-1">
                     <Star className="w-3 h-3 text-accent-amber" />
                     <span>{repo.stargazers_count}</span>
