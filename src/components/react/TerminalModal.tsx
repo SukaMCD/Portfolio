@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { X, Terminal as TerminalIcon } from 'lucide-react';
 import { triggerToast } from './GooeyToast';
-import { loginAdmin, logoutAdmin, isAdminAuthenticated } from '../../lib/firebase';
+import { loginAdmin, logoutAdmin, isAdminAuthenticated, getProjects } from '../../lib/firebase';
 
 interface TerminalModalProps {
   isOpen: boolean;
@@ -57,8 +57,8 @@ export default function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
       const res = loginAdmin(rawInput);
       if (res.success) {
         addLog('[ACCESS GRANTED] Identity verified: Fabian Rizky Pratama (Root Admin)', 'success');
-        addLog('[SYSTEM] Certificate CRUD privileges unlocked on /certificates.', 'success');
-        triggerToast('Admin Mode Active: Certificate CRUD Unlocked!', 'success');
+        addLog('[SYSTEM] Project & Certificate CRUD privileges unlocked.', 'success');
+        triggerToast('Admin Mode Active: Projects & Certificates CRUD Unlocked!', 'success');
       } else {
         addLog('[ACCESS DENIED] Incorrect password. Incident reported to security log.', 'error');
         triggerToast('Authentication failed: Invalid password', 'error');
@@ -92,8 +92,8 @@ export default function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
           const res = loginAdmin(arg);
           if (res.success) {
             addLog('[ACCESS GRANTED] Identity verified: Fabian Rizky Pratama (Root Admin)', 'success');
-            addLog('[SYSTEM] Certificate CRUD privileges unlocked on /certificates.', 'success');
-            triggerToast('Admin Mode Active: Certificate CRUD Unlocked!', 'success');
+            addLog('[SYSTEM] Project & Certificate CRUD privileges unlocked.', 'success');
+            triggerToast('Admin Mode Active: Projects & Certificates CRUD Unlocked!', 'success');
           } else {
             addLog('[ACCESS DENIED] Incorrect password. Incident reported to security log.', 'error');
             triggerToast('Authentication failed: Invalid password', 'error');
@@ -138,15 +138,26 @@ export default function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
         addLog('Core Stack: Laravel, PHP, PostgreSQL, Flutter, Dart, Astro, Godot.');
         break;
 
-      case 'projects':
-        addLog('Featured Projects:');
-        addLog('  - Leafly Tea (PHP/MySQL E-Commerce)');
-        addLog('  - Lost Formula (Godot Engine Game)');
-        addLog('  - Web App Kegiatan Guru (PHP/PostgreSQL Portal)');
-        addLog('  - Kedai Cendana (Laravel/Filament/PostgreSQL)');
-        addLog('  - Instagram Clone (Flutter/Dart app)');
-        addLog('  - Website Manajemen Sekolah (WordPress CMS)');
-        break;
+      case 'projects': {
+        const fetchProjectsLog = async () => {
+          try {
+            const projs = await getProjects();
+            if (projs.length === 0) {
+              addLog('No projects found in database. Navigate to /projects to add projects.', 'output');
+            } else {
+              addLog(`Showcase Projects (${projs.length}):`);
+              projs.forEach((p) => {
+                addLog(`  - ${p.title} [${p.category}]`);
+              });
+            }
+          } catch (e) {
+            addLog('Error retrieving project catalogue.', 'error');
+          }
+          setLogs([...newLogs]);
+        };
+        fetchProjectsLog();
+        return;
+      }
 
       case 'dino':
         addLog('Bypassing security protocols...', 'success');

@@ -10,47 +10,12 @@ import {
   isFirebaseConfigured,
   isAdminAuthenticated, 
   logoutAdmin, 
-  subscribeToAuthChange 
+  subscribeToAuthChange,
+  formatDriveImageUrl,
+  extractDriveFileId,
+  DEFAULT_FALLBACK_IMAGE
 } from '../../lib/firebase';
 import { triggerToast } from './GooeyToast';
-
-/**
- * Extract Google Drive file ID from various link formats
- */
-function extractDriveFileId(url?: string): string | null {
-  if (!url) return null;
-  const trimmed = url.trim();
-  
-  // Pattern 1: /file/d/([a-zA-Z0-9_-]+)
-  const matchFile = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (matchFile && matchFile[1]) return matchFile[1];
-
-  // Pattern 2: id=([a-zA-Z0-9_-]+)
-  const matchId = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if (matchId && matchId[1]) return matchId[1];
-
-  // Pattern 3: /d/([a-zA-Z0-9_-]+)
-  const matchD = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if (matchD && matchD[1]) return matchD[1];
-
-  return null;
-}
-
-/**
- * Automatically converts Google Drive share URLs into direct embeddable image CDN links
- */
-function formatDriveImageUrl(url?: string): string | undefined {
-  if (!url) return undefined;
-  const trimmed = url.trim();
-  if (!trimmed) return undefined;
-
-  const fileId = extractDriveFileId(trimmed);
-  if (fileId) {
-    return `https://lh3.googleusercontent.com/d/${fileId}`;
-  }
-
-  return trimmed;
-}
 
 export default function CertificatesView() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -166,11 +131,19 @@ export default function CertificatesView() {
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (confirm(`Are you sure you want to delete "${name}"?`)) {
+  const handleDelete = async (cert: Certificate) => {
+    if (confirm(`Are you sure you want to delete "${cert.title}"?`)) {
       try {
-        await deleteCertificate(id);
-        setCertificates((prev) => prev.filter((c) => c.id !== id));
+        if (cert.id) {
+          await deleteCertificate(cert.id);
+        }
+        setCertificates((prev) => {
+          const updated = prev.filter((c) => (cert.id ? c.id !== cert.id : c.title !== cert.title));
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('sukamcd_portfolio_certificates', JSON.stringify(updated));
+          }
+          return updated;
+        });
         triggerToast('Certificate deleted', 'info');
       } catch (err) {
         console.error(err);
@@ -315,7 +288,7 @@ export default function CertificatesView() {
                         <Edit3 className="w-3 h-3" />
                       </button>
                       <button
-                        onClick={() => handleDelete(cert.id, cert.title)}
+                        onClick={() => handleDelete(cert)}
                         className="w-7 h-7 rounded-lg bg-bg-elevated/90 hover:bg-bg-hover border border-border-soft text-silver-300 hover:text-accent-crimson flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
                         title="Delete certificate"
                       >
@@ -539,10 +512,10 @@ export default function CertificatesView() {
                 </p>
 
                 {/* Live Preview of Image in Modal */}
-                {image ? (
+                {image && image.trim() !== '/image/.webp' && image.trim() !== '/image/' && image.trim() !== '.webp' ? (
                   <div className="mt-2 w-full h-28 rounded-xl bg-bg-root border border-border-soft overflow-hidden flex items-center justify-center relative p-1">
                     <img 
-                      src={formatDriveImageUrl(image)} 
+                      src={formatDriveImageUrl(image.trim()) || image.trim()} 
                       alt="Preview"
                       referrerPolicy="no-referrer"
                       crossOrigin="anonymous"
@@ -553,6 +526,8 @@ export default function CertificatesView() {
                         if (fileId && !target.dataset.tried) {
                           target.dataset.tried = 'true';
                           target.src = `https://lh3.googleusercontent.com/d/${fileId}=w800`;
+                        } else {
+                          target.src = DEFAULT_FALLBACK_IMAGE;
                         }
                       }}
                     />

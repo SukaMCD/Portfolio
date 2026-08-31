@@ -10,6 +10,7 @@ import {
   type Firestore 
 } from 'firebase/firestore';
 import { initialCertificates, type Certificate } from '../data/certificates';
+import { initialProjects, type Project } from '../data/projects';
 
 // Environment Variables
 const firebaseConfig = {
@@ -21,8 +22,11 @@ const firebaseConfig = {
   appId: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_APP_ID : '',
 };
 
-const LOCAL_STORAGE_KEY = 'sukamcd_portfolio_certificates';
-const COLLECTION_NAME = 'certificates';
+const LOCAL_STORAGE_KEY_CERTIFICATES = 'sukamcd_portfolio_certificates';
+const COLLECTION_NAME_CERTIFICATES = 'certificates';
+
+const LOCAL_STORAGE_KEY_PROJECTS = 'sukamcd_portfolio_projects';
+const COLLECTION_NAME_PROJECTS = 'projects';
 
 let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
@@ -42,11 +46,65 @@ if (isFirebaseConfigured) {
   }
 }
 
-// Fallback helper for local storage
+export const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1572945281861-68b122e3e85a?q=80&w=600&auto=format&fit=crop';
+
+/**
+ * Extract Google Drive file ID from various link formats
+ */
+export function extractDriveFileId(url?: string): string | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  
+  // Pattern 1: /file/d/([a-zA-Z0-9_-]+)
+  const matchFile = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (matchFile && matchFile[1]) return matchFile[1];
+
+  // Pattern 2: id=([a-zA-Z0-9_-]+)
+  const matchId = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (matchId && matchId[1]) return matchId[1];
+
+  // Pattern 3: /d/([a-zA-Z0-9_-]+)
+  const matchD = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (matchD && matchD[1]) return matchD[1];
+
+  return null;
+}
+
+/**
+ * Automatically converts Google Drive share URLs into direct embeddable image CDN links
+ */
+export function formatDriveImageUrl(url?: string): string {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (!trimmed || trimmed === '/image/.webp' || trimmed === '/image/' || trimmed === '.webp') return '';
+
+  const fileId = extractDriveFileId(trimmed);
+  if (fileId) {
+    return `https://lh3.googleusercontent.com/d/${fileId}`;
+  }
+
+  return trimmed;
+}
+
+// Clean undefined/empty values so Firestore does not reject the document
+function cleanFirestoreData<T extends Record<string, any>>(data: T): Record<string, any> {
+  const cleaned: Record<string, any> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (value !== undefined) {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+}
+
+/* ============================================================
+   CERTIFICATES CRUD
+   ============================================================ */
+
 function getLocalCertificates(): Certificate[] {
   if (typeof window === 'undefined') return [];
   try {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY_CERTIFICATES);
     if (saved !== null) {
       return JSON.parse(saved);
     }
@@ -58,7 +116,7 @@ function getLocalCertificates(): Certificate[] {
 
 function setLocalCertificates(certs: Certificate[]) {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(certs));
+  localStorage.setItem(LOCAL_STORAGE_KEY_CERTIFICATES, JSON.stringify(certs));
 }
 
 /**
@@ -67,35 +125,22 @@ function setLocalCertificates(certs: Certificate[]) {
 export async function getCertificates(): Promise<Certificate[]> {
   if (db && isFirebaseConfigured) {
     try {
-      const colRef = collection(db, COLLECTION_NAME);
+      const colRef = collection(db, COLLECTION_NAME_CERTIFICATES);
       const snapshot = await getDocs(colRef);
       
       const certs: Certificate[] = [];
       snapshot.forEach((doc) => {
         certs.push({ id: doc.id, ...doc.data() } as Certificate);
       });
+
       setLocalCertificates(certs);
       return certs;
     } catch (err) {
-      console.warn('[Firestore] Error fetching documents, using local fallback:', err);
+      console.warn('[Firestore] Error fetching certificates, using local fallback:', err);
     }
   }
 
   return getLocalCertificates();
-}
-
-/**
- * Create a new Certificate
- */
-// Clean undefined/empty values so Firestore does not reject the document
-function cleanFirestoreData<T extends Record<string, any>>(data: T): Record<string, any> {
-  const cleaned: Record<string, any> = {};
-  for (const [key, value] of Object.entries(data)) {
-    if (value !== undefined) {
-      cleaned[key] = value;
-    }
-  }
-  return cleaned;
 }
 
 /**
@@ -111,14 +156,12 @@ export async function createCertificate(data: Omit<Certificate, 'id'> & { id?: s
   if (db && isFirebaseConfigured) {
     try {
       const payload = cleanFirestoreData(newCertificate);
-      await setDoc(doc(db, COLLECTION_NAME, id), payload);
+      await setDoc(doc(db, COLLECTION_NAME_CERTIFICATES, id), payload);
     } catch (err) {
-      console.error('[Firestore] Failed creating certificate:', err);
-      throw err;
+      console.warn('[Firestore] Failed creating certificate in cloud, using local cache:', err);
     }
   }
 
-  // Always keep local storage updated as cache / offline support
   const current = getLocalCertificates();
   const updated = [newCertificate, ...current.filter(c => c.id !== id)];
   setLocalCertificates(updated);
@@ -130,14 +173,14 @@ export async function createCertificate(data: Omit<Certificate, 'id'> & { id?: s
  * Update an existing Certificate
  */
 export async function updateCertificate(id: string, data: Partial<Certificate>): Promise<void> {
+  if (!id) return;
   if (db && isFirebaseConfigured) {
     try {
-      const docRef = doc(db, COLLECTION_NAME, id);
+      const docRef = doc(db, COLLECTION_NAME_CERTIFICATES, id);
       const payload = cleanFirestoreData(data);
       await updateDoc(docRef, payload);
     } catch (err) {
-      console.error('[Firestore] Failed updating certificate:', err);
-      throw err;
+      console.warn('[Firestore] Failed updating certificate in cloud:', err);
     }
   }
 
@@ -150,18 +193,140 @@ export async function updateCertificate(id: string, data: Partial<Certificate>):
  * Delete a Certificate
  */
 export async function deleteCertificate(id: string): Promise<void> {
+  if (!id) return;
   if (db && isFirebaseConfigured) {
     try {
-      await deleteDoc(doc(db, COLLECTION_NAME, id));
+      await deleteDoc(doc(db, COLLECTION_NAME_CERTIFICATES, id));
     } catch (err) {
-      console.error('[Firestore] Failed deleting certificate:', err);
-      throw err;
+      console.warn('[Firestore] Failed deleting certificate document from Firestore:', err);
     }
   }
 
   const current = getLocalCertificates();
   const updated = current.filter(c => c.id !== id);
   setLocalCertificates(updated);
+}
+
+/* ============================================================
+   PROJECTS CRUD
+   ============================================================ */
+
+function getLocalProjects(): Project[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY_PROJECTS);
+    if (saved !== null) {
+      const parsed: Project[] = JSON.parse(saved);
+      // Ensure all items have an ID and a safe image URL
+      return parsed.map((p, idx) => {
+        const rawImg = p.image?.trim();
+        const safeImg = (rawImg && rawImg !== '/image/.webp' && rawImg !== '/image/' && rawImg !== '.webp')
+          ? rawImg
+          : DEFAULT_FALLBACK_IMAGE;
+        return {
+          ...p,
+          id: p.id || `proj_legacy_${idx}_${p.title?.toLowerCase().replace(/[^a-z0-9]/g, '_') || Date.now()}`,
+          image: safeImg,
+        };
+      });
+    }
+  } catch (e) {
+    console.error('Failed reading localStorage projects:', e);
+  }
+  return [];
+}
+
+function setLocalProjects(projs: Project[]) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(LOCAL_STORAGE_KEY_PROJECTS, JSON.stringify(projs));
+}
+
+/**
+ * Fetch all projects from Firestore or LocalStorage
+ */
+export async function getProjects(): Promise<Project[]> {
+  if (db && isFirebaseConfigured) {
+    try {
+      const colRef = collection(db, COLLECTION_NAME_PROJECTS);
+      const snapshot = await getDocs(colRef);
+      
+      const projs: Project[] = [];
+      snapshot.forEach((doc) => {
+        projs.push({ id: doc.id, ...doc.data() } as Project);
+      });
+
+      setLocalProjects(projs);
+      return projs;
+    } catch (err) {
+      console.warn('[Firestore] Error fetching projects, using local fallback:', err);
+    }
+  }
+
+  return getLocalProjects();
+}
+
+/**
+ * Create a new Project
+ */
+export async function createProject(data: Omit<Project, 'id'> & { id?: string }): Promise<Project> {
+  const id = data.id || `proj_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+  const newProject: Project = {
+    ...data,
+    id,
+  };
+
+  if (db && isFirebaseConfigured) {
+    try {
+      const payload = cleanFirestoreData(newProject);
+      await setDoc(doc(db, COLLECTION_NAME_PROJECTS, id), payload);
+    } catch (err) {
+      console.warn('[Firestore] Failed creating project in cloud, using local cache:', err);
+    }
+  }
+
+  const current = getLocalProjects();
+  const updated = [newProject, ...current.filter(p => p.id !== id)];
+  setLocalProjects(updated);
+
+  return newProject;
+}
+
+/**
+ * Update an existing Project
+ */
+export async function updateProject(id: string, data: Partial<Project>): Promise<void> {
+  if (!id) return;
+  if (db && isFirebaseConfigured) {
+    try {
+      const docRef = doc(db, COLLECTION_NAME_PROJECTS, id);
+      const payload = cleanFirestoreData(data);
+      await updateDoc(docRef, payload);
+    } catch (err) {
+      console.warn('[Firestore] Failed updating project in Firestore:', err);
+    }
+  }
+
+  const current = getLocalProjects();
+  const updated = current.map(p => p.id === id ? { ...p, ...data } : p);
+  setLocalProjects(updated);
+}
+
+/**
+ * Delete a Project
+ */
+export async function deleteProject(id: string): Promise<void> {
+  if (!id) return;
+  if (db && isFirebaseConfigured) {
+    try {
+      await deleteDoc(doc(db, COLLECTION_NAME_PROJECTS, id));
+    } catch (err) {
+      console.warn('[Firestore] Failed deleting project from Firestore:', err);
+    }
+  }
+
+  const current = getLocalProjects();
+  const updated = current.filter(p => p.id !== id);
+  setLocalProjects(updated);
 }
 
 /* ============================================================
