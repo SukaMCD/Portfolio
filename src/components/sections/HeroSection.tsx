@@ -8,7 +8,7 @@ export function HeroIllustration() {
       <div className="w-[120px] sm:w-[135px] md:w-[150px] lg:w-[160px] aspect-square border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[4px_4px_0px_#1c1c21]">
         <img
           src="/image/hiura.jpg"
-          alt="Illustration"
+          alt="Fabian Rizky Pratama anime ink lineart portrait"
           className="w-full h-full object-cover object-top scale-[1.00] origin-top mix-blend-multiply opacity-95 translate-y-1"
         />
       </div>

@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArchIcon from '../components/ui/ArchIcon';
+import Cursor from '../components/ui/Cursor';
+import InteractiveBackground from '../components/ui/InteractiveBackground';
+---
+
+<Layout
+  title="404: Kernel Panic // Page Not Found"
+  description="The requested memory address or directory file could not be resolved on the system."
+>
+  <div class="relative min-h-screen w-full bg-[#E2DFD2] text-[#1c1c21] overflow-hidden flex flex-col justify-between p-6 sm:p-12">
+    <InteractiveBackground client:load />
+    <Cursor client:load />
+
+    {/* Top Header */}
+    <header class="relative z-10 w-full flex items-center justify-between pb-4 border-b-[2.5px] border-[#1c1c21]">
+      <div class="flex items-center gap-2.5 font-mono-stack text-xs">
+        <ArchIcon className="w-4 h-4 text-[#1c1c21]" />
+        <span class="font-bold text-[#1c1c21]">sukamcd@archlinux:~$</span>
+        <span class="text-[#58554f]">sys_err</span>
+      </div>
+      <div class="font-mono-stack text-[11px] font-semibold px-2 py-0.5 border border-[#1c1c21] bg-[#1c1c21]/5 text-[#1c1c21]">
+        ERR_STATUS // 404
+      </div>
+    </header>
+
+    {/* Center Error Box */}
+    <main class="relative z-10 my-auto py-12 flex flex-col items-center justify-center text-center max-w-2xl mx-auto">
+      <div class="font-mono-stack text-xs uppercase tracking-widest text-[#58554f] mb-3">
+        // INTERRUPT 0x00000194 — NULL_POINTER
+      </div>
+
+      <h1 class="font-display font-extrabold uppercase text-6xl sm:text-8xl lg:text-9xl leading-[0.88] tracking-[-0.04em] text-[#1c1c21] mb-6">
+        404.
+        <br />
+        <span class="font-light italic text-[#58554f]">PANIC</span>
+      </h1>
+
+      <div class="p-4 sm:p-5 border-[2.5px] border-[#1c1c21] shadow-[4px_4px_0px_#1c1c21] bg-[#E2DFD2] font-mono-stack text-xs text-left w-full space-y-2 mb-8">
+        <div class="text-[#1c1c21] font-bold">KERNEL_ALERT: TARGET_NODE_NOT_FOUND</div>
+        <p class="text-[#58554f] leading-relaxed">
+          The requested route, virtual memory block, or resource file does not exist on this host filesystem.
+        </p>
+        <div class="pt-2 border-t border-[#1c1c21]/15 text-[11px] text-[#58554f]">
+          Traceback: <span class="text-[#1c1c21]">request_uri &rarr; /dev/null</span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-5 py-3 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-xs font-bold tracking-wider uppercase transition-colors border border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21]"
+        >
+          <span>&larr; RETURN TO ROOT DIRECTORY</span>
+        </a>
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 px-5 py-3 bg-transparent text-[#1c1c21] hover:bg-[#1c1c21]/5 font-mono-stack text-xs font-bold tracking-wider uppercase transition-colors border-[2px] border-[#1c1c21]"
+        >
+          <span>BROWSE PROJECTS ARCHIVE</span>
+        </a>
+      </div>
+    </main>
+
+    {/* Terminal Footer */}
+    <footer class="relative z-10 w-full pt-4 border-t-[2.5px] border-[#1c1c21] flex flex-col sm:flex-row items-center justify-between font-mono-stack text-xs text-[#58554f] gap-2">
+      <div>ARCH LINUX // TTY1 RESCUE SHELL</div>
+      <div>FABIAN RIZKY PRATAMA // PORTFOLIO</div>
+    </footer>
+  </div>
+</Layout>

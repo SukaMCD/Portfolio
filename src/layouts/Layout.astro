@@ -4,12 +4,51 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: string;
 }
 
 const {
   title = "Fabian Rizky Pratama — Creative Software Engineer",
-  description = "Portfolio Fabian Rizky Pratama. Bridging robust backend systems with cinematic frontend experiences and game engine craftsmanship."
+  description = "Portfolio of Fabian Rizky Pratama. Bridging robust backend systems with cinematic frontend experiences and game engine craftsmanship.",
+  image = "/image/main.webp",
+  type = "website",
 } = Astro.props;
+
+const siteUrl = "https://sukamcd.tech";
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageURL = new URL(image, siteUrl).href;
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      "name": "Fabian Rizky Pratama",
+      "alternateName": "SukaMCD",
+      "url": siteUrl,
+      "image": `${siteUrl}/image/main.webp`,
+      "jobTitle": "Software Engineer",
+      "description": "Software engineer specializing in high-performance backend systems, web infrastructure, and game development.",
+      "sameAs": [
+        "https://github.com/SukaMCD",
+        "https://linkedin.com/in/fabian-rizky-pratama",
+        "https://sukamcd.itch.io"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "Fabian Rizky Pratama — Portfolio",
+      "publisher": {
+        "@id": `${siteUrl}/#person`
+      },
+      "description": description
+    }
+  ]
+};
 ---
 
 <!doctype html>
@@ -20,24 +59,40 @@ const {
     <meta name="description" content={description} />
     <meta name="author" content="Fabian Rizky Pratama" />
     <meta name="theme-color" content="#E2DFD2" />
+    <meta name="robots" content="index, follow" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://fabiandev.my.id" />
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/image/main.webp" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Fabian Rizky Pratama — Portfolio" />
+    <meta property="og:site_name" content="Fabian Rizky Pratama" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/image/main.webp" />
+    <meta name="twitter:image" content={ogImageURL} />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 
     <title>{title}</title>
   </head>

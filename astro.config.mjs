@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://sukamcd.tech',
   integrations: [react()],
   devToolbar: {
     enabled: false,
@@ -12,6 +13,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     envPrefix: ['PUBLIC_', 'VITE_'],
+    build: {
+      sourcemap: true,
+    },
   },
 });
 
