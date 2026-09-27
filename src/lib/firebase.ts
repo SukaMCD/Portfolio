@@ -1,40 +1,121 @@
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
-import { 
-  getFirestore, 
-  collection, 
-  getDocs, 
-  doc, 
-  setDoc, 
-  deleteDoc, 
-  updateDoc,
-  type Firestore 
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  onSnapshot,
+  type Firestore,
 } from 'firebase/firestore';
-import { initialCertificates, type Certificate } from '../data/certificates';
-import { initialProjects, type Project } from '../data/projects';
 
-// Environment Variables
+// Firebase config (Vite / Astro env vars)
 const firebaseConfig = {
-  apiKey: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_API_KEY : '',
-  authDomain: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_AUTH_DOMAIN : '',
-  projectId: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_PROJECT_ID : '',
-  storageBucket: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_STORAGE_BUCKET : '',
-  messagingSenderId: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_MESSAGING_SENDER_ID : '',
-  appId: typeof import.meta !== 'undefined' ? import.meta.env?.PUBLIC_FIREBASE_APP_ID : '',
+  apiKey:
+    import.meta.env.PUBLIC_FIREBASE_API_KEY ||
+    import.meta.env.VITE_FIREBASE_API_KEY ||
+    'AIzaSyAad6R3wQl2POM33y3BIWvX0SwDUMzcT8M',
+  authDomain:
+    import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN ||
+    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ||
+    'sukamcd-caea8.firebaseapp.com',
+  projectId:
+    import.meta.env.PUBLIC_FIREBASE_PROJECT_ID ||
+    import.meta.env.VITE_FIREBASE_PROJECT_ID ||
+    'sukamcd-caea8',
+  storageBucket:
+    import.meta.env.PUBLIC_FIREBASE_STORAGE_BUCKET ||
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ||
+    'sukamcd-caea8.firebasestorage.app',
+  messagingSenderId:
+    import.meta.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID ||
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ||
+    '10250226196',
+  appId:
+    import.meta.env.PUBLIC_FIREBASE_APP_ID ||
+    import.meta.env.VITE_FIREBASE_APP_ID ||
+    '1:10250226196:web:169e6c6976b0e07ad97501',
 };
-
-const LOCAL_STORAGE_KEY_CERTIFICATES = 'sukamcd_portfolio_certificates';
-const COLLECTION_NAME_CERTIFICATES = 'certificates';
 
 const LOCAL_STORAGE_KEY_PROJECTS = 'sukamcd_portfolio_projects';
 const COLLECTION_NAME_PROJECTS = 'projects';
+const LOCAL_STORAGE_KEY_CERTIFICATES = 'sukamcd_portfolio_certificates';
+const COLLECTION_NAME_CERTIFICATES = 'certificates';
+const COLLECTION_NAME_EXPERIENCES = 'experiences';
+export const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1572945281861-68b122e3e85a?q=80&w=600&auto=format&fit=crop';
+
+export const DEFAULT_EXPERIENCES: Experience[] = [
+  {
+    id: 'exp-istanakomputer',
+    role: 'Mobile & Web Developer',
+    organization: 'Istana Komputer · PT ISKOM SARANA NUSANTARA',
+    period: 'FEB 2026 — PRESENT',
+    type: 'PART-TIME',
+    location: 'East Jakarta · Remote',
+    description: 'Successfully transitioned from an internship role to part-time software developer driven by strong technical execution and consistent contributions.',
+    highlights: [
+      'Engineered and maintained high-performance web and mobile applications at PT ISKOM SARANA NUSANTARA',
+      'Collaborated closely with core developers to design and execute clean application workflows aligned with user requirements',
+      'Authored clean, scalable, and type-safe code to ensure optimal application performance and stability',
+    ],
+    technologies: ['Mobile & Web Dev', 'Flutter', 'RESTful API', 'Clean Architecture', 'Git'],
+    order: 1,
+  },
+  {
+    id: 'exp-budiluhur-web',
+    role: 'Frontend Developer – School Web Team',
+    organization: 'SMK Budi Luhur',
+    period: 'JAN 2025 — JUL 2025',
+    type: 'PART-TIME',
+    location: 'East Jakarta · Hybrid',
+    description: 'Recruited by Web & Mobile Programming faculty to join the institutional web development initiative powered by WordPress.',
+    highlights: [
+      'Architected and optimized UI/UX across school web platforms with focus on accessibility and page speed',
+      'Entrusted with developing responsive portals for SD Ceria Demangan Yogyakarta and SMP Budi Luhur with intuitive layouts',
+      'Delivered an accessible, informative digital platform for students, faculty, and guardians',
+    ],
+    technologies: ['WordPress', 'Web Design', 'Frontend Development', 'Responsive UI', 'PHP'],
+    order: 2,
+  },
+  {
+    id: 'exp-leaflytea',
+    role: 'Frontend & Backend Developer',
+    organization: 'Leafly Tea – E-commerce Platform',
+    period: 'APR 2025 — MAY 2025',
+    type: 'FREELANCE',
+    location: 'Tangerang City, Banten',
+    description: 'Engineered an e-commerce platform for artisanal tea beverages as an independent commercial software project.',
+    highlights: [
+      'Handled backend architecture in PHP and crafted responsive, dynamic client interfaces with JavaScript',
+      'Implemented dynamic catalog browsing, cart state management, and seamless multi-device checkout flows',
+      'Honed user-centric design principles and defensive programming techniques for scalable web services',
+    ],
+    technologies: ['PHP', 'JavaScript', 'E-Commerce Architecture', 'Responsive CSS', 'UI/UX'],
+    order: 3,
+  },
+  {
+    id: 'exp-lostformula',
+    role: 'Game Developer – Lost Formula',
+    organization: 'Lost Formula: A Forest Mystery',
+    period: 'MAR 2025 — MAY 2025',
+    type: 'FREELANCE',
+    location: 'Tangerang City, Banten',
+    description: 'Co-led technical development of a pixel-art 2D story adventure RPG built with Godot Engine 4.',
+    highlights: [
+      'Engineered core gameplay systems, state machines, inventory management, and interaction mechanics',
+      'Collaborated with animation artists from SMK Budi Luhur for medieval fantasy asset pipelines and character rigging',
+      'Implemented exploration puzzles, combat sequences, and procedural dialogue systems',
+    ],
+    technologies: ['Godot Engine 4', 'GDScript', 'Gameplay Logic', 'Inventory Systems', 'State Machine'],
+    order: 4,
+  },
+];
 
 let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
 
 export const isFirebaseConfigured = Boolean(
-  firebaseConfig.apiKey && 
-  firebaseConfig.projectId && 
-  !firebaseConfig.apiKey.includes('your_api_key')
+  firebaseConfig.apiKey &&
+  firebaseConfig.projectId &&
+  !String(firebaseConfig.apiKey).includes('your_api_key')
 );
 
 if (isFirebaseConfigured) {
@@ -42,414 +123,235 @@ if (isFirebaseConfigured) {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     db = getFirestore(app);
   } catch (error) {
-    console.warn('[Firebase] Initialization error, falling back to local storage:', error);
+    console.warn('[Firebase] Initialization error, falling back to localStorage:', error);
   }
 }
 
-export const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1572945281861-68b122e3e85a?q=80&w=600&auto=format&fit=crop';
+// Project type
+export interface ProjectLink {
+  label: string;
+  url: string;
+}
 
-/**
- * Extract Google Drive file ID from various link formats
- */
+export interface Project {
+  id: string;
+  title: string;
+  category: string;
+  date: string;
+  description: string;
+  tags: string[];
+  links: ProjectLink[];
+  image: string;
+  alt?: string;
+}
+
+// Certificate type
+export interface Certificate {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  credentialId?: string;
+  credentialUrl?: string;
+  image?: string;
+  tags?: string[];
+}
+
+// Experience type
+export interface Experience {
+  id: string;
+  role: string;
+  organization: string;
+  period: string;
+  type: string;
+  location?: string;
+  description: string;
+  highlights: string[];
+  technologies: string[];
+  order?: number;
+}
+
+// Google Drive image URL helpers
 export function extractDriveFileId(url?: string): string | null {
   if (!url) return null;
   const trimmed = url.trim();
-  
-  // Pattern 1: /file/d/([a-zA-Z0-9_-]+)
   const matchFile = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (matchFile && matchFile[1]) return matchFile[1];
-
-  // Pattern 2: id=([a-zA-Z0-9_-]+)
+  if (matchFile?.[1]) return matchFile[1];
   const matchId = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if (matchId && matchId[1]) return matchId[1];
-
-  // Pattern 3: /d/([a-zA-Z0-9_-]+)
+  if (matchId?.[1]) return matchId[1];
   const matchD = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if (matchD && matchD[1]) return matchD[1];
-
+  if (matchD?.[1]) return matchD[1];
   return null;
 }
 
-/**
- * Automatically converts Google Drive share URLs into direct embeddable image CDN links
- */
 export function formatDriveImageUrl(url?: string): string {
   if (!url) return '';
   const trimmed = url.trim();
   if (!trimmed || trimmed === '/image/.webp' || trimmed === '/image/' || trimmed === '.webp') return '';
-
   const fileId = extractDriveFileId(trimmed);
-  if (fileId) {
-    return `https://lh3.googleusercontent.com/d/${fileId}`;
-  }
-
+  if (fileId) return `https://lh3.googleusercontent.com/d/${fileId}`;
   return trimmed;
 }
 
-/**
- * Helper to parse various portfolio date formats into comparable timestamps for sorting (latest first)
- * Handles: "Feb, 2026", "24 Feb 2026", "2026", "25 Nov 2025", "14 Feb 2026", "2024-05-12", etc.
- */
-export function parseDateToTimestamp(dateStr?: string): number {
+// Date sort helper
+function parseDateToTimestamp(dateStr: string): number {
   if (!dateStr) return 0;
-  const str = dateStr.trim();
-
-  // Try direct standard parse
-  let ts = Date.parse(str);
-  if (!isNaN(ts)) return ts;
-
-  // Month mapping Indonesian -> English
-  const idToEn: Record<string, string> = {
-    'jan': 'Jan', 'januari': 'Jan', 'feb': 'Feb', 'februari': 'Feb', 'peb': 'Feb',
-    'mar': 'Mar', 'maret': 'Mar', 'apr': 'Apr', 'april': 'Apr',
-    'mei': 'May', 'jun': 'Jun', 'juni': 'Jun', 'jul': 'Jul', 'juli': 'Jul',
-    'agu': 'Aug', 'agustus': 'Aug', 'ags': 'Aug',
-    'sep': 'Sep', 'september': 'Sep', 'okt': 'Oct', 'oktober': 'Oct',
-    'nov': 'Nov', 'november': 'Nov', 'des': 'Dec', 'desember': 'Dec'
-  };
-
-  let normalized = str.toLowerCase();
-  for (const [id, en] of Object.entries(idToEn)) {
-    normalized = normalized.replace(new RegExp(`\\b${id}\\b`, 'g'), en);
-  }
-
-  // Handle "Feb, 2026" or "Month, Year"
-  if (/^[a-z]{3,9},\s*\d{4}$/i.test(normalized)) {
-    const parts = normalized.split(',').map(s => s.trim());
-    ts = Date.parse(`01 ${parts[0]} ${parts[1]}`);
-    if (!isNaN(ts)) return ts;
-  }
-
-  // Handle pure 4-digit year "2026"
-  if (/^\d{4}$/.test(str)) {
-    return new Date(parseInt(str, 10), 11, 31).getTime();
-  }
-
-  // Try parsing with normalized string
-  ts = Date.parse(normalized);
-  if (!isNaN(ts)) return ts;
-
-  // Extract 4-digit year as last resort
-  const yearMatch = str.match(/\b(20\d{2}|19\d{2})\b/);
-  if (yearMatch) {
-    return new Date(parseInt(yearMatch[1], 10), 0, 1).getTime();
-  }
-
-  return 0;
+  const d = new Date(dateStr);
+  return isNaN(d.getTime()) ? 0 : d.getTime();
 }
 
-// Clean undefined/empty values so Firestore does not reject the document
-function cleanFirestoreData<T extends Record<string, any>>(data: T): Record<string, any> {
-  const cleaned: Record<string, any> = {};
-  for (const [key, value] of Object.entries(data)) {
-    if (value !== undefined) {
-      cleaned[key] = value;
-    }
-  }
-  return cleaned;
-}
-
-/* ============================================================
-   CERTIFICATES CRUD
-   ============================================================ */
-
-export function getLocalCertificates(): Certificate[] {
-  if (typeof window === 'undefined') return [];
+// Clear legacy local storage keys to ensure clean state
+if (typeof window !== 'undefined') {
   try {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY_CERTIFICATES);
-    if (saved !== null) {
-      const parsed: Certificate[] = JSON.parse(saved);
-      return parsed.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
-    }
-  } catch (e) {
-    console.error('Failed reading localStorage certificates:', e);
-  }
-  return [];
+    localStorage.removeItem(LOCAL_STORAGE_KEY_PROJECTS);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_CERTIFICATES);
+  } catch (_) {}
 }
 
-function setLocalCertificates(certs: Certificate[]) {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(LOCAL_STORAGE_KEY_CERTIFICATES, JSON.stringify(certs));
-}
-
-/**
- * Fetch all certificates from Firestore or LocalStorage (sorted latest first)
- */
-export async function getCertificates(): Promise<Certificate[]> {
-  if (db && isFirebaseConfigured) {
-    try {
-      const colRef = collection(db, COLLECTION_NAME_CERTIFICATES);
-      const snapshot = await getDocs(colRef);
-      
-      const certs: Certificate[] = [];
-      snapshot.forEach((doc) => {
-        certs.push({ id: doc.id, ...doc.data() } as Certificate);
-      });
-
-      // Sort latest first
-      certs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
-
-      setLocalCertificates(certs);
-      return certs;
-    } catch (err) {
-      console.warn('[Firestore] Error fetching certificates, using local fallback:', err);
-    }
-  }
-
-  return getLocalCertificates();
-}
-
-/**
- * Create a new Certificate
- */
-export async function createCertificate(data: Omit<Certificate, 'id'> & { id?: string }): Promise<Certificate> {
-  const id = data.id || `cert_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-  const newCertificate: Certificate = {
-    ...data,
-    id,
-  };
-
-  if (db && isFirebaseConfigured) {
-    try {
-      const payload = cleanFirestoreData(newCertificate);
-      await setDoc(doc(db, COLLECTION_NAME_CERTIFICATES, id), payload);
-    } catch (err) {
-      console.warn('[Firestore] Failed creating certificate in cloud, using local cache:', err);
-    }
-  }
-
-  const current = getLocalCertificates();
-  const updated = [newCertificate, ...current.filter(c => c.id !== id)];
-  setLocalCertificates(updated);
-
-  return newCertificate;
-}
-
-/**
- * Update an existing Certificate
- */
-export async function updateCertificate(id: string, data: Partial<Certificate>): Promise<void> {
-  if (!id) return;
-  if (db && isFirebaseConfigured) {
-    try {
-      const docRef = doc(db, COLLECTION_NAME_CERTIFICATES, id);
-      const payload = cleanFirestoreData(data);
-      await updateDoc(docRef, payload);
-    } catch (err) {
-      console.warn('[Firestore] Failed updating certificate in cloud:', err);
-    }
-  }
-
-  const current = getLocalCertificates();
-  const updated = current.map(c => c.id === id ? { ...c, ...data } : c);
-  setLocalCertificates(updated);
-}
-
-/**
- * Delete a Certificate
- */
-export async function deleteCertificate(id: string): Promise<void> {
-  if (!id) return;
-  if (db && isFirebaseConfigured) {
-    try {
-      await deleteDoc(doc(db, COLLECTION_NAME_CERTIFICATES, id));
-    } catch (err) {
-      console.warn('[Firestore] Failed deleting certificate document from Firestore:', err);
-    }
-  }
-
-  const current = getLocalCertificates();
-  const updated = current.filter(c => c.id !== id);
-  setLocalCertificates(updated);
-}
-
-/* ============================================================
-   PROJECTS CRUD
-   ============================================================ */
-
-export function getLocalProjects(): Project[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY_PROJECTS);
-    if (saved !== null) {
-      const parsed: Project[] = JSON.parse(saved);
-      // Ensure all items have an ID and a safe image URL
-      const mapped = parsed.map((p, idx) => {
-        const rawImg = p.image?.trim();
-        const safeImg = (rawImg && rawImg !== '/image/.webp' && rawImg !== '/image/' && rawImg !== '.webp')
-          ? rawImg
-          : DEFAULT_FALLBACK_IMAGE;
-        return {
-          ...p,
-          id: p.id || `proj_legacy_${idx}_${p.title?.toLowerCase().replace(/[^a-z0-9]/g, '_') || Date.now()}`,
-          image: safeImg,
-        };
-      });
-      return mapped.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
-    }
-  } catch (e) {
-    console.error('Failed reading localStorage projects:', e);
-  }
-  return [];
-}
-
-function setLocalProjects(projs: Project[]) {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(LOCAL_STORAGE_KEY_PROJECTS, JSON.stringify(projs));
-}
-
-/**
- * Fetch all projects from Firestore or LocalStorage (sorted latest first)
- */
+// Fetch all projects (Pure Firestore)
 export async function getProjects(): Promise<Project[]> {
   if (db && isFirebaseConfigured) {
     try {
       const colRef = collection(db, COLLECTION_NAME_PROJECTS);
       const snapshot = await getDocs(colRef);
-      
       const projs: Project[] = [];
       snapshot.forEach((doc) => {
         projs.push({ id: doc.id, ...doc.data() } as Project);
       });
-
-      // Sort latest first
       projs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
-
-      setLocalProjects(projs);
       return projs;
     } catch (err) {
-      console.warn('[Firestore] Error fetching projects, using local fallback:', err);
+      console.warn('[Firestore] Error fetching projects:', err);
     }
   }
-
-  return getLocalProjects();
+  return [];
 }
 
-/**
- * Create a new Project
- */
-export async function createProject(data: Omit<Project, 'id'> & { id?: string }): Promise<Project> {
-  const id = data.id || `proj_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-  const newProject: Project = {
-    ...data,
-    id,
-  };
-
+// Fetch all certificates (Pure Firestore)
+export async function getCertificates(): Promise<Certificate[]> {
   if (db && isFirebaseConfigured) {
     try {
-      const payload = cleanFirestoreData(newProject);
-      await setDoc(doc(db, COLLECTION_NAME_PROJECTS, id), payload);
+      const colRef = collection(db, COLLECTION_NAME_CERTIFICATES);
+      const snapshot = await getDocs(colRef);
+      const certs: Certificate[] = [];
+      snapshot.forEach((doc) => {
+        certs.push({ id: doc.id, ...doc.data() } as Certificate);
+      });
+      certs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+      return certs;
     } catch (err) {
-      console.warn('[Firestore] Failed creating project in cloud, using local cache:', err);
+      console.warn('[Firestore] Error fetching certificates:', err);
     }
   }
-
-  const current = getLocalProjects();
-  const updated = [newProject, ...current.filter(p => p.id !== id)];
-  setLocalProjects(updated);
-
-  return newProject;
+  return [];
 }
 
-/**
- * Update an existing Project
- */
-export async function updateProject(id: string, data: Partial<Project>): Promise<void> {
-  if (!id) return;
+// Realtime certificate subscriber (Pure Firestore)
+export function subscribeCertificates(callback: (certs: Certificate[]) => void): () => void {
   if (db && isFirebaseConfigured) {
     try {
-      const docRef = doc(db, COLLECTION_NAME_PROJECTS, id);
-      const payload = cleanFirestoreData(data);
-      await updateDoc(docRef, payload);
-    } catch (err) {
-      console.warn('[Firestore] Failed updating project in Firestore:', err);
+      const colRef = collection(db, COLLECTION_NAME_CERTIFICATES);
+      return onSnapshot(
+        colRef,
+        (snapshot) => {
+          const certs: Certificate[] = [];
+          snapshot.forEach((doc) => {
+            certs.push({ id: doc.id, ...doc.data() } as Certificate);
+          });
+          certs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+          callback(certs);
+        },
+        (err) => {
+          console.warn('[Firestore] Realtime certificates listener error:', err);
+        }
+      );
+    } catch (e) {
+      console.warn('[Firestore] Failed attaching realtime certificates listener:', e);
     }
   }
-
-  const current = getLocalProjects();
-  const updated = current.map(p => p.id === id ? { ...p, ...data } : p);
-  setLocalProjects(updated);
+  return () => {};
 }
 
-/**
- * Delete a Project
- */
-export async function deleteProject(id: string): Promise<void> {
-  if (!id) return;
+// Realtime projects subscriber (Pure Firestore)
+export function subscribeProjects(callback: (projects: Project[]) => void): () => void {
   if (db && isFirebaseConfigured) {
     try {
-      await deleteDoc(doc(db, COLLECTION_NAME_PROJECTS, id));
-    } catch (err) {
-      console.warn('[Firestore] Failed deleting project from Firestore:', err);
+      const colRef = collection(db, COLLECTION_NAME_PROJECTS);
+      return onSnapshot(
+        colRef,
+        (snapshot) => {
+          const projs: Project[] = [];
+          snapshot.forEach((doc) => {
+            projs.push({ id: doc.id, ...doc.data() } as Project);
+          });
+          projs.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+          callback(projs);
+        },
+        (err) => {
+          console.warn('[Firestore] Realtime projects listener error:', err);
+        }
+      );
+    } catch (e) {
+      console.warn('[Firestore] Failed attaching realtime projects listener:', e);
     }
   }
-
-  const current = getLocalProjects();
-  const updated = current.filter(p => p.id !== id);
-  setLocalProjects(updated);
+  return () => {};
 }
 
-/* ============================================================
-   ADMIN AUTHENTICATION STATE & TERMINAL LOGIN
-   ============================================================ */
-const ADMIN_SESSION_KEY = '_sukamcd_admin_session_token';
-const AUTH_CHANGE_EVENT = 'sukamcd:admin_auth_changed';
-const DEFAULT_PASSWORD = 'admin';
-
-export function getAdminPassword(): string {
-  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.PUBLIC_ADMIN_PASSWORD) {
-    return import.meta.env.PUBLIC_ADMIN_PASSWORD;
+// Fetch all experiences (Pure Firestore with fallback)
+export async function getExperiences(): Promise<Experience[]> {
+  if (db && isFirebaseConfigured) {
+    try {
+      const colRef = collection(db, COLLECTION_NAME_EXPERIENCES);
+      const snapshot = await getDocs(colRef);
+      if (!snapshot.empty) {
+        const items: Experience[] = [];
+        snapshot.forEach((doc) => {
+          items.push({ id: doc.id, ...doc.data() } as Experience);
+        });
+        items.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+        return items;
+      }
+    } catch (err) {
+      console.warn('[Firestore] Error fetching experiences:', err);
+    }
   }
-  return DEFAULT_PASSWORD;
+  return DEFAULT_EXPERIENCES;
 }
 
-export function isAdminAuthenticated(): boolean {
-  if (typeof window === 'undefined') return false;
-  const token = sessionStorage.getItem(ADMIN_SESSION_KEY);
-  return Boolean(token && token.startsWith('adm_session_'));
-}
-
-export function loginAdmin(password: string): { success: boolean; message: string } {
-  if (typeof window === 'undefined') return { success: false, message: 'Client context unavailable.' };
-
-  const validPassword = getAdminPassword();
-
-  if (password === validPassword || password === 'admin' || password === 'sukamcd') {
-    const sessionToken = `adm_session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-    sessionStorage.setItem(ADMIN_SESSION_KEY, sessionToken);
-    
-    window.dispatchEvent(new CustomEvent(AUTH_CHANGE_EVENT, { detail: { isAuthenticated: true } }));
-
-    return {
-      success: true,
-      message: 'Access granted. Welcome, Fabian Rizky Pratama (Root Admin).',
-    };
+// Realtime experiences subscriber (Pure Firestore with fallback)
+export function subscribeExperiences(callback: (experiences: Experience[]) => void): () => void {
+  if (db && isFirebaseConfigured) {
+    try {
+      const colRef = collection(db, COLLECTION_NAME_EXPERIENCES);
+      return onSnapshot(
+        colRef,
+        (snapshot) => {
+          if (!snapshot.empty) {
+            const items: Experience[] = [];
+            snapshot.forEach((doc) => {
+              items.push({ id: doc.id, ...doc.data() } as Experience);
+            });
+            items.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+            callback(items);
+          } else {
+            callback(DEFAULT_EXPERIENCES);
+          }
+        },
+        (err) => {
+          console.warn('[Firestore] Realtime experiences listener error, using defaults:', err);
+          callback(DEFAULT_EXPERIENCES);
+        }
+      );
+    } catch (e) {
+      console.warn('[Firestore] Failed attaching realtime experiences listener:', e);
+      callback(DEFAULT_EXPERIENCES);
+    }
+  } else {
+    callback(DEFAULT_EXPERIENCES);
   }
-
-  return {
-    success: false,
-    message: 'Access denied: Invalid password.',
-  };
+  return () => {};
 }
 
-export function logoutAdmin(): void {
-  if (typeof window === 'undefined') return;
-  sessionStorage.removeItem(ADMIN_SESSION_KEY);
-  window.dispatchEvent(new CustomEvent(AUTH_CHANGE_EVENT, { detail: { isAuthenticated: false } }));
-}
 
-export function subscribeToAuthChange(callback: (isAuthenticated: boolean) => void): () => void {
-  if (typeof window === 'undefined') return () => {};
 
-  const handler = () => {
-    callback(isAdminAuthenticated());
-  };
-
-  window.addEventListener(AUTH_CHANGE_EVENT, handler);
-  window.addEventListener('storage', handler);
-
-  return () => {
-    window.removeEventListener(AUTH_CHANGE_EVENT, handler);
-    window.removeEventListener('storage', handler);
-  };
-}

@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import DashboardContainer from '../components/react/DashboardContainer';
+import ProjectsArchive from '../components/ProjectsArchive';
 ---
 
-<Layout>
-  <DashboardContainer initialTab="projects" client:load />
+<Layout
+  title="Projects Directory // Fabian Rizky Pratama"
+  description="Comprehensive directory of software engineering projects, backend systems, and web applications by Fabian Rizky Pratama."
+>
+  <ProjectsArchive client:load />
 </Layout>

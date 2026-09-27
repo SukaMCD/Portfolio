@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import DashboardContainer from '../components/react/DashboardContainer';
+import CertificatesArchive from '../components/CertificatesArchive';
 ---
 
-<Layout>
-  <DashboardContainer initialTab="certificates" client:load />
+<Layout
+  title="Certificates & Accreditations // Fabian Rizky Pratama"
+  description="Comprehensive repository of official licenses, competition awards, and professional certifications by Fabian Rizky Pratama."
+>
+  <CertificatesArchive client:load />
 </Layout>

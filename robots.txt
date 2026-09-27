@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-# Disallow private/system directory
-Disallow: /x7r4w2/
-
-Sitemap: https://fabiandev.my.id/sitemap.xml

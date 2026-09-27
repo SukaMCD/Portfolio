@@ -1,208 +1,163 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
-/* ============================================================
-   SUKAMCD PORTFOLIO DESIGN SYSTEM v4.0
-   Themes: Charcoal/Silver & Off-White/Silver
-   ============================================================ */
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
 
-:root {
-  /* --- Charcoal/Silver (Dark Theme - Default) --- */
-  --bg-root:          #0b0b0d;
-  --bg-surface:       #111114;
-  --bg-elevated:      #18181c;
-  --bg-hover:         #1f1f25;
-  --bg-active:        #26262f;
-
-  /* Silver Accent System */
-  --silver-100:       #f4f4f6;
-  --silver-200:       #e4e4e8;
-  --silver-300:       #d4d4d8;
-  --silver-400:       #a1a1aa;
-  --silver-500:       #71717a;
-  --silver-600:       #52525b;
-  --silver-700:       #3f3f46;
-  --silver-glow:      rgba(212, 212, 216, 0.08);
-
-  /* Status Colors */
-  --emerald:          #10b981;
-  --emerald-glow:     rgba(16, 185, 129, 0.15);
-  --crimson:          #ef4444;
-  --crimson-glow:     rgba(239, 68, 68, 0.15);
-  --amber:            #f59e0b;
-  --amber-glow:       rgba(245, 158, 11, 0.15);
-
-  /* Borders */
-  --border-subtle:    rgba(255, 255, 255, 0.03);
-  --border-soft:      rgba(255, 255, 255, 0.06);
-  --border-silver:    rgba(212, 212, 216, 0.1);
-}
-
-/* --- Off-White/Silver (Light Theme) --- */
-.light {
-  --bg-root:          #fafaf9;
-  --bg-surface:       #f5f5f4;
-  --bg-elevated:      #e7e5e4;
-  --bg-hover:         #d6d3d1;
-  --bg-active:        #a8a29e;
-
-  /* Text & Contrast Adjustments (using Stone as dark gray base) */
-  --silver-100:       #1c1917;
-  --silver-200:       #292524;
-  --silver-300:       #44403c;
-  --silver-400:       #57534e;
-  --silver-500:       #78716c;
-  --silver-600:       #a8a29e;
-  --silver-700:       #d6d3d1;
-  --silver-glow:      rgba(120, 113, 108, 0.1);
-
-  /* Status Colors */
-  --emerald:          #059669;
-  --emerald-glow:     rgba(5, 150, 105, 0.15);
-  --crimson:          #dc2626;
-  --crimson-glow:     rgba(220, 38, 38, 0.15);
-  --amber:            #d97706;
-  --amber-glow:       rgba(217, 119, 6, 0.15);
-
-  /* Borders */
-  --border-subtle:    rgba(0, 0, 0, 0.03);
-  --border-soft:      rgba(0, 0, 0, 0.06);
-  --border-silver:    rgba(120, 113, 108, 0.15);
-}
-
-/* ============================================================
-   TAILWIND THEME CONFIG v4
-   ============================================================ */
-@theme {
-  --font-sans: "Outfit", var(--font-fallback-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
-  --font-mono: "Fira Code", var(--font-fallback-mono, monospace);
-
-  --color-bg-root: var(--bg-root);
-  --color-bg-surface: var(--bg-surface);
-  --color-bg-elevated: var(--bg-elevated);
-  --color-bg-hover: var(--bg-hover);
-  --color-bg-active: var(--bg-active);
-
-  --color-silver-100: var(--silver-100);
-  --color-silver-200: var(--silver-200);
-  --color-silver-300: var(--silver-300);
-  --color-silver-400: var(--silver-400);
-  --color-silver-500: var(--silver-500);
-  --color-silver-600: var(--silver-600);
-  --color-silver-700: var(--silver-700);
-
-  --color-accent-emerald: var(--emerald);
-  --color-accent-crimson: var(--crimson);
-  --color-accent-amber: var(--amber);
-
-  --color-border-subtle: var(--border-subtle);
-  --color-border-soft: var(--border-soft);
-  --color-border-silver: var(--border-silver);
-}
-
-/* ============================================================
-   GLOBAL STYLES & RESETS
-   ============================================================ */
 html {
-  scrollbar-gutter: stable;
+  background: #E2DFD2;
+  color: #141418;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background-color: var(--bg-root);
-  color: var(--silver-100);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: clip;
+  background: #E2DFD2;
 }
 
-/* Custom Scrollbar */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: auto !important;
+  }
+}
+
+::selection { background: rgba(2, 132, 199, 0.2); color: #000; }
+
+/* Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1c1c21 transparent;
+}
+
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-soft);
-  border-radius: 99px;
+  background: #1c1c21;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--silver-600);
+  background: #58554f;
 }
 
-/* Custom Selection */
-::selection {
-  background-color: var(--silver-100);
-  color: var(--bg-root);
+/* Terminal Buffer Scrollbar */
+.terminal-buffer {
+  scrollbar-width: thin;
+  scrollbar-color: #1c1c21 rgba(28, 28, 33, 0.05);
+}
+.terminal-buffer::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.terminal-buffer::-webkit-scrollbar-track {
+  background: rgba(28, 28, 33, 0.05);
+  border-left: 1px solid rgba(28, 28, 33, 0.15);
+}
+.terminal-buffer::-webkit-scrollbar-thumb {
+  background: #1c1c21;
+  border-radius: 0px;
+}
+.terminal-buffer::-webkit-scrollbar-thumb:hover {
+  background: #58554f;
 }
 
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
-@keyframes pulse-emerald {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  50%       { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+/* Font stacks */
+.font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+.font-mono-stack { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+
+/* Subtle dot-grid background */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(30, 28, 25, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-@keyframes pulse-emerald-light {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
-  50%       { box-shadow: 0 0 0 5px rgba(5, 150, 105, 0); }
+/* Marquee */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* Neon pulse */
+@keyframes neon-ping {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.5); }
+}
+.neon-ping { animation: neon-ping 2s ease-in-out infinite; }
+
+/* Grain overlay */
+@keyframes grain {
+  0%,100%  { transform: translate(0,0); }
+  10%      { transform: translate(-2%,-3%); }
+  30%      { transform: translate(3%,2%); }
+  50%      { transform: translate(-1%,4%); }
+  70%      { transform: translate(2%,-2%); }
+  90%      { transform: translate(-3%,1%); }
+}
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 100;
+  animation: grain 8s steps(10) infinite;
+  opacity: 0.22;
 }
 
-.animate-pulse-emerald {
-  animation: pulse-emerald 2s infinite;
-}
-.light .animate-pulse-emerald {
-  animation: pulse-emerald-light 2s infinite;
+/* Audio equalizer micro-bars */
+@keyframes eq-1 { 0%, 100% { height: 4px; } 50% { height: 14px; } }
+@keyframes eq-2 { 0%, 100% { height: 12px; } 50% { height: 5px; } }
+@keyframes eq-3 { 0%, 100% { height: 6px; } 50% { height: 15px; } }
+@keyframes eq-4 { 0%, 100% { height: 14px; } 50% { height: 6px; } }
+
+.eq-bar-1 { animation: eq-1 0.8s ease-in-out infinite; }
+.eq-bar-2 { animation: eq-2 0.9s ease-in-out infinite 0.15s; }
+.eq-bar-3 { animation: eq-3 0.75s ease-in-out infinite 0.3s; }
+.eq-bar-4 { animation: eq-4 0.85s ease-in-out infinite 0.1s; }
+
+/* Biometric scan beam for portrait */
+@keyframes scan-sweep {
+  0% { top: 0%; opacity: 0; }
+  15% { opacity: 0.85; }
+  85% { opacity: 0.85; }
+  100% { top: 100%; opacity: 0; }
 }
 
-/* ============================================================
-   SPECIAL EFFECTS
-   ============================================================ */
-
-/* Gooey Liquid Container */
-.gooey-container {
-  filter: url('#gooey-effect');
+.scan-beam {
+  animation: scan-sweep 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* Cyber grid background */
-.cyber-grid {
-  background-image: radial-gradient(var(--silver-700) 1px, transparent 1px);
-  background-size: 32px 32px;
+/* Terminal custom scrollbar */
+.terminal-buffer::-webkit-scrollbar {
+  width: 5px;
+}
+.terminal-buffer::-webkit-scrollbar-track {
+  background: #E2DFD2;
+}
+.terminal-buffer::-webkit-scrollbar-thumb {
+  background: #c8c4b7;
+  border-radius: 2px;
+}
+.terminal-buffer::-webkit-scrollbar-thumb:hover {
+  background: #1c1c21;
 }
 
-/* Glass panel */
-.glass-panel {
-  background: rgba(var(--bg-surface), 0.7);
-  backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid var(--border-soft);
-}
 
-/* ============================================================
-   UNUSUAL VIEW TRANSITION THEME SWEEP (CIRCULAR REVEAL)
-   ============================================================ */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-/* Disable active transitions on DOM elements during snapshotting */
-.theme-transition,
-.theme-transition * {
-  transition: none !important;
-}
-
-/* GitHub Contribution Graph Blending */
-.github-chart-img {
-  mix-blend-mode: multiply;
-  opacity: 0.9;
-  filter: none;
-  transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
-}
-
-html:not(.light) .github-chart-img {
-  filter: invert(1);
-  mix-blend-mode: screen;
-}
