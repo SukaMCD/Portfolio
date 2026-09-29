@@ -6,9 +6,9 @@ export function getTheme(): Theme {
   if (document.documentElement.classList.contains('dark')) return 'dark';
   try {
     const saved = localStorage.getItem('theme') as Theme | null;
-    if (saved === 'dark' || saved === 'light') return saved;
+    if (saved === 'dark') return 'dark';
   } catch {}
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'light';
 }
 
 export function setTheme(theme: Theme) {

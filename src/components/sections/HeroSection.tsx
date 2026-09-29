@@ -12,7 +12,7 @@ export function HeroIllustration() {
           src="/image/hiura.webp"
           alt="Fabian Rizky Pratama anime ink lineart portrait"
           loading="eager"
-          fetchpriority="high"
+          fetchPriority="high"
           decoding="sync"
           className="w-full h-full object-cover object-top scale-[1.04] origin-top mix-blend-multiply opacity-95"
         />
