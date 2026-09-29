@@ -561,6 +561,7 @@ export default function Portfolio() {
       {/* Tab 02: Works */}
       <div
         ref={worksTabRef}
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
         className="fixed top-0 left-[140px] sm:left-[225px] md:left-[305px] z-40 will-change-transform"
       >
         <button
@@ -589,6 +590,7 @@ export default function Portfolio() {
       {/* Tab 03: Credentials */}
       <div
         ref={credentialsTabRef}
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
         className="fixed top-0 left-[268px] sm:left-[410px] md:left-[548px] z-[60] will-change-transform"
       >
         <button
@@ -617,6 +619,7 @@ export default function Portfolio() {
       {/* Tab 04: Experience */}
       <div
         ref={experienceTabRef}
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
         className="fixed top-0 left-[390px] sm:left-[590px] md:left-[780px] z-[80] will-change-transform"
       >
         <button
@@ -645,6 +648,7 @@ export default function Portfolio() {
       {/* Tab 05: Contact */}
       <div
         ref={contactTabRef}
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
         className="fixed top-0 left-[520px] sm:left-[760px] md:left-[990px] z-[100] will-change-transform"
       >
         <button
