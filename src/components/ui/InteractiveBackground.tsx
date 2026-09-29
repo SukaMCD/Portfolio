@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function InteractiveBackground() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -38,10 +38,13 @@ export default function InteractiveBackground() {
       mouse.x += (mouse.targetX - mouse.x) * 0.06;
       mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
+      const isDark = document.documentElement.classList.contains('dark');
+      const rgb = isDark ? '226, 223, 210' : '28, 28, 33';
+
       const mouseGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 280);
-      mouseGlow.addColorStop(0, 'rgba(28, 28, 33, 0.045)');
-      mouseGlow.addColorStop(0.5, 'rgba(28, 28, 33, 0.015)');
-      mouseGlow.addColorStop(1, 'rgba(226, 223, 210, 0)');
+      mouseGlow.addColorStop(0, `rgba(${rgb}, ${isDark ? 0.04 : 0.045})`);
+      mouseGlow.addColorStop(0.5, `rgba(${rgb}, 0.015)`);
+      mouseGlow.addColorStop(1, `rgba(${rgb}, 0)`);
       ctx.fillStyle = mouseGlow;
       ctx.fillRect(0, 0, width, height);
 
@@ -54,12 +57,12 @@ export default function InteractiveBackground() {
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 90 && dist > 0) { const force = ((90 - dist) / 90) * 1.5; p.x += (dx / dist) * force; p.y += (dy / dist) * force; }
         ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        if (p.isAccent) { ctx.shadowColor = 'rgba(28, 28, 33, 0.4)'; ctx.shadowBlur = 4; ctx.fillStyle = `rgba(28, 28, 33, ${p.baseAlpha * 1.8})`; }
-        else { ctx.shadowBlur = 0; ctx.fillStyle = `rgba(28, 28, 33, ${p.baseAlpha * 0.65})`; }
+        if (p.isAccent) { ctx.shadowColor = `rgba(${rgb}, 0.4)`; ctx.shadowBlur = 4; ctx.fillStyle = `rgba(${rgb}, ${p.baseAlpha * 1.8})`; }
+        else { ctx.shadowBlur = 0; ctx.fillStyle = `rgba(${rgb}, ${p.baseAlpha * 0.65})`; }
         ctx.fill(); ctx.shadowBlur = 0;
         for (let j = i + 1; j < particles.length; j++) {
           const q = particles[j]; const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 100) { const alpha = (1 - d / 100) * 0.08; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.strokeStyle = `rgba(28, 28, 33, ${alpha * 0.75})`; ctx.lineWidth = 0.5; ctx.stroke(); }
+          if (d < 100) { const alpha = (1 - d / 100) * 0.08; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.strokeStyle = `rgba(${rgb}, ${alpha * 0.75})`; ctx.lineWidth = 0.5; ctx.stroke(); }
         }
       }
       raf = requestAnimationFrame(draw);

@@ -16,6 +16,12 @@ body {
   background: #E2DFD2;
 }
 
+/* During clip-path reveal, suppress all color transitions so the overlay is the sole animation */
+html.theme-transitioning,
+html.theme-transitioning * {
+  transition: none !important;
+}
+
 body.custom-cursor-active,
 body.custom-cursor-active * {
   cursor: none !important;
@@ -39,15 +45,323 @@ body.custom-cursor-active * {
 
 #contact ::selection,
 .bg-\[\#1c1c21\] ::selection,
-[data-theme="dark"] ::selection {
-  background: #E2DFD2;
-  color: #1c1c21;
+html.dark ::selection {
+  background: #E2DFD2 !important;
+  color: #1c1c21 !important;
 }
 #contact ::-moz-selection,
 .bg-\[\#1c1c21\] ::-moz-selection,
-[data-theme="dark"] ::-moz-selection {
+html.dark ::-moz-selection {
+  background: #E2DFD2 !important;
+  color: #1c1c21 !important;
+}
+
+html.dark #contact ::selection,
+html.dark .bg-\[\#1c1c21\] ::selection {
+  background: #1c1c21 !important;
+  color: #E2DFD2 !important;
+}
+html.dark #contact ::-moz-selection,
+html.dark .bg-\[\#1c1c21\] ::-moz-selection {
+  background: #1c1c21 !important;
+  color: #E2DFD2 !important;
+}
+
+/* Dark Mode Inversion */
+html.dark,
+html.dark body {
+  background-color: #1c1c21 !important;
+  color: #E2DFD2 !important;
+}
+
+html.dark .bg-\[\#E2DFD2\] {
+  background-color: #1c1c21 !important;
+}
+html.dark .bg-\[\#1c1c21\] {
+  background-color: #E2DFD2 !important;
+}
+
+html.dark .text-\[\#1c1c21\] {
+  color: #E2DFD2 !important;
+}
+html.dark .text-\[\#E2DFD2\] {
+  color: #1c1c21 !important;
+}
+html.dark .text-\[\#58554f\] {
+  color: #a8a49c !important;
+}
+html.dark .text-\[\#E2DFD2\]\/80 {
+  color: rgba(28, 28, 33, 0.85) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/75 {
+  color: rgba(28, 28, 33, 0.85) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/70 {
+  color: rgba(28, 28, 33, 0.80) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/60 {
+  color: rgba(28, 28, 33, 0.70) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/50 {
+  color: rgba(28, 28, 33, 0.60) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/40 {
+  color: rgba(28, 28, 33, 0.50) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/35 {
+  color: rgba(28, 28, 33, 0.45) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/30 {
+  color: rgba(28, 28, 33, 0.40) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/25 {
+  color: rgba(28, 28, 33, 0.35) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/20 {
+  color: rgba(28, 28, 33, 0.30) !important;
+}
+html.dark .text-\[\#E2DFD2\]\/15 {
+  color: rgba(28, 28, 33, 0.25) !important;
+}
+html.dark .text-\[\#1c1c21\]\/80 {
+  color: rgba(226, 223, 210, 0.85) !important;
+}
+html.dark .text-\[\#1c1c21\]\/70 {
+  color: rgba(226, 223, 210, 0.75) !important;
+}
+html.dark .text-\[\#1c1c21\]\/60 {
+  color: rgba(226, 223, 210, 0.65) !important;
+}
+html.dark .text-\[\#1c1c21\]\/50 {
+  color: rgba(226, 223, 210, 0.55) !important;
+}
+html.dark .text-\[\#1c1c21\]\/40 {
+  color: rgba(226, 223, 210, 0.45) !important;
+}
+html.dark .text-\[\#1c1c21\]\/30 {
+  color: rgba(226, 223, 210, 0.35) !important;
+}
+html.dark .text-\[\#1c1c21\]\/20 {
+  color: rgba(226, 223, 210, 0.25) !important;
+}
+html.dark .text-\[\#58554f\]\/40 {
+  color: rgba(226, 223, 210, 0.40) !important;
+}
+html.dark .text-\[\#58554f\]\/60 {
+  color: rgba(226, 223, 210, 0.60) !important;
+}
+html.dark .text-\[\#58554f\]\/70 {
+  color: rgba(226, 223, 210, 0.70) !important;
+}
+
+html.dark .border-\[\#1c1c21\] {
+  border-color: #E2DFD2 !important;
+}
+html.dark .border-\[\#E2DFD2\] {
+  border-color: #1c1c21 !important;
+}
+html.dark .border-\[\#1c1c21\]\/10 {
+  border-color: rgba(226, 223, 210, 0.12) !important;
+}
+html.dark .border-\[\#1c1c21\]\/12 {
+  border-color: rgba(226, 223, 210, 0.14) !important;
+}
+html.dark .border-\[\#1c1c21\]\/15 {
+  border-color: rgba(226, 223, 210, 0.18) !important;
+}
+html.dark .border-\[\#1c1c21\]\/20 {
+  border-color: rgba(226, 223, 210, 0.22) !important;
+}
+html.dark .border-\[\#1c1c21\]\/25 {
+  border-color: rgba(226, 223, 210, 0.28) !important;
+}
+html.dark .border-\[\#1c1c21\]\/30 {
+  border-color: rgba(226, 223, 210, 0.35) !important;
+}
+html.dark .border-\[\#E2DFD2\]\/10 {
+  border-color: rgba(28, 28, 33, 0.12) !important;
+}
+html.dark .border-\[\#E2DFD2\]\/15 {
+  border-color: rgba(28, 28, 33, 0.15) !important;
+}
+html.dark .border-\[\#E2DFD2\]\/20 {
+  border-color: rgba(28, 28, 33, 0.20) !important;
+}
+html.dark .border-\[\#E2DFD2\]\/25 {
+  border-color: rgba(28, 28, 33, 0.25) !important;
+}
+html.dark .border-\[\#E2DFD2\]\/30 {
+  border-color: rgba(28, 28, 33, 0.30) !important;
+}
+
+html.dark .bg-\[\#1c1c21\]\/\[0\.02\] {
+  background-color: rgba(226, 223, 210, 0.03) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/\[0\.03\] {
+  background-color: rgba(226, 223, 210, 0.04) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/\[0\.04\] {
+  background-color: rgba(226, 223, 210, 0.05) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/\[0\.05\] {
+  background-color: rgba(226, 223, 210, 0.06) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/\[0\.08\] {
+  background-color: rgba(226, 223, 210, 0.08) !important;
+}
+html.dark .bg-\[\#dcd7ce\] {
+  background-color: #24242b !important;
+}
+html.dark .bg-\[\#1c1c21\]\/5 {
+  background-color: rgba(226, 223, 210, 0.05) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/8 {
+  background-color: rgba(226, 223, 210, 0.08) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/10 {
+  background-color: rgba(226, 223, 210, 0.10) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/12 {
+  background-color: rgba(226, 223, 210, 0.12) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/15 {
+  background-color: rgba(226, 223, 210, 0.15) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/20 {
+  background-color: rgba(226, 223, 210, 0.20) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/25 {
+  background-color: rgba(226, 223, 210, 0.25) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/30 {
+  background-color: rgba(226, 223, 210, 0.30) !important;
+}
+html.dark .bg-\[\#1c1c21\]\/50 {
+  background-color: rgba(226, 223, 210, 0.50) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/15 {
+  background-color: rgba(28, 28, 33, 0.15) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/20 {
+  background-color: rgba(28, 28, 33, 0.20) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/30 {
+  background-color: rgba(28, 28, 33, 0.30) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/50 {
+  background-color: rgba(28, 28, 33, 0.50) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/70 {
+  background-color: rgba(28, 28, 33, 0.70) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/90 {
+  background-color: rgba(28, 28, 33, 0.90) !important;
+}
+html.dark .bg-\[\#E2DFD2\]\/95 {
+  background-color: rgba(28, 28, 33, 0.95) !important;
+}
+
+html.dark .shadow-\[4px_4px_0px_\#1c1c21\] {
+  box-shadow: 4px 4px 0px #E2DFD2 !important;
+}
+html.dark .shadow-\[3px_3px_0px_\#1c1c21\] {
+  box-shadow: 3px 3px 0px #E2DFD2 !important;
+}
+html.dark .shadow-\[2px_2px_0px_\#1c1c21\] {
+  box-shadow: 2px 2px 0px #E2DFD2 !important;
+}
+html.dark .shadow-\[1px_1px_0px_\#1c1c21\] {
+  box-shadow: 1px 1px 0px #E2DFD2 !important;
+}
+html.dark .shadow-\[0_-24px_50px_rgba\(28\,28\,33\,0\.18\)\] {
+  box-shadow: 0 -24px 50px rgba(0, 0, 0, 0.55) !important;
+}
+
+html.dark .hover\:bg-\[\#1c1c21\]:hover {
+  background-color: #E2DFD2 !important;
+  color: #1c1c21 !important;
+}
+html.dark .hover\:text-\[\#E2DFD2\]:hover {
+  color: #1c1c21 !important;
+}
+html.dark .hover\:text-\[\#1c1c21\]:hover {
+  color: #E2DFD2 !important;
+}
+html.dark .hover\:bg-\[\#2e2e36\]:hover {
+  background-color: #d6d3c7 !important;
+  color: #1c1c21 !important;
+}
+html.dark .hover\:border-\[\#1c1c21\]:hover {
+  border-color: #E2DFD2 !important;
+}
+html.dark .group:hover .group-hover\:bg-\[\#1c1c21\] {
+  background-color: #E2DFD2 !important;
+  color: #1c1c21 !important;
+}
+html.dark .group:hover .group-hover\:text-\[\#E2DFD2\] {
+  color: #1c1c21 !important;
+}
+
+html.dark * {
+  scrollbar-color: #E2DFD2 transparent;
+}
+html.dark ::-webkit-scrollbar-thumb {
   background: #E2DFD2;
-  color: #1c1c21;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #a8a49c;
+}
+html.dark .terminal-buffer {
+  scrollbar-color: #E2DFD2 rgba(226, 223, 210, 0.05);
+}
+html.dark .terminal-buffer::-webkit-scrollbar-thumb {
+  background: #E2DFD2;
+}
+
+html.dark .dot-grid {
+  background-image: radial-gradient(circle, rgba(226, 223, 210, 0.08) 1px, transparent 1px) !important;
+}
+
+html.dark .mix-blend-multiply {
+  mix-blend-mode: normal !important;
+}
+
+html.dark input,
+html.dark textarea {
+  caret-color: #E2DFD2;
+}
+
+/* Contact Section Inversion in Dark Mode */
+html.dark #contact label {
+  color: #58554f !important;
+  opacity: 0.95 !important;
+}
+html.dark #contact input,
+html.dark #contact textarea {
+  color: #1c1c21 !important;
+  caret-color: #1c1c21 !important;
+}
+html.dark #contact input::placeholder,
+html.dark #contact textarea::placeholder {
+  color: rgba(88, 85, 79, 0.6) !important;
+}
+html.dark #contact .placeholder\:text-\[\#E2DFD2\]\/15::placeholder {
+  color: rgba(88, 85, 79, 0.6) !important;
+}
+html.dark #contact .focus\:text-\[\#E2DFD2\]:focus {
+  color: #1c1c21 !important;
+}
+html.dark #contact .text-\[\#E2DFD2\]\/80 {
+  color: #1c1c21 !important;
+}
+html.dark #contact .border-\[\#E2DFD2\]\/10 {
+  border-color: rgba(28, 28, 33, 0.18) !important;
+}
+html.dark #contact .border-\[\#E2DFD2\]\/20 {
+  border-color: rgba(28, 28, 33, 0.25) !important;
+}
+html.dark #contact .hover\:bg-\[\#E2DFD2\]\/90:hover {
+  background-color: rgba(28, 28, 33, 0.90) !important;
 }
 /* Scrollbar */
 * {

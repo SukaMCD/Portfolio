@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Moon, Sun } from 'lucide-react';
+import { getTheme, type Theme } from '../../lib/theme';
+import { triggerThemeTransition } from './ThemeTransition';
 
 // Site Nav
 export default function SiteNav({
@@ -22,6 +25,24 @@ export default function SiteNav({
   onNavigateExperience?: () => void;
   onNavigateContact?: () => void;
 }) {
+  const [theme, setThemeState] = useState<Theme>('light');
+
+  useEffect(() => {
+    setThemeState(getTheme());
+    const onTheme = (e: Event) => {
+      const customEvent = e as CustomEvent<Theme>;
+      setThemeState(customEvent.detail || getTheme());
+    };
+    window.addEventListener('theme-change', onTheme);
+    return () => window.removeEventListener('theme-change', onTheme);
+  }, []);
+
+  const handleToggleTheme = (e: React.MouseEvent) => {
+    const current = getTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    triggerThemeTransition({ x: e.clientX, y: e.clientY, targetTheme: next });
+  };
+
   const isInverted = activeSection === 5;
 
   const navItems = [
@@ -109,8 +130,17 @@ export default function SiteNav({
         })}
       </div>
 
-      {/* Bottom — github */}
-      <div className={`pb-3 pt-2 flex flex-col items-center gap-1 border-t ${isInverted ? 'border-[#E2DFD2]/15' : 'border-[#1c1c21]/10'} w-full transition-colors duration-300 shrink-0`}>
+      {/* Bottom — theme toggle & github */}
+      <div className={`pb-3 pt-2 flex flex-col items-center gap-1.5 border-t ${isInverted ? 'border-[#E2DFD2]/15' : 'border-[#1c1c21]/10'} w-full transition-colors duration-300 shrink-0`}>
+        <button
+          type="button"
+          onClick={handleToggleTheme}
+          aria-label="Toggle theme"
+          title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-1 flex items-center justify-center cursor-pointer`}
+        >
+          {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
+        </button>
         <div className={`w-2 h-px ${isInverted ? 'bg-[#E2DFD2]/30' : 'bg-[#1c1c21]/25'} transition-colors duration-300`} />
         <a
           id="nav-github"

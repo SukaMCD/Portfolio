@@ -24,10 +24,14 @@ export default function Cursor() {
     let isHovering = false;
 
     const checkIsDark = (target: HTMLElement | null): boolean => {
-      if (!target) return false;
+      const isHtmlDark = document.documentElement.classList.contains('dark');
+      if (!target) return isHtmlDark;
 
       let cur: HTMLElement | null = target;
       while (cur && cur !== document.documentElement) {
+        if (cur.id === 'contact') {
+          return !isHtmlDark;
+        }
         const bg = window.getComputedStyle(cur).backgroundColor;
         if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
           const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
@@ -42,10 +46,9 @@ export default function Cursor() {
             }
           }
         }
-        if (cur.id === 'contact') return true;
         cur = cur.parentElement;
       }
-      return false;
+      return isHtmlDark;
     };
 
     const updateAppearance = () => {
@@ -108,10 +111,17 @@ export default function Cursor() {
       }
     };
 
+    const onThemeChange = () => {
+      const el = document.elementFromPoint(mouseX, mouseY) as HTMLElement | null;
+      isDark = checkIsDark(el);
+      updateAppearance();
+    };
+
     window.addEventListener('mousemove', onMove, { passive: true });
     window.addEventListener('mousedown', onMouseDown, { passive: true });
     window.addEventListener('mouseup', onMouseUp, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('theme-change', onThemeChange);
     document.addEventListener('mouseleave', onMouseLeave);
     document.addEventListener('mouseenter', onMouseEnter);
 
@@ -121,6 +131,7 @@ export default function Cursor() {
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('theme-change', onThemeChange);
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
     };

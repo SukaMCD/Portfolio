@@ -87,6 +87,8 @@ export default function WorksSection({
                     <img
                       src={imgUrl}
                       alt={project.alt || project.title}
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       crossOrigin="anonymous"
                       className="w-full h-full object-cover object-top filter grayscale mix-blend-multiply opacity-85 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300"

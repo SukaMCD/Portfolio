@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ArchIcon from './ArchIcon';
+import { setTheme, toggleTheme } from '../../lib/theme';
 
 // Fastfetch Monasm Output
 export function FastfetchOutput() {
@@ -104,6 +105,8 @@ export default function ArchTerminal() {
             <span className="col-span-9 text-[#58554f]">- Print Linux kernel & architecture</span>
             <span className="col-span-3 font-bold text-[#1c1c21]">btw</span>
             <span className="col-span-9 text-[#58554f]">- Arch Linux signature motto</span>
+            <span className="col-span-3 font-bold text-[#1c1c21]">theme</span>
+            <span className="col-span-9 text-[#58554f]">- Toggle or set theme (theme [dark|light])</span>
             <span className="col-span-3 font-bold text-[#1c1c21]">clear</span>
             <span className="col-span-9 text-[#58554f]">- Clear the terminal buffer</span>
           </div>
@@ -195,6 +198,14 @@ export default function ArchTerminal() {
       res = (
         <div className="text-[11px] font-bold text-[#1c1c21]">
           i use arch btw (•̀ᴗ•́)و ̑̑
+        </div>
+      );
+    } else if (lower === 'theme' || lower === 'dark' || lower === 'light' || lower === 'theme dark' || lower === 'theme light') {
+      const mode = lower.includes('dark') ? 'dark' : lower.includes('light') ? 'light' : toggleTheme();
+      if (lower.includes('dark') || lower.includes('light')) setTheme(mode);
+      res = (
+        <div className="text-[11px] text-[#1c1c21] font-bold">
+          [SYSTEM // THEME APPLIED: {mode.toUpperCase()} MODE]
         </div>
       );
     } else if (lower === 'fastfetch') {

@@ -20,8 +20,18 @@ import InteractiveBackground from '../components/ui/InteractiveBackground';
         <span class="font-bold text-[#1c1c21]">sukamcd@archlinux:~$</span>
         <span class="text-[#58554f]">sys_err</span>
       </div>
-      <div class="font-mono-stack text-[11px] font-semibold px-2 py-0.5 border border-[#1c1c21] bg-[#1c1c21]/5 text-[#1c1c21]">
-        ERR_STATUS // 404
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          id="theme-toggle-404"
+          aria-label="Toggle theme"
+          class="font-mono-stack text-[11px] font-bold px-2.5 py-0.5 border border-[#1c1c21] bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] transition-colors cursor-pointer shadow-[2px_2px_0px_#1c1c21]"
+        >
+          THEME
+        </button>
+        <div class="font-mono-stack text-[11px] font-semibold px-2 py-0.5 border border-[#1c1c21] bg-[#1c1c21]/5 text-[#1c1c21]">
+          ERR_STATUS // 404
+        </div>
       </div>
     </header>
 
@@ -68,5 +78,27 @@ import InteractiveBackground from '../components/ui/InteractiveBackground';
       <div>ARCH LINUX // TTY1 RESCUE SHELL</div>
       <div>FABIAN RIZKY PRATAMA // PORTFOLIO</div>
     </footer>
+
+    <script is:inline>
+      const btn = document.getElementById('theme-toggle-404');
+      if (btn) {
+        const updateText = () => {
+          const isDark = document.documentElement.classList.contains('dark');
+          btn.textContent = isDark ? 'LIGHT' : 'DARK';
+        };
+        updateText();
+        btn.addEventListener('click', () => {
+          if (window.__toggleTheme) {
+            window.__toggleTheme();
+          } else {
+            const isDark = document.documentElement.classList.toggle('dark');
+            try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
+            window.dispatchEvent(new CustomEvent('theme-change', { detail: isDark ? 'dark' : 'light' }));
+          }
+          updateText();
+        });
+        window.addEventListener('theme-change', updateText);
+      }
+    </script>
   </div>
 </Layout>

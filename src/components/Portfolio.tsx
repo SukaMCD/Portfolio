@@ -3,6 +3,7 @@ import Lenis from 'lenis';
 import InteractiveBackground from './ui/InteractiveBackground';
 import Cursor from './ui/Cursor';
 import SiteNav from './ui/SiteNav';
+import ThemeTransition from './ui/ThemeTransition';
 import HeroSection from './sections/HeroSection';
 import DossierSection from './sections/DossierSection';
 import WorksSection from './sections/WorksSection';
@@ -515,6 +516,7 @@ export default function Portfolio() {
 
   return (
     <div className="relative min-h-screen text-[#1c1c21] bg-[#E2DFD2]">
+      <ThemeTransition />
       <InteractiveBackground />
       <Cursor />
       <SiteNav

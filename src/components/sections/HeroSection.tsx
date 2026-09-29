@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowDown, Github, Mail } from 'lucide-react';
+import { ArrowDown, Github, Mail, Moon, Sun } from 'lucide-react';
+import { getTheme, type Theme } from '../../lib/theme';
+import { triggerThemeTransition } from '../ui/ThemeTransition';
 
 // Hero Illustration
 export function HeroIllustration() {
@@ -7,9 +9,12 @@ export function HeroIllustration() {
     <div className="shrink-0 self-start lg:self-end">
       <div className="w-[120px] sm:w-[135px] md:w-[150px] lg:w-[160px] aspect-square border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[4px_4px_0px_#1c1c21]">
         <img
-          src="/image/hiura.jpg"
+          src="/image/hiura.webp"
           alt="Fabian Rizky Pratama anime ink lineart portrait"
-          className="w-full h-full object-cover object-top scale-[1.00] origin-top mix-blend-multiply opacity-95 translate-y-1"
+          loading="eager"
+          fetchpriority="high"
+          decoding="sync"
+          className="w-full h-full object-cover object-top scale-[1.04] origin-top mix-blend-multiply opacity-95"
         />
       </div>
     </div>
@@ -25,6 +30,23 @@ export default function HeroSection({
   onNavigateWorks?: () => void;
 }) {
   const [time, setTime] = useState('');
+  const [theme, setThemeState] = useState<Theme>('light');
+
+  useEffect(() => {
+    setThemeState(getTheme());
+    const onTheme = (e: Event) => {
+      const customEvent = e as CustomEvent<Theme>;
+      setThemeState(customEvent.detail || getTheme());
+    };
+    window.addEventListener('theme-change', onTheme);
+    return () => window.removeEventListener('theme-change', onTheme);
+  }, []);
+
+  const handleToggleTheme = (e: React.MouseEvent) => {
+    const current = getTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    triggerThemeTransition({ x: e.clientX, y: e.clientY, targetTheme: next });
+  };
 
   useEffect(() => {
     const updateTime = () => {
@@ -57,7 +79,16 @@ export default function HeroSection({
           <span>JAKARTA, ID {time && `[${time} WIB]`}</span>
         </div>
 
-        <nav className="flex items-center gap-3 sm:gap-4 font-mono-stack text-xs">
+        <nav className="flex items-center gap-2 sm:gap-3 font-mono-stack text-xs">
+          <button
+            type="button"
+            onClick={handleToggleTheme}
+            aria-label="Toggle theme"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1c1c21]/20 hover:border-[#1c1c21] hover:bg-[#1c1c21] hover:text-[#E2DFD2] transition-all text-[#1c1c21] cursor-pointer"
+          >
+            {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
+            <span className="hidden sm:inline uppercase font-bold">{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
+          </button>
           <a
             href="https://github.com/SukaMCD"
             target="_blank"

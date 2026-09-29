@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ExternalLink, Search, ArrowLeft, Terminal, Filter } from 'lucide-react';
+import { ExternalLink, Search, ArrowLeft, Terminal, Filter, Sun, Moon } from 'lucide-react';
 import { getProjects, formatDriveImageUrl, DEFAULT_FALLBACK_IMAGE, type Project } from '../lib/firebase';
+import { getTheme, type Theme } from '../lib/theme';
 import InteractiveBackground from './ui/InteractiveBackground';
 import Cursor from './ui/Cursor';
 import ArchIcon from './ui/ArchIcon';
+import ThemeTransition, { triggerThemeTransition } from './ui/ThemeTransition';
 
 // Projects Archive Component
 export default function ProjectsArchive() {
@@ -11,6 +13,23 @@ export default function ProjectsArchive() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [theme, setThemeState] = useState<Theme>('light');
+
+  useEffect(() => {
+    setThemeState(getTheme());
+    const onTheme = (e: Event) => {
+      const customEvent = e as CustomEvent<Theme>;
+      setThemeState(customEvent.detail || getTheme());
+    };
+    window.addEventListener('theme-change', onTheme);
+    return () => window.removeEventListener('theme-change', onTheme);
+  }, []);
+
+  const handleToggleTheme = (e: React.MouseEvent) => {
+    const current = getTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    triggerThemeTransition({ x: e.clientX, y: e.clientY, targetTheme: next });
+  };
 
   useEffect(() => {
     getProjects().then((data) => {
@@ -46,6 +65,7 @@ export default function ProjectsArchive() {
 
   return (
     <div className="relative min-h-screen text-[#1c1c21] bg-[#E2DFD2]">
+      <ThemeTransition />
       <InteractiveBackground />
       <Cursor />
 
@@ -62,14 +82,23 @@ export default function ProjectsArchive() {
             <span>BACK TO HOME</span>
           </a>
 
-          <div className="flex items-center gap-3 font-mono-stack text-xs text-[#58554f]">
+          <div className="flex items-center gap-2 sm:gap-3 font-mono-stack text-xs text-[#58554f]">
             <span className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 border border-[#1c1c21]/20 bg-[#1c1c21]/[0.02] text-[11px]">
               <ArchIcon className="w-3.5 h-3.5 text-[#1c1c21]" />
               <span className="text-[#1c1c21] font-semibold">ARCH LINUX</span>
               <span className="text-[#1c1c21]/30">/</span>
               <span>x86_64</span>
             </span>
-            <span className="px-2 py-1 bg-[#1c1c21]/5 border border-[#1c1c21]/15 text-[11px] font-semibold text-[#1c1c21]">
+            <button
+              type="button"
+              onClick={handleToggleTheme}
+              aria-label="Toggle Theme"
+              className="flex items-center gap-1.5 px-2.5 py-1 border border-[#1c1c21] bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-[11px] font-bold tracking-wider transition-colors shadow-[2px_2px_0px_#1c1c21] cursor-pointer"
+            >
+              {theme === 'dark' ? <Sun size={12} /> : <Moon size={12} />}
+              <span className="uppercase">{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
+            </button>
+            <span className="hidden md:inline px-2 py-1 bg-[#1c1c21]/5 border border-[#1c1c21]/15 text-[11px] font-semibold text-[#1c1c21]">
               DIRECTORY // ARCHIVE
             </span>
           </div>
