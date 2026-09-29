@@ -45,7 +45,7 @@ export default function ProjectsArchive() {
   }, [projects, selectedCategory, searchQuery]);
 
   return (
-    <div className="relative min-h-screen text-[#1c1c21] bg-[#E2DFD2] selection:bg-[#1c1c21]/20">
+    <div className="relative min-h-screen text-[#1c1c21] bg-[#E2DFD2]">
       <InteractiveBackground />
       <Cursor />
 

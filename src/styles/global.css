@@ -27,9 +27,28 @@ body.custom-cursor-active * {
     cursor: auto !important;
   }
 }
+/* Text Selection - Editorial Ink on Paper */
+::selection {
+  background: #1c1c21;
+  color: #E2DFD2;
+}
+::-moz-selection {
+  background: #1c1c21;
+  color: #E2DFD2;
+}
 
-::selection { background: rgba(2, 132, 199, 0.2); color: #000; }
-
+#contact ::selection,
+.bg-\[\#1c1c21\] ::selection,
+[data-theme="dark"] ::selection {
+  background: #E2DFD2;
+  color: #1c1c21;
+}
+#contact ::-moz-selection,
+.bg-\[\#1c1c21\] ::-moz-selection,
+[data-theme="dark"] ::-moz-selection {
+  background: #E2DFD2;
+  color: #1c1c21;
+}
 /* Scrollbar */
 * {
   scrollbar-width: thin;
