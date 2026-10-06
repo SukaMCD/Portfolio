@@ -80,7 +80,7 @@ export default function GithubContributions() {
         return 'bg-[#3fb950] border-[#3fb950]';
       case 0:
       default:
-        return 'bg-[#1c1c21]/[0.08] border-[#1c1c21]/15';
+        return 'bg-[#1c1c21]/8 border-[#1c1c21]/15';
     }
   };
 
@@ -114,7 +114,7 @@ export default function GithubContributions() {
 
       {/* Heatmap Grid */}
       <div className="w-full overflow-x-auto py-0.5">
-        <div className="min-w-[530px] flex flex-col gap-0.5">
+        <div className="min-w-132.5 flex flex-col gap-0.5">
           {/* Months header */}
           <div className="flex text-[8px] sm:text-[8.5px] font-mono-stack text-[#58554f] pl-5 justify-between pr-1">
             {months.map((m, mIdx) => (
@@ -125,20 +125,20 @@ export default function GithubContributions() {
           {/* Grid with days label */}
           <div className="flex items-center gap-1">
             {/* Day labels (Mon, Wed, Fri) */}
-            <div className="flex flex-col justify-between h-[60px] sm:h-[64px] text-[7.5px] font-mono-stack text-[#58554f] pr-0.5 leading-none py-0.5">
+            <div className="flex flex-col justify-between h-15 sm:h-16 text-[7.5px] font-mono-stack text-[#58554f] pr-0.5 leading-none py-0.5">
               <span>Mon</span>
               <span>Wed</span>
               <span>Fri</span>
             </div>
 
             {/* Weeks Columns */}
-            <div className="flex-1 flex gap-[2px] xl:gap-[2.5px] items-center justify-between">
+            <div className="flex-1 flex gap-0.5 xl:gap-[2.5px] items-center justify-between">
               {weeks.length > 0
                 ? weeks.map((week, wIdx) => (
-                    <div key={wIdx} className="flex flex-col gap-[2px] xl:gap-[2.5px]">
+                    <div key={wIdx} className="flex flex-col gap-0.5 xl:gap-[2.5px]">
                       {week.map((day, dIdx) => {
                         if (day.count === -1) {
-                          return <div key={dIdx} className="w-[8px] h-[8px] sm:w-[8.5px] sm:h-[8.5px] xl:w-[9.5px] xl:h-[9.5px] opacity-0" />;
+                          return <div key={dIdx} className="w-2 h-2 sm:w-[8.5px] sm:h-[8.5px] xl:w-[9.5px] xl:h-[9.5px] opacity-0" />;
                         }
                         return (
                           <div
@@ -152,7 +152,7 @@ export default function GithubContributions() {
                               setHoveredDay(null);
                               setTooltipPos(null);
                             }}
-                            className={`w-[8px] h-[8px] sm:w-[8.5px] sm:h-[8.5px] xl:w-[9.5px] xl:h-[9.5px] rounded-[1px] border transition-transform duration-100 hover:scale-125 cursor-pointer ${getLevelColor(
+                            className={`w-2 h-2 sm:w-[8.5px] sm:h-[8.5px] xl:w-[9.5px] xl:h-[9.5px] rounded-[1px] border transition-transform duration-100 hover:scale-125 cursor-pointer ${getLevelColor(
                               day.level
                             )}`}
                           />
@@ -161,11 +161,11 @@ export default function GithubContributions() {
                     </div>
                   ))
                 : Array.from({ length: 52 }).map((_, wIdx) => (
-                    <div key={wIdx} className="flex flex-col gap-[2px] xl:gap-[2.5px]">
+                    <div key={wIdx} className="flex flex-col gap-0.5 xl:gap-[2.5px]">
                       {Array.from({ length: 7 }).map((_, dIdx) => (
                         <div
                           key={dIdx}
-                          className="w-[8px] h-[8px] sm:w-[8.5px] sm:h-[8.5px] xl:w-[9.5px] xl:h-[9.5px] rounded-[1px] bg-[#1c1c21]/[0.05] border border-[#1c1c21]/10 animate-pulse"
+                          className="w-2 h-2 sm:w-[8.5px] sm:h-[8.5px] xl:w-[9.5px] xl:h-[9.5px] rounded-[1px] bg-[#1c1c21]/5 border border-[#1c1c21]/10 animate-pulse"
                         />
                       ))}
                     </div>
@@ -181,7 +181,7 @@ export default function GithubContributions() {
         <div className="flex items-center gap-1.5">
           <span>Less</span>
           <div className="flex gap-0.5">
-            <span className="w-2 h-2 rounded-[1px] border border-[#1c1c21]/20 bg-[#1c1c21]/[0.08]" />
+            <span className="w-2 h-2 rounded-[1px] border border-[#1c1c21]/20 bg-[#1c1c21]/8" />
             <span className="w-2 h-2 rounded-[1px] border border-[#196127]/80 bg-[#196127]/60" />
             <span className="w-2 h-2 rounded-[1px] border border-[#238636] bg-[#238636]" />
             <span className="w-2 h-2 rounded-[1px] border border-[#2ea043] bg-[#2ea043]" />

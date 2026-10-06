@@ -33,7 +33,7 @@ export default function CredentialsSection({
   return (
     <section
       id="credentials"
-      className="relative z-50 w-full h-screen min-h-[640px] max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
+      className="relative z-50 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
     >
       {/* Header */}
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
@@ -98,6 +98,8 @@ export default function CredentialsSection({
                     <img
                       src={imgUrl}
                       alt={cert.title}
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       crossOrigin="anonymous"
                       className="w-full h-full object-cover object-center filter contrast-[1.03] group-hover:scale-105 transition-transform duration-300"
@@ -132,7 +134,7 @@ export default function CredentialsSection({
                     <div className="flex items-center justify-between text-[9px] font-mono-stack text-[#58554f]">
                       <span>{cert.date || 'VERIFIED'}</span>
                       {cert.credentialId && (
-                        <span className="font-semibold text-[#1c1c21] truncate max-w-[140px]">
+                        <span className="font-semibold text-[#1c1c21] truncate max-w-35">
                           ID: {cert.credentialId}
                         </span>
                       )}
@@ -241,6 +243,8 @@ export default function CredentialsSection({
               <img
                 src={formatDriveImageUrl(activePreview.image) || DEFAULT_FALLBACK_IMAGE}
                 alt={activePreview.title}
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 crossOrigin="anonymous"
                 className="w-full h-full object-contain filter contrast-105"

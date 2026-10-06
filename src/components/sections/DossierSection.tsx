@@ -16,19 +16,19 @@ export default function DossierSection({
   return (
     <section
       id="dossier"
-      className="relative z-20 w-full h-screen min-h-[640px] max-h-screen flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
+      className="relative z-20 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
     >
       {/* Dossier Folder Tab */}
       <button
         id="dossier-tab"
         type="button"
         onClick={onNavigateDossier}
-        className="group absolute -top-[34px] left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
+        className="group absolute -top-8.5 left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
       >
-        <div className="bg-[#1c1c21] p-[3px] pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-          <div className="h-[31px] bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)]">
+        <div className="bg-[#1c1c21] p-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+          <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)]">
             <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
-            <span className="w-5 h-[17px] flex items-center justify-center rounded-[2px] border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
+            <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
               01
             </span>
             <span className="font-mono-stack text-[10px] font-bold tracking-widest text-[#1c1c21] whitespace-nowrap">
@@ -50,7 +50,7 @@ export default function DossierSection({
           <span className="text-[#58554f] text-[11px] sm:text-xs">PERSONNEL PROFILE & TECH ARSENAL</span>
         </div>
         <div className="flex items-center gap-3 font-mono-stack text-xs text-[#58554f]">
-          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#1c1c21]/20 bg-[#1c1c21]/[0.02] text-[11px]">
+          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#1c1c21]/20 bg-[#1c1c21]/2 text-[11px]">
             <ArchIcon className="w-3.5 h-3.5 text-[#1c1c21]" />
             <span className="text-[#1c1c21] font-semibold">ARCH LINUX</span>
             <span className="text-[#1c1c21]/30">/</span>
@@ -76,11 +76,13 @@ export default function DossierSection({
           </h2>
 
           <div className="flex flex-col sm:flex-row gap-5 sm:gap-6 items-stretch">
-            <div className="w-32 sm:w-40 shrink-0 relative border-[3px] border-[#1c1c21] bg-[#1c1c21]/[0.03] shadow-[4px_4px_0px_#1c1c21] overflow-hidden flex flex-col">
-              <div className="relative flex-1 min-h-0 w-full overflow-hidden bg-[#1c1c21]/[0.02]">
+            <div className="w-32 sm:w-40 shrink-0 relative border-[3px] border-[#1c1c21] bg-[#1c1c21]/3 shadow-[4px_4px_0px_#1c1c21] overflow-hidden flex flex-col">
+              <div className="relative flex-1 min-h-0 w-full overflow-hidden bg-[#1c1c21]/2">
                 <img
                   src="/image/fabian-portrait.webp"
                   alt="Fabian Rizky Pratama"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top filter grayscale contrast-110"
                 />
                 <div className="absolute inset-0 scan-beam pointer-events-none" />

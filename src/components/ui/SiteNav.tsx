@@ -61,7 +61,7 @@ export default function SiteNav({
         transform: visible ? 'translateX(0)' : 'translateX(-100%)',
         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
-      className="fixed left-0 top-0 bottom-0 z-[120] w-8 flex flex-col items-center select-none"
+      className="fixed left-0 top-0 bottom-0 z-120 w-8 flex flex-col items-center select-none"
     >
       {/* Progress fill — behind border */}
       <div
@@ -118,7 +118,7 @@ export default function SiteNav({
 
               {/* Right edge border tick indicator */}
               <div
-                className={`absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-4 transition-all duration-200 ${
+                className={`absolute right-0 top-1/2 -translate-y-1/2 w-0.5 h-4 transition-all duration-200 ${
                   isInverted ? 'bg-[#E2DFD2]' : 'bg-[#1c1c21]'
                 } ${
                   isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'

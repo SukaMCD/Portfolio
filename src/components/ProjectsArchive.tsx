@@ -3,7 +3,6 @@ import { ExternalLink, Search, ArrowLeft, Terminal, Filter, Sun, Moon } from 'lu
 import { getProjects, formatDriveImageUrl, DEFAULT_FALLBACK_IMAGE, type Project } from '../lib/firebase';
 import { getTheme, type Theme } from '../lib/theme';
 import InteractiveBackground from './ui/InteractiveBackground';
-import Cursor from './ui/Cursor';
 import ArchIcon from './ui/ArchIcon';
 import ThemeTransition, { triggerThemeTransition } from './ui/ThemeTransition';
 
@@ -67,7 +66,6 @@ export default function ProjectsArchive() {
     <div className="relative min-h-screen text-[#1c1c21] bg-[#E2DFD2]">
       <ThemeTransition />
       <InteractiveBackground />
-      <Cursor />
 
       {/* Main Container */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-10 flex flex-col gap-8 sm:gap-10">
@@ -83,7 +81,7 @@ export default function ProjectsArchive() {
           </a>
 
           <div className="flex items-center gap-2 sm:gap-3 font-mono-stack text-xs text-[#58554f]">
-            <span className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 border border-[#1c1c21]/20 bg-[#1c1c21]/[0.02] text-[11px]">
+            <span className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 border border-[#1c1c21]/20 bg-[#1c1c21]/2 text-[11px]">
               <ArchIcon className="w-3.5 h-3.5 text-[#1c1c21]" />
               <span className="text-[#1c1c21] font-semibold">ARCH LINUX</span>
               <span className="text-[#1c1c21]/30">/</span>
@@ -133,7 +131,7 @@ export default function ProjectsArchive() {
         {/* Search and Filters Toolbar */}
         <div className="flex flex-col gap-3 p-3.5 sm:p-4 border-[2.5px] border-[#1c1c21] bg-[#E2DFD2] shadow-[3px_3px_0px_#1c1c21]">
           {/* CLI Search Input */}
-          <div className="flex items-center gap-2 px-3 py-2 border border-[#1c1c21]/20 focus-within:border-[#1c1c21] focus-within:bg-[#1c1c21]/[0.02] font-mono-stack text-xs transition-colors bg-transparent">
+          <div className="flex items-center gap-2 px-3 py-2 border border-[#1c1c21]/20 focus-within:border-[#1c1c21] focus-within:bg-[#1c1c21]/2 font-mono-stack text-xs transition-colors bg-transparent">
             <div className="flex items-center gap-1.5 text-[#58554f] shrink-0 select-none">
               <Terminal size={14} className="text-[#1c1c21]" />
               <span className="hidden sm:inline font-bold text-[#1c1c21]">sukamcd@archlinux:~/projects$</span>
@@ -272,7 +270,7 @@ export default function ProjectsArchive() {
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="font-mono-stack text-[9px] font-semibold uppercase text-[#1c1c21] border border-[#1c1c21]/25 px-1.5 py-0.5 bg-[#1c1c21]/[0.02]"
+                            className="font-mono-stack text-[9px] font-semibold uppercase text-[#1c1c21] border border-[#1c1c21]/25 px-1.5 py-0.5 bg-[#1c1c21]/2"
                           >
                             {tag}
                           </span>

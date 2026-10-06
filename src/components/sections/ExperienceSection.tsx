@@ -29,7 +29,7 @@ export default function ExperienceSection({
   return (
     <section
       id="experience"
-      className="relative z-[70] w-full h-screen min-h-[640px] max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
+      className="relative z-70 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
     >
       {/* Header */}
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
@@ -40,7 +40,7 @@ export default function ExperienceSection({
           <span className="text-[#58554f] text-[11px] sm:text-xs">CAREER TIMELINE & OPERATIONAL HISTORY</span>
         </div>
         <div className="flex items-center gap-3 font-mono-stack text-xs text-[#58554f]">
-          <span className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 border border-[#1c1c21]/20 bg-[#1c1c21]/[0.02] text-[11px]">
+          <span className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 border border-[#1c1c21]/20 bg-[#1c1c21]/2 text-[11px]">
             <ArchIcon className="w-3 h-3 text-[#1c1c21]" />
             <span className="text-[#1c1c21] font-semibold">ARCH / PROD</span>
           </span>
@@ -64,7 +64,7 @@ export default function ExperienceSection({
                 className={`flex-1 min-h-0 w-full text-left p-2 sm:p-2.5 xl:p-3 transition-all duration-150 border-[2.5px] select-none cursor-pointer flex flex-col justify-between ${
                   isSelected
                     ? 'border-[#1c1c21] bg-[#1c1c21] text-[#E2DFD2] shadow-[3px_3px_0px_#58554f]'
-                    : 'border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:bg-[#1c1c21]/[0.04]'
+                    : 'border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:bg-[#1c1c21]/4'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 font-mono-stack text-[9.5px]">
@@ -193,7 +193,7 @@ export default function ExperienceSection({
                       {activeExp.technologies.map((tech, tIdx) => (
                         <span
                           key={tIdx}
-                          className="px-1.5 py-0.5 border border-[#1c1c21] bg-[#1c1c21]/[0.03] text-[#1c1c21] font-mono-stack text-[8.5px] font-bold tracking-wider"
+                          className="px-1.5 py-0.5 border border-[#1c1c21] bg-[#1c1c21]/3 text-[#1c1c21] font-mono-stack text-[8.5px] font-bold tracking-wider"
                         >
                           {tech}
                         </span>

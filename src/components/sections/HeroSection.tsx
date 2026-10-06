@@ -7,7 +7,7 @@ import { triggerThemeTransition } from '../ui/ThemeTransition';
 export function HeroIllustration() {
   return (
     <div className="shrink-0 self-start lg:self-end">
-      <div className="w-[120px] sm:w-[135px] md:w-[150px] lg:w-[160px] aspect-square border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[4px_4px_0px_#1c1c21]">
+      <div className="w-30 sm:w-33.75 md:w-37.5 lg:w-40 aspect-square border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[4px_4px_0px_#1c1c21]">
         <img
           src="/image/hiura.webp"
           alt="Fabian Rizky Pratama anime ink lineart portrait"
@@ -67,7 +67,7 @@ export default function HeroSection({
   }, []);
 
   return (
-    <section className="relative z-10 w-full h-screen min-h-[680px] flex flex-col justify-between p-6 sm:p-10 md:p-14 select-none overflow-hidden">
+    <section className="relative z-10 w-full h-screen min-h-170 flex flex-col justify-between p-6 sm:p-10 md:p-14 select-none overflow-hidden">
       <header className="relative z-10 w-full flex items-center justify-between border-b border-[#1c1c21]/15 pb-5">
         <div className="flex items-center gap-3">
           <span className="font-display font-bold tracking-tight text-sm sm:text-base text-[#1c1c21]">

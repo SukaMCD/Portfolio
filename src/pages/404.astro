@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ArchIcon from '../components/ui/ArchIcon';
-import Cursor from '../components/ui/Cursor';
 import InteractiveBackground from '../components/ui/InteractiveBackground';
 ---
 
@@ -11,7 +10,6 @@ import InteractiveBackground from '../components/ui/InteractiveBackground';
 >
   <div class="relative min-h-screen w-full bg-[#E2DFD2] text-[#1c1c21] overflow-hidden flex flex-col justify-between p-6 sm:p-12">
     <InteractiveBackground client:load />
-    <Cursor client:load />
 
     {/* Top Header */}
     <header class="relative z-10 w-full flex items-center justify-between pb-4 border-b-[2.5px] border-[#1c1c21]">
@@ -66,7 +64,7 @@ import InteractiveBackground from '../components/ui/InteractiveBackground';
         </a>
         <a
           href="/projects"
-          class="inline-flex items-center gap-2 px-5 py-3 bg-transparent text-[#1c1c21] hover:bg-[#1c1c21]/5 font-mono-stack text-xs font-bold tracking-wider uppercase transition-colors border-[2px] border-[#1c1c21]"
+          class="inline-flex items-center gap-2 px-5 py-3 bg-transparent text-[#1c1c21] hover:bg-[#1c1c21]/5 font-mono-stack text-xs font-bold tracking-wider uppercase transition-colors border-2 border-[#1c1c21]"
         >
           <span>BROWSE PROJECTS ARCHIVE</span>
         </a>

@@ -12,7 +12,7 @@ export default defineConfig({
     defaultStrategy: 'hover',
   },
   devToolbar: {
-    enabled: false,
+    enabled: true,
   },
   vite: {
     plugins: [tailwindcss()],

@@ -71,7 +71,7 @@ export default function ContactSection({
   return (
     <section
       id="contact"
-      className="relative z-[90] w-full h-screen min-h-[640px] max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#1c1c21] border-t-[3.5px] border-[#E2DFD2]/20 overflow-hidden"
+      className="relative z-90 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#1c1c21] border-t-[3.5px] border-[#E2DFD2]/20 overflow-hidden"
     >
       <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.04]" />
 
@@ -220,8 +220,9 @@ export default function ContactSection({
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-3">
                 <div className="space-y-0 border-t border-[#E2DFD2]/10">
                   <div className="py-3 border-b border-[#E2DFD2]/10">
-                    <label className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Name</label>
+                    <label htmlFor="contact-name" className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Name</label>
                     <input
+                      id="contact-name"
                       type="text"
                       value={formState.name}
                       onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
@@ -231,8 +232,9 @@ export default function ContactSection({
                     />
                   </div>
                   <div className="py-3 border-b border-[#E2DFD2]/10">
-                    <label className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Email</label>
+                    <label htmlFor="contact-email" className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Email</label>
                     <input
+                      id="contact-email"
                       type="email"
                       value={formState.email}
                       onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
@@ -242,8 +244,9 @@ export default function ContactSection({
                     />
                   </div>
                   <div className="py-3 border-b border-[#E2DFD2]/10">
-                    <label className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Message</label>
+                    <label htmlFor="contact-message" className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Message</label>
                     <textarea
+                      id="contact-message"
                       value={formState.message}
                       onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))}
                       required
