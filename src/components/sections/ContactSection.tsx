@@ -71,7 +71,7 @@ export default function ContactSection({
   return (
     <section
       id="contact"
-      className="relative z-90 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#1c1c21] border-t-[3.5px] border-[#E2DFD2]/20 overflow-hidden"
+      className="relative z-90 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#1c1c21] border-t-[3px] border-[#E2DFD2]/20 overflow-hidden"
     >
       <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.04]" />
 

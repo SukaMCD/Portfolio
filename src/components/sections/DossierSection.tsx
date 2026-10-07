@@ -16,7 +16,7 @@ export default function DossierSection({
   return (
     <section
       id="dossier"
-      className="relative z-20 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
+      className="relative z-20 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
     >
       {/* Dossier Folder Tab */}
       <button
@@ -25,8 +25,8 @@ export default function DossierSection({
         onClick={onNavigateDossier}
         className="group absolute -top-8.5 left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
       >
-        <div className="bg-[#1c1c21] p-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-          <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)]">
+        <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+          <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
             <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
             <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
               01

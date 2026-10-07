@@ -41,8 +41,6 @@ export default function Portfolio() {
     });
     lenisRef.current = lenis;
 
-    let scrollRafId: number | null = null;
-
     const updateScrollEffects = () => {
       const vh = window.innerHeight;
       const scrollY = window.scrollY;
@@ -71,7 +69,7 @@ export default function Portfolio() {
       }
 
       // Tabs positioning
-      const tabVisibleHeight = 30.5;
+      const tabVisibleHeight = 31;
       const restingTop = scrollY < 5
         ? dossierRect.top - tabVisibleHeight
         : vh - tabVisibleHeight;
@@ -107,15 +105,7 @@ export default function Portfolio() {
       setActiveSection((prev) => (prev !== nextSec ? nextSec : prev));
     };
 
-    const onScroll = () => {
-      if (scrollRafId !== null) return;
-      scrollRafId = requestAnimationFrame(() => {
-        scrollRafId = null;
-        updateScrollEffects();
-      });
-    };
-
-    lenis.on('scroll', onScroll);
+    lenis.on('scroll', updateScrollEffects);
 
     const updateTabHorizontalPositions = () => {
       const dossierTabEl = document.getElementById('dossier-tab');
@@ -398,13 +388,13 @@ export default function Portfolio() {
     let rafId: number;
     const raf = (time: number) => {
       lenis.raf(time);
+      updateScrollEffects();
       rafId = requestAnimationFrame(raf);
     };
     rafId = requestAnimationFrame(raf);
 
     return () => {
       cancelAnimationFrame(rafId);
-      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
       window.removeEventListener('wheel', handleWheel, { capture: true } as any);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
@@ -512,16 +502,16 @@ export default function Portfolio() {
       {/* Tab 02: Works */}
       <div
         ref={worksTabRef}
-        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
-        className="fixed top-0 left-35 sm:left-56.25 md:left-76.25 z-40 will-change-transform"
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
+        className="fixed top-0 left-35 sm:left-56.25 md:left-76.25 z-45 will-change-transform"
       >
         <button
           type="button"
           onClick={handleNavigateWorks}
           className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block"
         >
-          <div className="bg-[#1c1c21] p-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)]">
+          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
               <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
               <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 02
@@ -541,16 +531,16 @@ export default function Portfolio() {
       {/* Tab 03: Credentials */}
       <div
         ref={credentialsTabRef}
-        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
-        className="fixed top-0 left-67 sm:left-102.5 md:left-137 z-60 will-change-transform"
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
+        className="fixed top-0 left-67 sm:left-102.5 md:left-137 z-55 will-change-transform"
       >
         <button
           type="button"
           onClick={handleNavigateCredentials}
           className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block"
         >
-          <div className="bg-[#1c1c21] p-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)]">
+          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
               <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
               <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 03
@@ -570,16 +560,16 @@ export default function Portfolio() {
       {/* Tab 04: Experience */}
       <div
         ref={experienceTabRef}
-        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
-        className="fixed top-0 left-97.5 sm:left-147.5 md:left-195 z-80 will-change-transform"
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
+        className="fixed top-0 left-97.5 sm:left-147.5 md:left-195 z-75 will-change-transform"
       >
         <button
           type="button"
           onClick={handleNavigateExperience}
           className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block"
         >
-          <div className="bg-[#1c1c21] p-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)]">
+          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
               <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
               <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 04
@@ -599,16 +589,16 @@ export default function Portfolio() {
       {/* Tab 05: Contact */}
       <div
         ref={contactTabRef}
-        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 30.5px), 0)' }}
-        className="fixed top-0 left-130 sm:left-190 md:left-247.5 z-100 will-change-transform"
+        style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
+        className="fixed top-0 left-130 sm:left-190 md:left-247.5 z-95 will-change-transform"
       >
         <button
           type="button"
           onClick={handleNavigateContact}
           className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.15)] hover:-translate-y-0.5 transition-transform duration-150 block"
         >
-          <div className="bg-[#1c1c21] p-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#1c1c21] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_100%,0_100%)] border-t border-l border-[#E2DFD2]/25">
+          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-7.75 bg-[#1c1c21] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)] border-t-[3px] border-l-[3px] border-[#E2DFD2]/25">
               <span className="w-1.5 h-1.5 rounded-full border border-[#E2DFD2]/60 bg-[#E2DFD2]/20 shrink-0" />
               <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#E2DFD2] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 05

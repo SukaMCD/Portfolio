@@ -33,7 +33,7 @@ export default function WorksSection({
   return (
     <section
       id="works"
-      className="relative z-40 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3.5px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
+      className="relative z-40 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
     >
       {/* Header */}
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
