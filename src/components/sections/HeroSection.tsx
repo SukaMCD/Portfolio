@@ -7,7 +7,7 @@ import { triggerThemeTransition } from '../ui/ThemeTransition';
 export function HeroIllustration() {
   return (
     <div className="shrink-0 self-start lg:self-end">
-      <div className="w-30 sm:w-33.75 md:w-37.5 lg:w-40 aspect-square border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[4px_4px_0px_#1c1c21]">
+      <div className="w-24 sm:w-33.75 md:w-37.5 lg:w-40 aspect-square border-[3px] sm:border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[3px_3px_0px_#1c1c21] sm:shadow-[4px_4px_0px_#1c1c21]">
         <img
           src="/image/hiura.webp"
           alt="Fabian Rizky Pratama anime ink lineart portrait"
@@ -67,10 +67,10 @@ export default function HeroSection({
   }, []);
 
   return (
-    <section className="relative z-10 w-full h-screen min-h-170 flex flex-col justify-between p-6 sm:p-10 md:p-14 select-none overflow-hidden">
-      <header className="relative z-10 w-full flex items-center justify-between border-b border-[#1c1c21]/15 pb-5">
-        <div className="flex items-center gap-3">
-          <span className="font-display font-bold tracking-tight text-sm sm:text-base text-[#1c1c21]">
+    <section className="relative z-10 w-full min-h-screen md:h-screen md:min-h-170 flex flex-col justify-between p-4 sm:p-8 md:p-14 select-none overflow-hidden">
+      <header className="relative z-10 w-full flex items-center justify-between border-b border-[#1c1c21]/15 pb-3 sm:pb-5 gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <span className="font-display font-bold tracking-tight text-xs sm:text-base text-[#1c1c21] truncate">
             FABIAN RIZKY PRATAMA
           </span>
         </div>
@@ -79,12 +79,12 @@ export default function HeroSection({
           <span>JAKARTA, ID {time && `[${time} WIB]`}</span>
         </div>
 
-        <nav className="flex items-center gap-2 sm:gap-3 font-mono-stack text-xs">
+        <nav className="flex items-center gap-1.5 sm:gap-3 font-mono-stack text-xs shrink-0">
           <button
             type="button"
             onClick={handleToggleTheme}
             aria-label="Toggle theme"
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-[#1c1c21] bg-transparent hover:bg-[#1c1c21] hover:text-[#E2DFD2] shadow-[2px_2px_0px_#1c1c21] transition-all text-[#1c1c21] cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 border border-[#1c1c21] bg-transparent hover:bg-[#1c1c21] hover:text-[#E2DFD2] shadow-[2px_2px_0px_#1c1c21] transition-all text-[#1c1c21] cursor-pointer min-h-[44px]"
           >
             {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
             <span className="hidden sm:inline uppercase font-bold">{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
@@ -93,23 +93,23 @@ export default function HeroSection({
             href="https://github.com/SukaMCD"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-[#1c1c21] bg-transparent hover:bg-[#1c1c21] hover:text-[#E2DFD2] shadow-[2px_2px_0px_#1c1c21] transition-all text-[#1c1c21]"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 border border-[#1c1c21] bg-transparent hover:bg-[#1c1c21] hover:text-[#E2DFD2] shadow-[2px_2px_0px_#1c1c21] transition-all text-[#1c1c21] min-h-[44px]"
           >
             <Github size={13} />
             <span className="hidden sm:inline">GITHUB</span>
           </a>
           <a
             href="mailto:sukamcdev@gmail.com"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] transition-all"
+            className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] transition-all min-h-[44px]"
           >
             <Mail size={13} />
-            <span>CONTACT</span>
+            <span className="hidden xs:inline">CONTACT</span>
           </a>
         </nav>
       </header>
 
-      <div className="relative z-10 w-full my-auto py-8 flex flex-col justify-center">
-        <h1 className="font-display font-extrabold uppercase text-4xl sm:text-6xl md:text-7xl lg:text-[5.8vw] leading-[0.92] tracking-[-0.04em] text-[#1c1c21]">
+      <div className="relative z-10 w-full my-auto py-4 sm:py-6 flex flex-col justify-center">
+        <h1 className="font-display font-extrabold uppercase text-3xl sm:text-5xl md:text-7xl lg:text-[5.8vw] leading-[0.92] tracking-[-0.04em] text-[#1c1c21]">
           ARCHITECTING
           <br />
           ROBUST SYSTEMS
@@ -117,15 +117,15 @@ export default function HeroSection({
           <span className="font-light italic text-[#58554f]">& CRAFTING DIGITAL DEPTH</span>
         </h1>
 
-        <div className="w-full mt-8 sm:mt-12 pt-6 border-t border-[#1c1c21]/15 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8 max-w-3xl">
-            <p className="max-w-md text-sm text-[#58554f] leading-relaxed">
+        <div className="w-full mt-4 sm:mt-10 pt-4 sm:pt-6 border-t border-[#1c1c21]/15 flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 max-w-3xl">
+            <p className="max-w-md text-xs sm:text-sm text-[#58554f] leading-relaxed">
               Architecting resilient backend infrastructures (Laravel, PostgreSQL) with
               sub-second API precision, deterministic data workflows, and scalable architectures.
               Dedicated to clean code and uncompromising system integrity.
             </p>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
               <a
                 href="#works"
                 onClick={(e) => {
@@ -134,9 +134,9 @@ export default function HeroSection({
                     onNavigateWorks();
                   }
                 }}
-                className="px-5 py-2.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 group border border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] cursor-pointer"
+                className="px-4 sm:px-5 py-2.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 group border border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] cursor-pointer min-h-[44px]"
               >
-                <span>VIEW SELECTED WORKS</span>
+                <span>VIEW WORKS</span>
                 <ArrowDown size={13} className="transition-transform group-hover:translate-y-0.5" />
               </a>
               <a
@@ -147,7 +147,7 @@ export default function HeroSection({
                     onNavigateDossier();
                   }
                 }}
-                className="px-5 py-2.5 border-2 border-[#1c1c21] bg-transparent text-[#1c1c21] hover:bg-[#1c1c21]/5 shadow-[3px_3px_0px_#1c1c21] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
+                className="px-4 sm:px-5 py-2.5 border-2 border-[#1c1c21] bg-transparent text-[#1c1c21] hover:bg-[#1c1c21]/5 shadow-[3px_3px_0px_#1c1c21] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer min-h-[44px]"
               >
                 <span>DOSSIER</span>
                 <ArrowDown size={13} />
@@ -159,7 +159,7 @@ export default function HeroSection({
         </div>
       </div>
 
-      <footer className="relative z-10 w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-5 border-t border-[#1c1c21]/15 font-mono-stack text-[11px] text-[#58554f]">
+      <footer className="relative z-10 w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 pt-3 sm:pt-5 border-t border-[#1c1c21]/15 font-mono-stack text-[10px] sm:text-[11px] text-[#58554f]">
         <div className="flex items-center gap-4">
           <span>LAT 06°12'S 106°50'E</span>
         </div>
@@ -172,7 +172,7 @@ export default function HeroSection({
               onNavigateDossier();
             }
           }}
-          className="flex items-center gap-2 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-[44px]"
         >
           <span>SCROLL TO PROCEED</span>
           <ArrowDown size={12} className="animate-bounce" />

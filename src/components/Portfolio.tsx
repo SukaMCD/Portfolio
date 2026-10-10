@@ -283,10 +283,13 @@ export default function Portfolio() {
       const target = e.target as HTMLElement | null;
       if (target?.closest('[data-lenis-prevent="true"]')) return;
 
-      const section = getActiveSection();
-      if (section >= 0 && section <= 5) {
-        if (e.cancelable) {
-          e.preventDefault();
+      // Only hijack touch on desktop / wide screens
+      if (window.innerWidth >= 768) {
+        const section = getActiveSection();
+        if (section >= 0 && section <= 5) {
+          if (e.cancelable) {
+            e.preventDefault();
+          }
         }
       }
     };
@@ -295,6 +298,9 @@ export default function Portfolio() {
       const target = e.target as HTMLElement | null;
       if (target?.closest('[data-lenis-prevent="true"]')) return;
       if (isAnimatingRef.current) return;
+
+      // Allow natural touch scrolling on mobile
+      if (window.innerWidth < 768) return;
 
       const deltaY = touchStartY - e.changedTouches[0].clientY;
       const deltaX = touchStartX - e.changedTouches[0].clientX;
@@ -470,7 +476,7 @@ export default function Portfolio() {
         onNavigateContact={handleNavigateContact}
       />
 
-      <div ref={heroRef} className="sticky top-0 z-0 h-screen min-h-170 w-full overflow-hidden will-change-transform origin-top">
+      <div ref={heroRef} className="sticky top-0 z-0 min-h-screen md:h-screen md:min-h-170 w-full overflow-hidden will-change-transform origin-top">
         <MemoHeroSection
           onNavigateDossier={handleNavigateDossier}
           onNavigateWorks={handleNavigateWorks}
@@ -503,7 +509,7 @@ export default function Portfolio() {
       <div
         ref={worksTabRef}
         style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
-        className="fixed top-0 left-35 sm:left-56.25 md:left-76.25 z-45 will-change-transform"
+        className="hidden md:block fixed top-0 left-35 sm:left-56.25 md:left-76.25 z-45 will-change-transform"
       >
         <button
           type="button"
@@ -532,7 +538,7 @@ export default function Portfolio() {
       <div
         ref={credentialsTabRef}
         style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
-        className="fixed top-0 left-67 sm:left-102.5 md:left-137 z-55 will-change-transform"
+        className="hidden md:block fixed top-0 left-67 sm:left-102.5 md:left-137 z-55 will-change-transform"
       >
         <button
           type="button"
@@ -561,7 +567,7 @@ export default function Portfolio() {
       <div
         ref={experienceTabRef}
         style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
-        className="fixed top-0 left-97.5 sm:left-147.5 md:left-195 z-75 will-change-transform"
+        className="hidden md:block fixed top-0 left-97.5 sm:left-147.5 md:left-195 z-75 will-change-transform"
       >
         <button
           type="button"
@@ -590,7 +596,7 @@ export default function Portfolio() {
       <div
         ref={contactTabRef}
         style={{ transform: 'translate3d(0, calc(max(100vh, 680px) - 31px), 0)' }}
-        className="fixed top-0 left-130 sm:left-190 md:left-247.5 z-95 will-change-transform"
+        className="hidden md:block fixed top-0 left-130 sm:left-190 md:left-247.5 z-95 will-change-transform"
       >
         <button
           type="button"

@@ -277,7 +277,7 @@ export default function ArchTerminal() {
       onWheel={(e) => {
         if (outputs.length > 0) e.stopPropagation();
       }}
-      data-lenis-prevent={outputs.length > 0 ? 'true' : undefined}
+      data-lenis-prevent="true"
       className="w-full h-[265px] sm:h-[280px] border-[3px] border-[#1c1c21] bg-[#E2DFD2] shadow-[4px_4px_0px_#1c1c21] text-[#1c1c21] font-mono-stack overflow-hidden flex flex-col cursor-text select-text"
     >
       {/* Titlebar */}
@@ -298,8 +298,8 @@ export default function ArchTerminal() {
       {/* Terminal Screen Buffer */}
       <div
         ref={terminalBufferRef}
-        data-lenis-prevent={outputs.length > 0 ? 'true' : undefined}
-        className={`terminal-buffer flex-1 min-h-0 p-3 sm:p-4 text-xs leading-relaxed space-y-2.5 ${outputs.length > 0 ? 'overflow-y-auto overscroll-contain' : 'overflow-hidden'} bg-[#E2DFD2]`}
+        data-lenis-prevent="true"
+        className="terminal-buffer flex-1 min-h-0 p-3 sm:p-4 text-xs leading-relaxed space-y-2.5 overflow-y-auto overscroll-contain bg-[#E2DFD2]"
       >
         {/* Fastfetch Executed Output */}
         <div className="space-y-1">

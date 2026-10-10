@@ -113,7 +113,7 @@ export default function GithubContributions() {
       </div>
 
       {/* Heatmap Grid */}
-      <div className="w-full overflow-x-auto py-0.5">
+      <div data-lenis-prevent="true" className="w-full overflow-x-auto py-0.5">
         <div className="min-w-132.5 flex flex-col gap-0.5">
           {/* Months header */}
           <div className="flex text-[8px] sm:text-[8.5px] font-mono-stack text-[#58554f] pl-5 justify-between pr-1">

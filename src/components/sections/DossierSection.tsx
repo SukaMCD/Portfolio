@@ -16,13 +16,13 @@ export default function DossierSection({
   return (
     <section
       id="dossier"
-      className="relative z-20 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
+      className="relative z-20 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
     >
       <button
         id="dossier-tab"
         type="button"
         onClick={onNavigateDossier}
-        className="group absolute -top-8.5 left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
+        className="hidden md:block group absolute -top-8.5 left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
       >
         <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
           <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
@@ -41,21 +41,21 @@ export default function DossierSection({
         </div>
       </button>
 
-      <header className="w-full flex items-center justify-between pb-3 sm:pb-3.5 border-b border-[#1c1c21]/15 gap-4 shrink-0">
-        <div className="flex items-center gap-3 font-mono-stack text-xs">
+      <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3.5 border-b border-[#1c1c21]/15 gap-2 sm:gap-4 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 font-mono-stack text-xs">
           <span className="px-2.5 py-1 rounded bg-[#1c1c21] text-[#E2DFD2] font-semibold tracking-wider text-[11px]">
             DOSSIER // 01
           </span>
-          <span className="text-[#58554f] text-[11px] sm:text-xs">PERSONNEL PROFILE & TECH ARSENAL</span>
+          <span className="text-[#58554f] text-[11px] sm:text-xs hidden sm:inline">PERSONNEL PROFILE & TECH ARSENAL</span>
         </div>
-        <div className="flex items-center gap-3 font-mono-stack text-xs text-[#58554f]">
-          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#1c1c21]/20 bg-[#1c1c21]/2 text-[11px]">
+        <div className="flex items-center gap-2 sm:gap-3 font-mono-stack text-xs text-[#58554f]">
+          <span className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded border border-[#1c1c21]/20 bg-[#1c1c21]/2 text-[10.5px] sm:text-[11px]">
             <ArchIcon className="w-3.5 h-3.5 text-[#1c1c21]" />
             <span className="text-[#1c1c21] font-semibold">ARCH LINUX</span>
             <span className="text-[#1c1c21]/30">/</span>
             <span>x86_64</span>
           </span>
-          <span className="text-[11px]">TTY1</span>
+          <span className="text-[10.5px] sm:text-[11px]">TTY1</span>
         </div>
       </header>
 
@@ -138,7 +138,7 @@ export default function DossierSection({
             <button
               type="button"
               onClick={onNavigateHero}
-              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-[44px]"
             >
               <span>▲ HERO</span>
             </button>
@@ -148,13 +148,13 @@ export default function DossierSection({
             <button
               type="button"
               onClick={onNavigateWorks}
-              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-[44px]"
             >
               <span>NEXT: SELECTED WORKS</span>
               <CornerDownRight size={11} />
             </button>
           ) : (
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 min-h-[44px]">
               <span>NEXT: SELECTED WORKS</span>
               <CornerDownRight size={11} />
             </div>
