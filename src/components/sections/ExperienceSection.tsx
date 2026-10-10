@@ -31,7 +31,6 @@ export default function ExperienceSection({
       id="experience"
       className="relative z-70 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
     >
-      {/* Header */}
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
         <div className="flex items-center gap-2.5 font-mono-stack text-xs">
           <span className="px-2.5 py-1 bg-[#1c1c21] text-[#E2DFD2] font-semibold tracking-wider text-[11px]">
@@ -50,9 +49,7 @@ export default function ExperienceSection({
         </div>
       </header>
 
-      {/* Main Content Area */}
       <div className="flex-1 min-h-0 my-auto py-1 sm:py-2 grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-stretch h-full">
-        {/* Left Column: Role Selector / Timeline Strip */}
         <div className="lg:col-span-5 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-0">
           {experiences.map((exp, idx) => {
             const isSelected = idx === selectedIndex;
@@ -124,13 +121,10 @@ export default function ExperienceSection({
           })}
         </div>
 
-        {/* Right Column: Detailed Operational Dossier (Top) + GitHub Activity (Bottom) */}
         <div className="lg:col-span-7 flex flex-col justify-between gap-2.5 sm:gap-3 h-full min-h-0">
-          {/* Top Box: Detailed Operational Dossier */}
           <div className="flex-1 min-h-0 flex flex-col justify-between border-[2.5px] border-[#1c1c21] bg-[#E2DFD2] shadow-[3px_3px_0px_#1c1c21] p-3 sm:p-3.5 overflow-y-auto">
             {activeExp ? (
               <div className="flex flex-col justify-between h-full gap-2">
-                {/* Role Header */}
                 <div className="pb-1.5 border-b border-[#1c1c21]/20">
                   <div className="flex flex-wrap items-center justify-between gap-2 font-mono-stack text-[9.5px] text-[#58554f] mb-0.5">
                     <span className="flex items-center gap-1.5">
@@ -209,14 +203,12 @@ export default function ExperienceSection({
             )}
           </div>
 
-          {/* Bottom Box: GitHub Contribution Graph */}
           <div className="shrink-0">
             <GithubContributions />
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="w-full flex items-center justify-between pt-2 sm:pt-2.5 border-t border-[#1c1c21]/15 font-mono-stack text-[10px] sm:text-[11px] text-[#58554f] shrink-0">
         <div className="flex items-center gap-2 sm:gap-3">
           <span>TIMELINE // SERVICE LOG</span>

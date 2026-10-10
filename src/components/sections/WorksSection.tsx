@@ -35,7 +35,6 @@ export default function WorksSection({
       id="works"
       className="relative z-40 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
     >
-      {/* Header */}
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
         <div className="flex items-center gap-2.5 font-mono-stack text-xs">
           <span className="px-2.5 py-1 bg-[#1c1c21] text-[#E2DFD2] font-semibold tracking-wider text-[11px]">
@@ -49,15 +48,13 @@ export default function WorksSection({
           </div>
           <a
             href="/projects"
-            className="group inline-flex items-center gap-1.5 px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-[10px] sm:text-[11px] font-bold tracking-wider border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:shadow-[3px_3px_0px_#1c1c21] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
+            className="group inline-flex items-center px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-[10px] sm:text-[11px] font-bold tracking-wider border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:shadow-[3px_3px_0px_#1c1c21] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
           >
             <span>VIEW ALL</span>
-            <span className="group-hover:translate-x-0.5 transition-transform duration-150">→</span>
           </a>
         </div>
       </header>
 
-      {/* Project grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-2.5 sm:gap-3 lg:gap-3.5 flex-1 min-h-0 my-auto py-2 sm:py-3">
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
@@ -74,6 +71,15 @@ export default function WorksSection({
                 </div>
               </div>
             ))
+          : displayProjects.length === 0
+          ? (
+            <div className="col-span-full row-span-2 border-[3px] border-[#1c1c21] shadow-[4px_4px_0px_#1c1c21] bg-[#E2DFD2] p-8 flex flex-col items-center justify-center text-center font-mono-stack gap-3">
+              <div className="text-base font-bold text-[#1c1c21]">ENGINEERING_ARCHIVE // 0 RECORDS</div>
+              <p className="text-xs text-[#58554f] max-w-md">
+                Project records are synchronizing with Firestore collection. Production case files will appear here automatically.
+              </p>
+            </div>
+          )
           : displayProjects.map((project, idx) => {
               const imgUrl = formatDriveImageUrl(project.image) || DEFAULT_FALLBACK_IMAGE;
               const primaryLink = project.links?.[0];
@@ -82,7 +88,6 @@ export default function WorksSection({
                   key={project.id}
                   className="group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] bg-[#E2DFD2] overflow-hidden flex flex-col justify-between transition-all duration-200 min-h-0"
                 >
-                  {/* Thumbnail banner - prominent showcase */}
                   <div className="relative flex-1 min-h-0 overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5">
                     <img
                       src={imgUrl}
@@ -102,7 +107,6 @@ export default function WorksSection({
                     </div>
                   </div>
 
-                  {/* Body - compact and snug */}
                   <div className="shrink-0 p-2.5 sm:p-3 flex flex-col gap-1.5 bg-[#E2DFD2]">
                     <div className="flex items-center justify-between text-[9px] font-mono-stack text-[#58554f]">
                       <span>{project.date || 'ACTIVE'}</span>

@@ -84,7 +84,7 @@ export default function HeroSection({
             type="button"
             onClick={handleToggleTheme}
             aria-label="Toggle theme"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1c1c21]/20 hover:border-[#1c1c21] hover:bg-[#1c1c21] hover:text-[#E2DFD2] transition-all text-[#1c1c21] cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 border border-[#1c1c21] bg-transparent hover:bg-[#1c1c21] hover:text-[#E2DFD2] shadow-[2px_2px_0px_#1c1c21] transition-all text-[#1c1c21] cursor-pointer"
           >
             {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
             <span className="hidden sm:inline uppercase font-bold">{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
@@ -93,14 +93,14 @@ export default function HeroSection({
             href="https://github.com/SukaMCD"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1c1c21]/20 hover:border-[#1c1c21] hover:bg-[#1c1c21] hover:text-[#E2DFD2] transition-all text-[#1c1c21]"
+            className="flex items-center gap-1.5 px-3 py-1.5 border border-[#1c1c21] bg-transparent hover:bg-[#1c1c21] hover:text-[#E2DFD2] shadow-[2px_2px_0px_#1c1c21] transition-all text-[#1c1c21]"
           >
             <Github size={13} />
             <span className="hidden sm:inline">GITHUB</span>
           </a>
           <a
             href="mailto:sukamcdev@gmail.com"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#2e2e36] transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] transition-all"
           >
             <Mail size={13} />
             <span>CONTACT</span>
@@ -134,9 +134,9 @@ export default function HeroSection({
                     onNavigateWorks();
                   }
                 }}
-                className="px-5 py-2.5 rounded-full bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#2e2e36] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 group shadow-sm cursor-pointer"
+                className="px-5 py-2.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 group border border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] cursor-pointer"
               >
-                <span>EXPLORE WORKS</span>
+                <span>VIEW SELECTED WORKS</span>
                 <ArrowDown size={13} className="transition-transform group-hover:translate-y-0.5" />
               </a>
               <a
@@ -147,7 +147,7 @@ export default function HeroSection({
                     onNavigateDossier();
                   }
                 }}
-                className="px-5 py-2.5 rounded-full border border-[#1c1c21]/30 text-[#1c1c21] hover:border-[#1c1c21] hover:bg-[#1c1c21]/5 transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2.5 border-2 border-[#1c1c21] bg-transparent text-[#1c1c21] hover:bg-[#1c1c21]/5 shadow-[3px_3px_0px_#1c1c21] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
               >
                 <span>DOSSIER</span>
                 <ArrowDown size={13} />

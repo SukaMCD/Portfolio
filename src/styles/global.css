@@ -66,8 +66,28 @@ html.dark body {
 html.dark .bg-\[\#E2DFD2\] {
   background-color: #1c1c21 !important;
 }
-html.dark .bg-\[\#1c1c21\] {
+html.dark .bg-\[\#1c1c21\]:not(#contact) {
   background-color: #E2DFD2 !important;
+}
+
+html.dark #contact,
+html.dark #contact.bg-\[\#1c1c21\] {
+  background-color: #141418 !important;
+  color: #E2DFD2 !important;
+}
+html.dark #contact .text-\[\#E2DFD2\],
+html.dark #contact .text-\[\#E2DFD2\]\/90 {
+  color: #E2DFD2 !important;
+}
+html.dark #contact .text-\[\#E2DFD2\]\/70,
+html.dark #contact .text-\[\#E2DFD2\]\/65,
+html.dark #contact .text-\[\#E2DFD2\]\/60 {
+  color: rgba(226, 223, 210, 0.75) !important;
+}
+html.dark #contact .border-\[\#E2DFD2\]\/10,
+html.dark #contact .border-\[\#E2DFD2\]\/15,
+html.dark #contact .border-\[\#E2DFD2\]\/20 {
+  border-color: rgba(226, 223, 210, 0.18) !important;
 }
 
 html.dark .text-\[\#1c1c21\] {

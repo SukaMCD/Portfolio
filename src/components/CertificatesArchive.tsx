@@ -76,6 +76,17 @@ export default function CertificatesArchive() {
     });
   }, []);
 
+  useEffect(() => {
+    if (!activePreview) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActivePreview(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activePreview]);
+
   const filteredCertificates = useMemo(() => {
     return certificates.filter((c) => {
       const cat = getCertificateCategory(c);
@@ -172,7 +183,7 @@ export default function CertificatesArchive() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="search certificates by title, issuer, credential ID, or skill..."
-              className="flex-1 min-w-0 bg-transparent text-[#1c1c21] placeholder-[#58554f]/60 focus:outline-none"
+              className="flex-1 min-w-0 bg-transparent text-[#1c1c21] placeholder-[#58554f] focus:outline-none"
             />
             {searchQuery ? (
               <button
@@ -256,10 +267,11 @@ export default function CertificatesArchive() {
                   key={cert.id}
                   className="group border-[3px] border-[#1c1c21] shadow-[4px_4px_0px_#1c1c21] hover:shadow-[7px_7px_0px_#1c1c21] hover:-translate-y-1 bg-[#E2DFD2] overflow-hidden flex flex-col justify-between transition-all duration-200"
                 >
-                  {/* Card Thumbnail */}
-                  <div
+                  <button
+                    type="button"
                     onClick={() => setActivePreview(cert)}
-                    className="relative h-52 overflow-hidden border-b-[2.5px] border-[#1c1c21] bg-[#1c1c21]/5 cursor-pointer flex items-center justify-center"
+                    aria-label={`View certificate ${cert.title}`}
+                    className="relative h-52 w-full overflow-hidden border-b-[2.5px] border-[#1c1c21] bg-[#1c1c21]/5 cursor-pointer flex items-center justify-center text-left focus-visible:ring-2 focus-visible:ring-[#1c1c21]"
                   >
                     <img
                       src={imgUrl}
@@ -293,9 +305,8 @@ export default function CertificatesArchive() {
                         <span>ZOOM PREVIEW</span>
                       </span>
                     </div>
-                  </div>
+                  </button>
 
-                  {/* Body Content */}
                   <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-[10px] font-mono-stack text-[#58554f]">

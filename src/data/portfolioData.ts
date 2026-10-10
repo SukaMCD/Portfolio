@@ -177,7 +177,7 @@ export const TECH_DOMAINS: SkillDomain[] = [
 
 export const MILESTONES = [
   {
-    year: "2024 — Present",
+    year: "2024 - Present",
     role: "Software Engineering Student",
     organization: "SMK Budi Luhur",
     description: "Deep technical focus on Software Engineering, structured algorithms, relational database architectures, and modern web systems."

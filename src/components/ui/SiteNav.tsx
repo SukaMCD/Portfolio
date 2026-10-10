@@ -63,7 +63,6 @@ export default function SiteNav({
       }}
       className="fixed left-0 top-0 bottom-0 z-120 w-8 flex flex-col items-center select-none"
     >
-      {/* Progress fill — behind border */}
       <div
         className={`absolute right-0 top-0 w-px ${isInverted ? 'bg-[#E2DFD2]/15' : 'bg-[#1c1c21]/12'} bottom-0 transition-colors duration-300`}
         aria-hidden="true"
@@ -74,36 +73,36 @@ export default function SiteNav({
         aria-hidden="true"
       />
 
-      {/* Top — identity stamp */}
-      <div className={`pt-3 pb-2 flex flex-col items-center gap-1 border-b ${isInverted ? 'border-[#E2DFD2]/15' : 'border-[#1c1c21]/10'} w-full transition-colors duration-300 shrink-0`}>
+      <div className={`pt-2 pb-1.5 flex flex-col items-center gap-1 border-b ${isInverted ? 'border-[#E2DFD2]/15' : 'border-[#1c1c21]/10'} w-full transition-colors duration-300 shrink-0`}>
         <button
           id="nav-home"
           onClick={onNavigateHero}
-          className={`font-mono-stack text-[9px] font-bold ${isInverted ? 'text-[#E2DFD2]' : 'text-[#1c1c21]'} tracking-[0.18em] hover:opacity-50 transition-all duration-200 cursor-pointer`}
+          aria-label="Navigate to top"
+          className={`font-mono-stack text-[9px] font-bold ${isInverted ? 'text-[#E2DFD2]' : 'text-[#1c1c21]'} tracking-[0.18em] hover:opacity-50 transition-all duration-200 cursor-pointer min-h-[44px] w-full flex items-center justify-center`}
         >
           F
         </button>
         <div className={`w-2 h-px ${isInverted ? 'bg-[#E2DFD2]/30' : 'bg-[#1c1c21]/25'} transition-colors duration-300`} />
       </div>
 
-      {/* Center — nav labels (rotated, distributed evenly to fit any height) */}
-      <div className="flex-1 min-h-0 flex flex-col items-center justify-evenly py-1.5 w-full">
+      <div className="flex-1 min-h-0 flex flex-col items-center justify-evenly py-1 w-full">
         {navItems.map((item) => {
           const isActive = activeSection === item.section;
           return (
-            <div key={item.id} className="relative w-full flex items-center justify-center py-0.5">
+            <div key={item.id} className="relative w-full flex items-center justify-center">
               <button
                 id={item.id}
                 onClick={item.onClick}
+                aria-label={`Navigate to ${item.label}`}
                 style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-                className={`group flex items-center gap-1 font-mono-stack text-[8px] tracking-[0.13em] uppercase transition-all duration-200 cursor-pointer ${
+                className={`group flex items-center justify-center gap-1 font-mono-stack text-[8px] tracking-[0.13em] uppercase transition-all duration-200 cursor-pointer min-h-[44px] w-full py-1 ${
                   isActive
                     ? isInverted
                       ? 'text-[#E2DFD2] font-bold'
                       : 'text-[#1c1c21] font-bold'
                     : isInverted
-                    ? 'text-[#E2DFD2]/40 font-normal hover:text-[#E2DFD2]'
-                    : 'text-[#58554f]/40 font-normal hover:text-[#1c1c21]'
+                    ? 'text-[#E2DFD2]/60 font-normal hover:text-[#E2DFD2]'
+                    : 'text-[#58554f]/60 font-normal hover:text-[#1c1c21]'
                 }`}
               >
                 <span
@@ -116,7 +115,6 @@ export default function SiteNav({
                 <span>{item.label}</span>
               </button>
 
-              {/* Right edge border tick indicator */}
               <div
                 className={`absolute right-0 top-1/2 -translate-y-1/2 w-0.5 h-4 transition-all duration-200 ${
                   isInverted ? 'bg-[#E2DFD2]' : 'bg-[#1c1c21]'
@@ -130,14 +128,13 @@ export default function SiteNav({
         })}
       </div>
 
-      {/* Bottom — theme toggle & github */}
-      <div className={`pb-3 pt-2 flex flex-col items-center gap-1.5 border-t ${isInverted ? 'border-[#E2DFD2]/15' : 'border-[#1c1c21]/10'} w-full transition-colors duration-300 shrink-0`}>
+      <div className={`pb-2 pt-1 flex flex-col items-center gap-1 border-t ${isInverted ? 'border-[#E2DFD2]/15' : 'border-[#1c1c21]/10'} w-full transition-colors duration-300 shrink-0`}>
         <button
           type="button"
           onClick={handleToggleTheme}
           aria-label="Toggle theme"
           title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-1 flex items-center justify-center cursor-pointer`}
+          className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-2 min-h-[44px] w-full flex items-center justify-center cursor-pointer`}
         >
           {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
         </button>
@@ -148,7 +145,7 @@ export default function SiteNav({
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub Profile"
-          className={`${isInverted ? 'text-[#E2DFD2]/60 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-1 flex items-center justify-center cursor-pointer`}
+          className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-2 min-h-[44px] w-full flex items-center justify-center cursor-pointer`}
         >
           <svg
             role="img"

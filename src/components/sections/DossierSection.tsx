@@ -18,7 +18,6 @@ export default function DossierSection({
       id="dossier"
       className="relative z-20 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
     >
-      {/* Dossier Folder Tab */}
       <button
         id="dossier-tab"
         type="button"
@@ -130,7 +129,7 @@ export default function DossierSection({
 
       <footer className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-3 sm:pt-3.5 border-t border-[#1c1c21]/15 font-mono-stack text-[10px] sm:text-[11px] text-[#58554f] shrink-0">
         <div className="flex items-center gap-3">
-          <span>SPEC_HASH // 0x8F9A2B</span>
+          <span>STATION // ARCH LINUX x86_64</span>
           <span>•</span>
           <span>PERSONNEL PROFILE & TECH ARSENAL</span>
         </div>

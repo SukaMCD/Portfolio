@@ -70,7 +70,7 @@ export default function ThemeTransition() {
     splash.setAttribute('stroke-width', '3');
     splash.setAttribute('opacity', '0.6');
 
-    // Initial turbulence — high frequency = chaotic ink splatter at start
+    // Initial turbulence: high frequency = chaotic ink splatter at start
     turb.setAttribute('baseFrequency', '0.032 0.022');
     turb.setAttribute('seed', '3');
     disp.setAttribute('scale', '0');
@@ -119,7 +119,7 @@ export default function ThemeTransition() {
         turb.setAttribute('seed', `${(seedTick % 6) + 1}`);
       }
 
-      // Micro-splash ring — expands fast then fades
+      // Micro-splash ring: expands fast then fades
       const splashR   = easeOutExpo(Math.min(t * 5, 1)) * 48;
       const splashOp  = Math.max(0, 0.7 - t * 3.5);
       const splashW   = Math.max(0.5, 3 - t * 12);

@@ -142,7 +142,7 @@ export default function ProjectsArchive() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="search by title, description, or tech stack..."
-              className="flex-1 min-w-0 bg-transparent text-[#1c1c21] placeholder-[#58554f]/60 focus:outline-none"
+              className="flex-1 min-w-0 bg-transparent text-[#1c1c21] placeholder-[#58554f] focus:outline-none"
             />
             {searchQuery ? (
               <button

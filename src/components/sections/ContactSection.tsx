@@ -81,109 +81,103 @@ export default function ContactSection({
           <span className="px-2.5 py-1 bg-[#E2DFD2] text-[#1c1c21] font-semibold tracking-wider text-[11px]">
             TRANSMISSION // 05
           </span>
-          <span className="text-[#E2DFD2]/35 text-[11px] sm:text-xs">OPEN CHANNEL</span>
+          <span className="text-[#E2DFD2]/65 text-[11px] sm:text-xs">OPEN CHANNEL</span>
         </div>
-        <div className="flex items-center gap-2.5 font-mono-stack text-[10.5px] text-[#E2DFD2]/30">
+        <div className="flex items-center gap-2.5 font-mono-stack text-[10.5px] text-[#E2DFD2]/60">
           <span className="hidden sm:flex items-center gap-1.5">
-            <ArchIcon className="w-3 h-3 text-[#E2DFD2]/30" />
+            <ArchIcon className="w-3 h-3 text-[#E2DFD2]/60" />
             sukamcd@archlinux:~$
           </span>
-          <span className="text-[#E2DFD2]/20">|</span>
+          <span className="text-[#E2DFD2]/40">|</span>
           <span>UTC+7 // WIB</span>
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="flex-1 min-h-0 py-3 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-stretch">
-
-        {/* Left � Identity + Links */}
         <div className="flex flex-col justify-between h-full gap-5">
-
-          {/* Big Headline */}
           <div>
             <h2 className="font-display font-extrabold uppercase leading-[0.86] tracking-[-0.04em] text-[#E2DFD2] text-[11vw] sm:text-[7.5vw] lg:text-[5.5vw] xl:text-[5.2vw]">
               Let&apos;s<br />
-              <span className="font-light italic text-[#E2DFD2]/30">build</span><br />
+              <span className="font-light italic text-[#E2DFD2]/60">build</span><br />
               together.
             </h2>
-            <p className="mt-3.5 font-mono-stack text-[11px] sm:text-xs text-[#E2DFD2]/40 leading-relaxed max-w-sm">
+            <p className="mt-3.5 font-mono-stack text-[11px] sm:text-xs text-[#E2DFD2]/70 leading-relaxed max-w-sm">
               Available for freelance work, collab, and full-time roles.
             </p>
           </div>
-          {/* Contacts — horizontal spec list */}
-          <div className="space-y-0 border-t border-[#E2DFD2]/10">
+          <div className="space-y-0 border-t border-[#E2DFD2]/15">
             <a
               href="mailto:sukamcdev@gmail.com"
-              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/10 group hover:border-[#E2DFD2]/25 transition-colors"
+              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/15 group hover:border-[#E2DFD2]/40 transition-colors"
             >
               <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/30 tracking-widest uppercase w-20 sm:w-24 shrink-0">
+                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/60 tracking-widest uppercase w-20 sm:w-24 shrink-0">
                   Email
                 </span>
-                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/75 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
+                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/90 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
                   sukamcdev@gmail.com
                 </span>
               </div>
-              <ArrowUpRight size={13} className="text-[#E2DFD2]/20 group-hover:text-[#E2DFD2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+              <ArrowUpRight size={13} className="text-[#E2DFD2]/50 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
             <a
               href="tel:+6288905588200"
-              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/10 group hover:border-[#E2DFD2]/25 transition-colors"
+              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/15 group hover:border-[#E2DFD2]/40 transition-colors"
             >
               <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/30 tracking-widest uppercase w-20 sm:w-24 shrink-0">
+                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/60 tracking-widest uppercase w-20 sm:w-24 shrink-0">
                   Phone
                 </span>
-                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/75 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
+                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/90 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
                   +62 889-0558-8200
                 </span>
               </div>
-              <ArrowUpRight size={13} className="text-[#E2DFD2]/20 group-hover:text-[#E2DFD2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+              <ArrowUpRight size={13} className="text-[#E2DFD2]/50 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
             <a
               href="https://github.com/SukaMCD"
               target="_blank" rel="noreferrer"
-              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/10 group hover:border-[#E2DFD2]/25 transition-colors"
+              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/15 group hover:border-[#E2DFD2]/40 transition-colors"
             >
               <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/30 tracking-widest uppercase w-20 sm:w-24 shrink-0">
+                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/60 tracking-widest uppercase w-20 sm:w-24 shrink-0">
                   GitHub
                 </span>
-                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/75 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
+                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/90 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
                   @SukaMCD
                 </span>
               </div>
-              <ArrowUpRight size={13} className="text-[#E2DFD2]/20 group-hover:text-[#E2DFD2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+              <ArrowUpRight size={13} className="text-[#E2DFD2]/50 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
             <a
               href="https://www.linkedin.com/in/fabianrizkypratama/"
               target="_blank" rel="noreferrer"
-              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/10 group hover:border-[#E2DFD2]/25 transition-colors"
+              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/15 group hover:border-[#E2DFD2]/40 transition-colors"
             >
               <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/30 tracking-widest uppercase w-20 sm:w-24 shrink-0">
+                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/60 tracking-widest uppercase w-20 sm:w-24 shrink-0">
                   LinkedIn
                 </span>
-                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/75 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
+                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/90 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
                   fabianrizkypratama
                 </span>
               </div>
-              <ArrowUpRight size={13} className="text-[#E2DFD2]/20 group-hover:text-[#E2DFD2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+              <ArrowUpRight size={13} className="text-[#E2DFD2]/50 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
             <a
               href="https://www.instagram.com/sukamcd.dev"
               target="_blank" rel="noreferrer"
-              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/10 group hover:border-[#E2DFD2]/25 transition-colors"
+              className="flex items-center justify-between py-2.5 border-b border-[#E2DFD2]/15 group hover:border-[#E2DFD2]/40 transition-colors"
             >
               <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/30 tracking-widest uppercase w-20 sm:w-24 shrink-0">
+                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/60 tracking-widest uppercase w-20 sm:w-24 shrink-0">
                   Instagram
                 </span>
-                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/75 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
+                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/90 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
                   @sukamcd.dev
                 </span>
               </div>
-              <ArrowUpRight size={13} className="text-[#E2DFD2]/20 group-hover:text-[#E2DFD2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+              <ArrowUpRight size={13} className="text-[#E2DFD2]/50 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
             <a
               href="/Fabian_Rizky_Pratama_CV.pdf"
@@ -191,36 +185,35 @@ export default function ContactSection({
               className="flex items-center justify-between py-2.5 group"
             >
               <div className="flex items-center gap-4 sm:gap-6 min-w-0">
-                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/30 tracking-widest uppercase w-20 sm:w-24 shrink-0">
+                <span className="font-mono-stack text-[9.5px] text-[#E2DFD2]/60 tracking-widest uppercase w-20 sm:w-24 shrink-0">
                   Resume / CV
                 </span>
-                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/75 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
+                <span className="font-mono-stack text-xs sm:text-[13px] text-[#E2DFD2]/90 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 transition-all truncate">
                   Download PDF
                 </span>
               </div>
-              <ArrowUpRight size={13} className="text-[#E2DFD2]/20 group-hover:text-[#E2DFD2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
+              <ArrowUpRight size={13} className="text-[#E2DFD2]/50 group-hover:text-[#E2DFD2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2" />
             </a>
           </div>
         </div>
 
-        {/* Right — Form, stripped bare */}
         <div className="flex flex-col justify-between h-full">
           {sent ? (
             <div className="flex-1 flex flex-col justify-center">
-              <div className="font-mono-stack text-[9.5px] tracking-widest text-[#E2DFD2]/40 uppercase mb-4">// transmission // confirmed</div>
+              <div className="font-mono-stack text-[9.5px] tracking-widest text-[#E2DFD2]/60 uppercase mb-4">// transmission // confirmed</div>
               <p className="font-display font-extrabold uppercase text-3xl sm:text-4xl leading-tight tracking-[-0.03em] text-[#E2DFD2]">
                 Message<br />dispatched.
               </p>
-              <p className="mt-3 font-mono-stack text-[11px] text-[#E2DFD2]/50 max-w-sm">
-                Your message has been forwarded to <span className="text-[#E2DFD2] font-bold">sukamcdev@gmail.com</span>. Will get back to you within 24–48h.
+              <p className="mt-3 font-mono-stack text-[11px] text-[#E2DFD2]/70 max-w-sm">
+                Your message has been forwarded to <span className="text-[#E2DFD2] font-bold">sukamcdev@gmail.com</span>. Will get back to you within 24-48h.
               </p>
             </div>
           ) : (
             <div className="flex flex-col justify-between h-full">
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-3">
-                <div className="space-y-0 border-t border-[#E2DFD2]/10">
-                  <div className="py-3 border-b border-[#E2DFD2]/10">
-                    <label htmlFor="contact-name" className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Name</label>
+                <div className="space-y-0 border-t border-[#E2DFD2]/15">
+                  <div className="py-3 border-b border-[#E2DFD2]/15">
+                    <label htmlFor="contact-name" className="font-mono-stack text-[9px] text-[#E2DFD2]/65 tracking-widest uppercase block mb-1.5">Name</label>
                     <input
                       id="contact-name"
                       type="text"
@@ -228,11 +221,11 @@ export default function ContactSection({
                       onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
                       required
                       placeholder="your name"
-                      className="w-full bg-transparent font-mono-stack text-sm text-[#E2DFD2]/80 placeholder:text-[#E2DFD2]/15 focus:outline-none focus:text-[#E2DFD2] transition-colors"
+                      className="w-full bg-transparent font-mono-stack text-sm text-[#E2DFD2] placeholder:text-[#E2DFD2]/45 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#E2DFD2] rounded-xs px-1 transition-colors"
                     />
                   </div>
-                  <div className="py-3 border-b border-[#E2DFD2]/10">
-                    <label htmlFor="contact-email" className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Email</label>
+                  <div className="py-3 border-b border-[#E2DFD2]/15">
+                    <label htmlFor="contact-email" className="font-mono-stack text-[9px] text-[#E2DFD2]/65 tracking-widest uppercase block mb-1.5">Email</label>
                     <input
                       id="contact-email"
                       type="email"
@@ -240,11 +233,11 @@ export default function ContactSection({
                       onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
                       required
                       placeholder="your@email.com"
-                      className="w-full bg-transparent font-mono-stack text-sm text-[#E2DFD2]/80 placeholder:text-[#E2DFD2]/15 focus:outline-none focus:text-[#E2DFD2] transition-colors"
+                      className="w-full bg-transparent font-mono-stack text-sm text-[#E2DFD2] placeholder:text-[#E2DFD2]/45 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#E2DFD2] rounded-xs px-1 transition-colors"
                     />
                   </div>
-                  <div className="py-3 border-b border-[#E2DFD2]/10">
-                    <label htmlFor="contact-message" className="font-mono-stack text-[9px] text-[#E2DFD2]/25 tracking-widest uppercase block mb-1.5">Message</label>
+                  <div className="py-3 border-b border-[#E2DFD2]/15">
+                    <label htmlFor="contact-message" className="font-mono-stack text-[9px] text-[#E2DFD2]/65 tracking-widest uppercase block mb-1.5">Message</label>
                     <textarea
                       id="contact-message"
                       value={formState.message}
@@ -252,7 +245,7 @@ export default function ContactSection({
                       required
                       rows={4}
                       placeholder="what do you want to build..."
-                      className="w-full bg-transparent font-mono-stack text-sm text-[#E2DFD2]/80 placeholder:text-[#E2DFD2]/15 focus:outline-none focus:text-[#E2DFD2] transition-colors resize-none"
+                      className="w-full bg-transparent font-mono-stack text-sm text-[#E2DFD2] placeholder:text-[#E2DFD2]/45 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#E2DFD2] rounded-xs px-1 transition-colors resize-none"
                     />
                   </div>
                 </div>

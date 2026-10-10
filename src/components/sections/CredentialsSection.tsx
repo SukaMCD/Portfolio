@@ -28,6 +28,17 @@ export default function CredentialsSection({
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (!activePreview) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActivePreview(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activePreview]);
+
   const displayCerts = certificates.slice(0, 6);
 
   return (
@@ -35,7 +46,6 @@ export default function CredentialsSection({
       id="credentials"
       className="relative z-50 w-full h-screen min-h-160 max-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-hidden"
     >
-      {/* Header */}
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
         <div className="flex items-center gap-2.5 font-mono-stack text-xs">
           <span className="px-2.5 py-1 bg-[#1c1c21] text-[#E2DFD2] font-semibold tracking-wider text-[11px]">
@@ -49,15 +59,13 @@ export default function CredentialsSection({
           </div>
           <a
             href="/certificates"
-            className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-xs font-bold tracking-wider transition-colors border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21]"
+            className="inline-flex items-center px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-xs font-bold tracking-wider transition-colors border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21]"
           >
             <span>VIEW ALL</span>
-            <span>→</span>
           </a>
         </div>
       </header>
 
-      {/* Certificates Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-2.5 sm:gap-3 lg:gap-3.5 flex-1 min-h-0 my-auto py-2 sm:py-3">
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
@@ -90,10 +98,11 @@ export default function CredentialsSection({
                   key={cert.id}
                   className="group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] bg-[#E2DFD2] overflow-hidden flex flex-col justify-between transition-all duration-200 min-h-0"
                 >
-                  {/* Thumbnail & Image Preview Trigger */}
-                  <div
+                  <button
+                    type="button"
                     onClick={() => setActivePreview(cert)}
-                    className="relative flex-1 min-h-0 overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5 cursor-pointer flex items-center justify-center"
+                    aria-label={`Inspect ${cert.title} credential`}
+                    className="relative flex-1 min-h-0 w-full overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5 cursor-pointer flex items-center justify-center text-left focus-visible:ring-2 focus-visible:ring-[#1c1c21]"
                   >
                     <img
                       src={imgUrl}
@@ -127,9 +136,8 @@ export default function CredentialsSection({
                         <span>ZOOM CERTS</span>
                       </span>
                     </div>
-                  </div>
+                  </button>
 
-                  {/* Body */}
                   <div className="shrink-0 p-2.5 sm:p-3 flex flex-col gap-1.5 bg-[#E2DFD2]">
                     <div className="flex items-center justify-between text-[9px] font-mono-stack text-[#58554f]">
                       <span>{cert.date || 'VERIFIED'}</span>

@@ -178,10 +178,10 @@ export default function ArchTerminal() {
       res = (
         <div className="text-[11px] space-y-1.5 pl-1">
           <div className="font-bold text-[#1c1c21]">Featured Engineering Projects:</div>
-          <div className="text-[#58554f]">1. <strong className="text-[#1c1c21]">Bluvocation</strong> — Laravel, MySQL, Vocational & Internship Management Platform</div>
-          <div className="text-[#58554f]">2. <strong className="text-[#1c1c21]">HRIS</strong> — CodeIgniter 4, MySQL, Human Resource Information System</div>
-          <div className="text-[#58554f]">3. <strong className="text-[#1c1c21]">Payment Gateway Engine</strong> — Hono, PostgreSQL, BNI SNAP BI, Neon</div>
-          <div className="text-[#58554f]">4. <strong className="text-[#1c1c21]">Leafly Tea</strong> — Astro, React, Tailwind CSS, e-commerce storefront</div>
+          <div className="text-[#58554f]">1. <strong className="text-[#1c1c21]">Bluvocation</strong> : Laravel, MySQL, Vocational & Internship Management Platform</div>
+          <div className="text-[#58554f]">2. <strong className="text-[#1c1c21]">HRIS</strong> : CodeIgniter 4, MySQL, Human Resource Information System</div>
+          <div className="text-[#58554f]">3. <strong className="text-[#1c1c21]">Payment Gateway Engine</strong> : Hono, PostgreSQL, BNI SNAP BI, Neon</div>
+          <div className="text-[#58554f]">4. <strong className="text-[#1c1c21]">Leafly Tea</strong> : Astro, React, Tailwind CSS, e-commerce storefront</div>
         </div>
       );
     } else if (lower === 'stack') {
@@ -264,6 +264,10 @@ export default function ArchTerminal() {
         setHistoryIdx(nextIdx);
         setCommand(history[nextIdx]);
       }
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      setCommand('');
+      setHistoryIdx(-1);
     }
   };
 
@@ -339,14 +343,13 @@ export default function ArchTerminal() {
             onChange={(e) => setCommand(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="type 'help', 'ls', 'btw', 'projects'..."
-            className="flex-1 bg-transparent border-none outline-none text-[#1c1c21] font-mono-stack text-[11px] caret-[#1c1c21] placeholder:text-[#58554f]"
+            className="flex-1 bg-transparent border-none focus-visible:ring-1 focus-visible:ring-[#1c1c21] rounded-xs text-[#1c1c21] font-mono-stack text-[11px] caret-[#1c1c21] placeholder:text-[#58554f] px-1"
             autoComplete="off"
             spellCheck="false"
           />
         </div>
       </div>
 
-      {/* Terminal Statusline (Neovim / Tmux Style) */}
       <div className="px-3 py-1.5 border-t-[2.5px] border-[#1c1c21] bg-[#1c1c21] text-[10px] text-[#E2DFD2] font-mono-stack flex items-center justify-between select-none shrink-0">
         <div className="flex items-center gap-2">
           <span className="px-1.5 py-0.5 bg-[#E2DFD2] text-[#1c1c21] font-bold text-[9px] tracking-wider rounded-xs">
