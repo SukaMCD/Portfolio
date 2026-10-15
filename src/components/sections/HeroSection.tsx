@@ -67,9 +67,15 @@ export default function HeroSection({
   }, []);
 
   return (
+<<<<<<< HEAD
     <section className="relative z-10 w-full min-h-screen md:h-screen md:min-h-170 flex flex-col justify-between p-4 sm:p-8 md:p-14 select-none overflow-hidden">
       <header className="relative z-10 w-full flex items-center justify-between border-b border-[#1c1c21]/15 pb-3 sm:pb-5 gap-2">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <svg viewBox="0 0 256 256" className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-current text-[#1c1c21] shrink-0" aria-hidden="true">
+            <path d="M44 44 H138 V84 H110 Q 84 84 84 110 V178 H44 Z" />
+            <path d="M212 212 H118 V172 H146 Q 172 172 172 146 V78 H212 Z" />
+            <rect x="108" y="108" width="40" height="40" rx="14" ry="14" />
+          </svg>
           <span className="font-display font-bold tracking-tight text-xs sm:text-base text-[#1c1c21] truncate">
             FABIAN RIZKY PRATAMA
           </span>

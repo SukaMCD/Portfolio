@@ -80,9 +80,13 @@ export default function SiteNav({
             id="nav-home"
             onClick={onNavigateHero}
             aria-label="Navigate to top"
-            className={`font-mono-stack text-[9px] font-bold ${isInverted ? 'text-[#E2DFD2]' : 'text-[#1c1c21]'} tracking-[0.18em] hover:opacity-50 transition-all duration-200 cursor-pointer min-h-[44px] w-full flex items-center justify-center`}
+            className={`font-mono-stack ${isInverted ? 'text-[#E2DFD2]' : 'text-[#1c1c21]'} hover:opacity-50 transition-all duration-200 cursor-pointer min-h-[44px] w-full flex items-center justify-center`}
           >
-            F
+            <svg viewBox="0 0 256 256" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
+              <path d="M44 44 H138 V84 H110 Q 84 84 84 110 V178 H44 Z" />
+              <path d="M212 212 H118 V172 H146 Q 172 172 172 146 V78 H212 Z" />
+              <rect x="108" y="108" width="40" height="40" rx="14" ry="14" />
+            </svg>
           </button>
           <div className={`w-2 h-px ${isInverted ? 'bg-[#E2DFD2]/30' : 'bg-[#1c1c21]/25'} transition-colors duration-300`} />
         </div>
