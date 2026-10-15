@@ -67,7 +67,7 @@ export default function WorksSection({
           </div>
           <a
             href="/projects"
-            className="group inline-flex items-center px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-[10px] sm:text-[11px] font-bold tracking-wider border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:shadow-[3px_3px_0px_#1c1c21] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-[44px]"
+            className="group inline-flex items-center px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-[10px] sm:text-[11px] font-bold tracking-wider border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:shadow-[3px_3px_0px_#1c1c21] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-11"
           >
             <span>VIEW ALL</span>
           </a>
@@ -116,7 +116,7 @@ export default function WorksSection({
                 key={i}
                 className="w-[84vw] max-w-[320px] h-fit sm:h-full shrink-0 snap-center self-center sm:self-auto border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] bg-[#E2DFD2] animate-pulse flex flex-col justify-start sm:justify-between overflow-hidden min-h-0"
               >
-                <div className="aspect-[16/10] sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 bg-[#1c1c21]/8 border-b-2 border-[#1c1c21]/15" />
+                <div className="aspect-16/10 sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 bg-[#1c1c21]/8 border-b-2 border-[#1c1c21]/15" />
                 <div className="p-2.5 sm:p-3 shrink-0 space-y-2">
                   <div className="h-2.5 w-20 bg-[#1c1c21]/15 rounded" />
                   <div className="h-3.5 w-3/4 bg-[#1c1c21]/15 rounded" />
@@ -142,7 +142,7 @@ export default function WorksSection({
                   key={project.id}
                   className="w-[84vw] max-w-[320px] h-fit sm:h-full shrink-0 snap-center self-center sm:self-auto group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] bg-[#E2DFD2] overflow-hidden flex flex-col justify-start sm:justify-between transition-all duration-200 min-h-0"
                 >
-                  <div className="relative aspect-[16/10] sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5">
+                  <div className="relative aspect-16/10 sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5">
                     <img
                       src={imgUrl}
                       alt={project.alt || project.title}
@@ -194,7 +194,7 @@ export default function WorksSection({
                           href={primaryLink.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="shrink-0 flex items-center gap-1 font-mono-stack text-[9px] font-bold uppercase text-[#1c1c21] hover:text-[#58554f] transition-colors min-h-[44px]"
+                          className="shrink-0 flex items-center gap-1 font-mono-stack text-[9px] font-bold uppercase text-[#1c1c21] hover:text-[#58554f] transition-colors min-h-11"
                         >
                           <span>{primaryLink.label || 'VISIT'}</span>
                           <ExternalLink size={10} />
@@ -202,7 +202,7 @@ export default function WorksSection({
                       ) : (
                         <a
                           href="/projects"
-                          className="shrink-0 font-mono-stack text-[9px] font-bold uppercase text-[#58554f] hover:text-[#1c1c21] min-h-[44px] flex items-center"
+                          className="shrink-0 font-mono-stack text-[9px] font-bold uppercase text-[#58554f] hover:text-[#1c1c21] min-h-11 flex items-center"
                         >
                           VIEW FILE →
                         </a>
@@ -226,7 +226,7 @@ export default function WorksSection({
             <button
               type="button"
               onClick={onNavigateDossier}
-              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-[44px]"
+              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-11"
             >
               <span>▲ DOSSIER</span>
             </button>
@@ -236,7 +236,7 @@ export default function WorksSection({
             <button
               type="button"
               onClick={onNavigateCredentials}
-              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-[44px]"
+              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-11"
             >
               <span>NEXT: CREDENTIALS</span>
               <CornerDownRight size={12} />
@@ -244,7 +244,7 @@ export default function WorksSection({
           ) : (
             <a
               href="/projects"
-              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-[44px]"
+              className="flex items-center gap-1.5 text-[#58554f] hover:text-[#1c1c21] transition-colors cursor-pointer min-h-11"
             >
               <span>NEXT: ALL PROJECTS</span>
               <CornerDownRight size={12} />

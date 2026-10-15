@@ -80,7 +80,7 @@ export default function SiteNav({
             id="nav-home"
             onClick={onNavigateHero}
             aria-label="Navigate to top"
-            className={`font-mono-stack ${isInverted ? 'text-[#E2DFD2]' : 'text-[#1c1c21]'} hover:opacity-50 transition-all duration-200 cursor-pointer min-h-[44px] w-full flex items-center justify-center`}
+            className={`font-mono-stack ${isInverted ? 'text-[#E2DFD2]' : 'text-[#1c1c21]'} hover:opacity-50 transition-all duration-200 cursor-pointer min-h-11 w-full flex items-center justify-center`}
           >
             <svg viewBox="0 0 256 256" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
               <path d="M44 44 H138 V84 H110 Q 84 84 84 110 V178 H44 Z" />
@@ -101,7 +101,7 @@ export default function SiteNav({
                   onClick={item.onClick}
                   aria-label={`Navigate to ${item.label}`}
                   style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-                  className={`group flex items-center justify-center gap-1 font-mono-stack text-[8px] tracking-[0.13em] uppercase transition-all duration-200 cursor-pointer min-h-[44px] w-full py-1 ${
+                  className={`group flex items-center justify-center gap-1 font-mono-stack text-[8px] tracking-[0.13em] uppercase transition-all duration-200 cursor-pointer min-h-11 w-full py-1 ${
                     isActive
                       ? isInverted
                         ? 'text-[#E2DFD2] font-bold'
@@ -140,7 +140,7 @@ export default function SiteNav({
             onClick={handleToggleTheme}
             aria-label="Toggle theme"
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-2 min-h-[44px] w-full flex items-center justify-center cursor-pointer`}
+            className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-2 min-h-11 w-full flex items-center justify-center cursor-pointer`}
           >
             {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
           </button>
@@ -151,7 +151,7 @@ export default function SiteNav({
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub Profile"
-            className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-2 min-h-[44px] w-full flex items-center justify-center cursor-pointer`}
+            className={`${isInverted ? 'text-[#E2DFD2]/70 hover:text-[#E2DFD2]' : 'text-[#58554f] hover:text-[#1c1c21]'} transition-colors duration-200 p-2 min-h-11 w-full flex items-center justify-center cursor-pointer`}
           >
             <svg
               role="img"
@@ -187,7 +187,7 @@ export default function SiteNav({
                 id={`mobile-${item.id}`}
                 onClick={item.onClick}
                 aria-label={item.label}
-                className={`min-h-[44px] min-w-[38px] px-1.5 flex items-center justify-center font-mono-stack text-[11px] font-bold tracking-wider transition-all cursor-pointer ${
+                className={`min-h-11 min-w-9.5 px-1.5 flex items-center justify-center font-mono-stack text-[11px] font-bold tracking-wider transition-all cursor-pointer ${
                   isActive
                     ? isInverted
                       ? 'bg-[#E2DFD2] text-[#1c1c21]'
@@ -208,7 +208,7 @@ export default function SiteNav({
             type="button"
             onClick={handleToggleTheme}
             aria-label="Toggle theme"
-            className="min-h-[44px] min-w-[40px] flex items-center justify-center cursor-pointer transition-opacity hover:opacity-75"
+            className="min-h-11 min-w-10 flex items-center justify-center cursor-pointer transition-opacity hover:opacity-75"
           >
             {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
           </button>

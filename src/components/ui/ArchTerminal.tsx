@@ -278,7 +278,7 @@ export default function ArchTerminal() {
         if (outputs.length > 0) e.stopPropagation();
       }}
       data-lenis-prevent="true"
-      className="w-full h-[265px] sm:h-[280px] border-[3px] border-[#1c1c21] bg-[#E2DFD2] shadow-[4px_4px_0px_#1c1c21] text-[#1c1c21] font-mono-stack overflow-hidden flex flex-col cursor-text select-text"
+      className="w-full h-66.25 sm:h-70 border-[3px] border-[#1c1c21] bg-[#E2DFD2] shadow-[4px_4px_0px_#1c1c21] text-[#1c1c21] font-mono-stack overflow-hidden flex flex-col cursor-text select-text"
     >
       {/* Titlebar */}
       <div className="flex items-center justify-between px-3.5 py-2 border-b-[2.5px] border-[#1c1c21] bg-[#1c1c21] text-[#E2DFD2] select-none text-xs shrink-0">
