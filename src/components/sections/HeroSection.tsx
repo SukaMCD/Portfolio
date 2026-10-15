@@ -67,7 +67,6 @@ export default function HeroSection({
   }, []);
 
   return (
-<<<<<<< HEAD
     <section className="relative z-10 w-full min-h-screen md:h-screen md:min-h-170 flex flex-col justify-between p-4 sm:p-8 md:p-14 select-none overflow-hidden">
       <header className="relative z-10 w-full flex items-center justify-between border-b border-[#1c1c21]/15 pb-3 sm:pb-5 gap-2">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
