@@ -725,3 +725,77 @@ html.dark .dot-grid {
 .dot-grid {
   background-image: radial-gradient(circle, rgba(20, 24, 31, 0.09) 1px, transparent 1px);
 }
+
+/* Custom Precision Cursor */
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+/* Editorial Motion & Dossier Effects */
+@keyframes dossierIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-dossier-in {
+  animation: dossierIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-backdrop-in {
+  animation: fadeInBackdrop 0.18s ease-out forwards;
+}
+
+@keyframes panelSwapIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-panel-swap {
+  animation: panelSwapIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-section .reveal-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.48s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-section[data-revealed="true"] .reveal-item {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-dossier-in,
+  .animate-backdrop-in,
+  .animate-panel-swap {
+    animation: none !important;
+  }
+  .reveal-section .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

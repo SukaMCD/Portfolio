@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ArrowDown, Github, Mail, Moon, Sun } from 'lucide-react';
 import { getTheme, type Theme } from '../../lib/theme';
+import { playClick, playThemeSwitch } from '../../lib/sfx';
+import { useMagnetic } from '../../lib/useMotion';
 import { triggerThemeTransition } from '../ui/ThemeTransition';
 
 const HASH_CHARS = '0123456789ABCDEF#/_-%$@';
@@ -123,16 +125,61 @@ function ScrambleLine({
 
 // Hero Illustration
 export function HeroIllustration() {
+  const frameRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      !window.matchMedia('(pointer: fine)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
+    let rafId = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+
+    const tick = () => {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      if (frameRef.current) {
+        const tx = (currentX * 5).toFixed(2);
+        const ty = (currentY * 5).toFixed(2);
+        const rx = (-currentY * 2.5).toFixed(2);
+        const ry = (currentX * 2.5).toFixed(2);
+        frameRef.current.style.transform = `perspective(700px) translate3d(${tx}px, ${ty}px, 0) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    rafId = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', onMouseMove);
+    };
+  }, []);
+
   return (
     <div className="shrink-0 self-start lg:self-end">
-      <div className="w-24 sm:w-33.75 md:w-37.5 lg:w-40 aspect-square border-[3px] sm:border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[3px_3px_0px_#1c1c21] sm:shadow-[4px_4px_0px_#1c1c21]">
+      <div
+        ref={frameRef}
+        className="w-24 sm:w-33.75 md:w-37.5 lg:w-40 aspect-square border-[3px] sm:border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] overflow-hidden relative shadow-[3px_3px_0px_#1c1c21] sm:shadow-[4px_4px_0px_#1c1c21] will-change-transform"
+      >
         <img
           src="/image/hiura.webp"
           alt="Fabian Rizky Pratama anime ink lineart portrait"
           loading="eager"
           fetchPriority="high"
           decoding="sync"
-          className="w-full h-full object-cover object-top scale-[1.04] origin-top mix-blend-multiply opacity-95"
+          className="w-full h-full object-cover object-top scale-[1.06] origin-top mix-blend-multiply opacity-95"
         />
       </div>
     </div>
@@ -149,6 +196,8 @@ export default function HeroSection({
 }) {
   const [time, setTime] = useState('');
   const [theme, setThemeState] = useState<Theme>('light');
+  const contactMagnetic = useMagnetic<HTMLAnchorElement>(3.5);
+  const worksMagnetic = useMagnetic<HTMLAnchorElement>(4);
 
   useEffect(() => {
     setThemeState(getTheme());
@@ -163,6 +212,7 @@ export default function HeroSection({
   const handleToggleTheme = (e: React.MouseEvent) => {
     const current = getTheme();
     const next = current === 'dark' ? 'light' : 'dark';
+    playThemeSwitch(next === 'dark');
     triggerThemeTransition({ x: e.clientX, y: e.clientY, targetTheme: next });
   };
 
@@ -222,6 +272,10 @@ export default function HeroSection({
             <span className="hidden sm:inline">GITHUB</span>
           </a>
           <a
+            ref={contactMagnetic.ref}
+            onMouseMove={contactMagnetic.onMouseMove}
+            onMouseLeave={contactMagnetic.onMouseLeave}
+            onClick={() => playClick()}
             href="mailto:sukamcdev@gmail.com"
             className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-[#F03A2A] text-[#F0E8D8] hover:bg-[#14181F] border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] transition-all min-h-11"
           >
@@ -255,8 +309,12 @@ export default function HeroSection({
 
             <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
               <a
+                ref={worksMagnetic.ref}
+                onMouseMove={worksMagnetic.onMouseMove}
+                onMouseLeave={worksMagnetic.onMouseLeave}
                 href="#works"
                 onClick={(e) => {
+                  playClick();
                   if (onNavigateWorks) {
                     e.preventDefault();
                     onNavigateWorks();

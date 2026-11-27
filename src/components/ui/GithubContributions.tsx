@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { GitCommit, ExternalLink } from 'lucide-react';
 
 interface DayContribution {
@@ -192,14 +193,16 @@ export default function GithubContributions() {
       </div>
 
       {/* Floating Hover Tooltip */}
-      {hoveredDay && tooltipPos && (
-        <div
-          style={{ left: tooltipPos.x, top: tooltipPos.y }}
-          className="fixed pointer-events-none -translate-x-1/2 -translate-y-full z-50 px-2 py-1 bg-[#1c1c21] text-[#E2DFD2] font-mono-stack text-[9px] border border-[#1c1c21] shadow-[2px_2px_0px_rgba(28,28,33,0.3)] whitespace-nowrap"
-        >
-          <span className="font-bold">{hoveredDay.count} contribution{hoveredDay.count === 1 ? '' : 's'}</span> on {hoveredDay.date}
-        </div>
-      )}
+      {hoveredDay && tooltipPos && typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            style={{ left: tooltipPos.x, top: tooltipPos.y }}
+            className="fixed pointer-events-none -translate-x-1/2 -translate-y-full z-[130] px-2 py-1 bg-[#1c1c21] text-[#E2DFD2] font-mono-stack text-[9px] border border-[#1c1c21] shadow-[2px_2px_0px_rgba(28,28,33,0.3)] whitespace-nowrap"
+          >
+            <span className="font-bold">{hoveredDay.count} contribution{hoveredDay.count === 1 ? '' : 's'}</span> on {hoveredDay.date}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

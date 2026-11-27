@@ -3,6 +3,8 @@ import { Briefcase, Calendar, MapPin, CheckCircle2, ChevronRight, CornerDownRigh
 import ArchIcon from '../ui/ArchIcon';
 import GithubContributions from '../ui/GithubContributions';
 import { subscribeExperiences, type Experience } from '../../lib/firebase';
+import { playClick } from '../../lib/sfx';
+import { useSectionReveal } from '../../lib/useMotion';
 
 // Experience Section
 export default function ExperienceSection({
@@ -15,6 +17,7 @@ export default function ExperienceSection({
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const { ref: sectionRef, revealed } = useSectionReveal<HTMLElement>();
 
   useEffect(() => {
     const unsubscribe = subscribeExperiences((data) => {
@@ -28,8 +31,10 @@ export default function ExperienceSection({
 
   return (
     <section
+      ref={sectionRef}
       id="experience"
-      className="relative z-70 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-visible lg:overflow-hidden"
+      data-revealed={revealed}
+      className="reveal-section relative z-70 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-visible lg:overflow-hidden"
     >
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
         <div className="flex items-center gap-2.5 font-mono-stack text-xs">
@@ -57,8 +62,14 @@ export default function ExperienceSection({
               <button
                 key={exp.id || idx}
                 type="button"
-                onClick={() => setSelectedIndex(idx)}
-                className={`flex-1 min-h-0 w-full text-left p-2 sm:p-2.5 xl:p-3 transition-all duration-150 border-[2.5px] select-none cursor-pointer flex flex-col justify-between ${
+                onClick={() => {
+                  if (idx !== selectedIndex) {
+                    playClick();
+                    setSelectedIndex(idx);
+                  }
+                }}
+                style={{ '--reveal-delay': `${idx * 55}ms` } as React.CSSProperties}
+                className={`reveal-item flex-1 min-h-0 w-full text-left p-2 sm:p-2.5 xl:p-3 transition-all duration-150 border-[2.5px] select-none cursor-pointer flex flex-col justify-between ${
                   isSelected
                     ? 'border-[#1c1c21] bg-[#1c1c21] text-[#E2DFD2] shadow-[3px_3px_0px_#58554f]'
                     : 'border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:bg-[#1c1c21]/4'
@@ -121,10 +132,10 @@ export default function ExperienceSection({
           })}
         </div>
 
-        <div className="lg:col-span-7 flex flex-col justify-between gap-2.5 sm:gap-3 h-full min-h-0">
+        <div className="lg:col-span-7 flex flex-col justify-between gap-2.5 sm:gap-3 h-full min-h-0 reveal-item" style={{ '--reveal-delay': '140ms' } as React.CSSProperties}>
           <div className="flex-1 min-h-0 flex flex-col justify-between border-[2.5px] border-[#1c1c21] bg-[#E2DFD2] shadow-[3px_3px_0px_#1c1c21] p-3 sm:p-3.5 overflow-y-auto">
             {activeExp ? (
-              <div className="flex flex-col justify-between h-full gap-2">
+              <div key={activeExp.id || selectedIndex} className="flex flex-col justify-between h-full gap-2 animate-panel-swap">
                 <div className="pb-1.5 border-b border-[#1c1c21]/20">
                   <div className="flex flex-wrap items-center justify-between gap-2 font-mono-stack text-[9.5px] text-[#58554f] mb-0.5">
                     <span className="flex items-center gap-1.5">

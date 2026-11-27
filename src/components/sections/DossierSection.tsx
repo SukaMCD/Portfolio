@@ -2,6 +2,7 @@ import React from 'react';
 import { CornerDownRight } from 'lucide-react';
 import ArchIcon from '../ui/ArchIcon';
 import ArchTerminal from '../ui/ArchTerminal';
+import { useSectionReveal } from '../../lib/useMotion';
 
 // Dossier Section
 export default function DossierSection({
@@ -13,10 +14,14 @@ export default function DossierSection({
   onNavigateWorks?: () => void;
   onNavigateDossier?: () => void;
 }) {
+  const { ref: sectionRef, revealed } = useSectionReveal<HTMLElement>();
+
   return (
     <section
+      ref={sectionRef}
       id="dossier"
-      className="relative z-20 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
+      data-revealed={revealed}
+      className="reveal-section relative z-20 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-7 md:p-9 lg:p-11 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)]"
     >
       <button
         id="dossier-tab"
@@ -61,7 +66,7 @@ export default function DossierSection({
       </header>
 
       <div className="w-full my-auto py-2 sm:py-3 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-        <div className="lg:col-span-7 flex flex-col justify-end">
+        <div className="lg:col-span-7 flex flex-col justify-end reveal-item" style={{ '--reveal-delay': '40ms' } as React.CSSProperties}>
           <div className="font-mono-stack text-[10px] sm:text-[11px] uppercase tracking-widest text-[#58554f] mb-1.5 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1c1c21]" />
             <span>PERSONNEL DOSSIER // ABOUT ME</span>

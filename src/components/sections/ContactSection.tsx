@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, CornerUpLeft } from 'lucide-react';
 import ArchIcon from '../ui/ArchIcon';
+import { playClick } from '../../lib/sfx';
+import { useSectionReveal, useMagnetic } from '../../lib/useMotion';
 
 // Contact Section
 export default function ContactSection({
@@ -12,6 +14,8 @@ export default function ContactSection({
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const { ref: sectionRef, revealed } = useSectionReveal<HTMLElement>();
+  const submitMagnetic = useMagnetic<HTMLButtonElement>(3);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,8 +74,10 @@ export default function ContactSection({
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
-      className="relative z-90 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-6 md:p-8 lg:p-10 bg-[#1c1c21] border-t-[3px] border-[#E2DFD2]/20 overflow-visible lg:overflow-hidden"
+      data-revealed={revealed}
+      className="reveal-section relative z-90 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-6 md:p-8 lg:p-10 bg-[#1c1c21] border-t-[3px] border-[#E2DFD2]/20 overflow-visible lg:overflow-hidden"
     >
       <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.04]" />
 
@@ -265,6 +271,10 @@ export default function ContactSection({
                 )}
 
                 <button
+                  ref={submitMagnetic.ref}
+                  onMouseMove={submitMagnetic.onMouseMove}
+                  onMouseLeave={submitMagnetic.onMouseLeave}
+                  onClick={() => playClick()}
                   type="submit"
                   disabled={sending}
                   className="w-full flex items-center justify-between px-5 py-3.5 bg-[#F03A2A] text-[#F0E8D8] font-mono-stack text-[11px] font-bold tracking-widest uppercase hover:bg-[#F0E8D8] hover:text-[#14181F] active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer"

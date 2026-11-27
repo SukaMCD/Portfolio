@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Lenis from 'lenis';
 import InteractiveBackground from './ui/InteractiveBackground';
+import CustomCursor from './ui/CustomCursor';
 import SiteNav from './ui/SiteNav';
 import ThemeTransition from './ui/ThemeTransition';
+import { playTabFlip } from '../lib/sfx';
 import HeroSection from './sections/HeroSection';
 import DossierSection from './sections/DossierSection';
 import WorksSection from './sections/WorksSection';
@@ -166,6 +168,7 @@ export default function Portfolio() {
     const goToSection = (sectionIndex: number) => {
       if (isAnimatingRef.current) return;
       isAnimatingRef.current = true;
+      playTabFlip();
 
       let target: string | number = 0;
       if (sectionIndex === 1) target = '#dossier';
@@ -207,6 +210,10 @@ export default function Portfolio() {
     };
 
     const handleWheel = (e: WheelEvent) => {
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) {
+        return;
+      }
+
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         return;
       }
@@ -319,6 +326,7 @@ export default function Portfolio() {
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) return;
       const target = e.target as HTMLElement | null;
       if (target?.tagName === 'INPUT' || target?.tagName === 'TEXTAREA') return;
       if (isAnimatingRef.current) return;
@@ -468,6 +476,7 @@ export default function Portfolio() {
   return (
     <div className="relative min-h-screen text-[#1c1c21] bg-[#E2DFD2]">
       <ThemeTransition />
+      <CustomCursor />
       <InteractiveBackground />
       <SiteNav
         visible={navVisible}

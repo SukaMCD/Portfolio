@@ -8,6 +8,8 @@ import {
   DEFAULT_FALLBACK_IMAGE,
   type Certificate,
 } from '../../lib/firebase';
+import { playModalOpen, playModalClose } from '../../lib/sfx';
+import { useSectionReveal } from '../../lib/useMotion';
 
 // Credentials Section
 export default function CredentialsSection({
@@ -22,6 +24,7 @@ export default function CredentialsSection({
   const [activePreview, setActivePreview] = useState<Certificate | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(1);
+  const { ref: sectionRef, revealed } = useSectionReveal<HTMLElement>();
 
   useEffect(() => {
     const unsubscribe = subscribeCertificates((data) => {
@@ -63,8 +66,10 @@ export default function CredentialsSection({
 
   return (
     <section
+      ref={sectionRef}
       id="credentials"
-      className="relative z-50 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-visible lg:overflow-hidden"
+      data-revealed={revealed}
+      className="reveal-section relative z-50 w-full min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between p-4 pb-20 sm:p-6 md:p-8 lg:p-10 bg-[#E2DFD2] border-t-[3px] border-[#1c1c21] shadow-[0_-24px_50px_rgba(28,28,33,0.18)] overflow-visible lg:overflow-hidden"
     >
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1c1c21]/15 gap-3 shrink-0">
         <div className="flex items-center gap-2.5 font-mono-stack text-xs">
@@ -150,11 +155,15 @@ export default function CredentialsSection({
               return (
                 <article
                   key={cert.id}
-                  className="w-[84vw] max-w-[320px] sm:w-full sm:max-w-none h-fit sm:h-full shrink-0 sm:shrink snap-center self-center sm:self-auto group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] bg-[#E2DFD2] overflow-hidden flex flex-col justify-start sm:justify-between transition-all duration-200 min-h-0"
+                  style={{ '--reveal-delay': `${idx * 65}ms` } as React.CSSProperties}
+                  className="reveal-item w-[84vw] max-w-[320px] sm:w-full sm:max-w-none h-fit sm:h-full shrink-0 sm:shrink snap-center self-center sm:self-auto group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] hover:-translate-y-0.5 bg-[#E2DFD2] overflow-hidden flex flex-col justify-start sm:justify-between transition-all duration-200 min-h-0"
                 >
                   <button
                     type="button"
-                    onClick={() => setActivePreview(cert)}
+                    onClick={() => {
+                      playModalOpen();
+                      setActivePreview(cert);
+                    }}
                     aria-label={`Inspect ${cert.title} credential`}
                     className="relative aspect-[16/10] sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5 cursor-pointer flex items-center justify-center text-left focus-visible:ring-2 focus-visible:ring-[#1c1c21]"
                   >
@@ -275,14 +284,19 @@ export default function CredentialsSection({
       {/* Lightbox Certificate Zoom Modal */}
       {activePreview && typeof document !== 'undefined' && createPortal(
         <div
-          onClick={() => setActivePreview(null)}
+          role="dialog"
+          aria-modal="true"
+          onClick={() => {
+            playModalClose();
+            setActivePreview(null);
+          }}
           onWheel={(e) => e.stopPropagation()}
           data-lenis-prevent="true"
-          className="fixed inset-0 z-[200] bg-[#1c1c21]/80 backdrop-blur-xs flex items-center justify-center p-4 select-none cursor-pointer"
+          className="fixed inset-0 z-[200] bg-[#14181F]/75 backdrop-blur-xs flex items-center justify-center p-4 select-none cursor-pointer animate-backdrop-in"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-3xl w-full border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] shadow-[8px_8px_0px_#1c1c21] p-4 sm:p-6 flex flex-col gap-4 cursor-default animate-in fade-in zoom-in-95 duration-150"
+            className="relative max-w-3xl w-full border-[3.5px] border-[#1c1c21] bg-[#E2DFD2] shadow-[8px_8px_0px_#1c1c21] p-4 sm:p-6 flex flex-col gap-4 cursor-default animate-dossier-in"
           >
             <div className="flex items-center justify-between border-b-2 border-[#1c1c21] pb-3 gap-3">
               <div>

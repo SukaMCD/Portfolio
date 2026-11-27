@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { getTheme, type Theme } from '../../lib/theme';
+import { playTabFlip, playThemeSwitch } from '../../lib/sfx';
 import { triggerThemeTransition } from './ThemeTransition';
 
 // Site Nav
@@ -40,6 +41,7 @@ export default function SiteNav({
   const handleToggleTheme = (e: React.MouseEvent) => {
     const current = getTheme();
     const next = current === 'dark' ? 'light' : 'dark';
+    playThemeSwitch(next === 'dark');
     triggerThemeTransition({ x: e.clientX, y: e.clientY, targetTheme: next });
   };
 
@@ -98,7 +100,10 @@ export default function SiteNav({
               <div key={item.id} className="relative w-full flex items-center justify-center">
                 <button
                   id={item.id}
-                  onClick={item.onClick}
+                  onClick={() => {
+                    playTabFlip();
+                    item.onClick?.();
+                  }}
                   aria-label={`Navigate to ${item.label}`}
                   style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
                   className={`group flex items-center justify-center gap-1 font-mono-stack text-[8px] tracking-[0.13em] uppercase transition-all duration-200 cursor-pointer min-h-11 w-full py-1 ${

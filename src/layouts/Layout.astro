@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -64,16 +65,26 @@ const schemaData = {
     <!-- Theme Initializer -->
     <script is:inline>
       (function() {
-        try {
-          const saved = localStorage.getItem('theme');
-          if (saved === 'dark') {
-            document.documentElement.classList.add('dark');
-            const meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', '#14181F');
-          }
-        } catch (e) {}
+        function applySavedTheme(doc) {
+          try {
+            const saved = localStorage.getItem('theme');
+            const isDark = saved === 'dark';
+            doc.documentElement.classList.toggle('dark', isDark);
+            const meta = doc.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', isDark ? '#14181F' : '#F0E8D8');
+          } catch (e) {}
+        }
+        applySavedTheme(document);
+        if (!window.__themeSwapHooked) {
+          window.__themeSwapHooked = true;
+          document.addEventListener('astro:before-swap', function(ev) {
+            applySavedTheme(ev.newDocument);
+          });
+        }
       })();
     </script>
+
+    <ClientRouter />
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
