@@ -73,7 +73,8 @@ export default function InteractiveBackground() {
       mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
       const isDark = document.documentElement.classList.contains('dark');
-      const rgb = isDark ? '226, 223, 210' : '28, 28, 33';
+      const rgb = isDark ? '240, 232, 216' : '20, 24, 31';
+      const accentRgb = '240, 58, 42';
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -96,7 +97,7 @@ export default function InteractiveBackground() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rgb}, ${p.isAccent ? p.baseAlpha * 1.5 : p.baseAlpha * 0.6})`;
+        ctx.fillStyle = `rgba(${p.isAccent ? accentRgb : rgb}, ${p.isAccent ? p.baseAlpha * 1.8 : p.baseAlpha * 0.6})`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {

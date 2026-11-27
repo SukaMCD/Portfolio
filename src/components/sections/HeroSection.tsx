@@ -3,6 +3,124 @@ import { ArrowDown, Github, Mail, Moon, Sun } from 'lucide-react';
 import { getTheme, type Theme } from '../../lib/theme';
 import { triggerThemeTransition } from '../ui/ThemeTransition';
 
+const HASH_CHARS = '0123456789ABCDEF#/_-%$@';
+
+function ScrambleLine({
+  text,
+  delayMs = 0,
+  durationMs = 700,
+  className,
+}: {
+  text: string;
+  delayMs?: number;
+  durationMs?: number;
+  className?: string;
+}) {
+  const [state, setState] = useState<{ revealed: number; scrambled: string; done: boolean }>({
+    revealed: text.length,
+    scrambled: text,
+    done: true,
+  });
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const scrambleString = (fromIdx: number) =>
+      text
+        .split('')
+        .map((ch, idx) => {
+          if (idx < fromIdx || ch === ' ') return ch;
+          return HASH_CHARS[Math.floor(Math.random() * HASH_CHARS.length)];
+        })
+        .join('');
+
+    setState({ revealed: 0, scrambled: scrambleString(0), done: false });
+
+    let cancelled = false;
+    let rafId = 0;
+    let startTime: number | null = null;
+    let lastTick = 0;
+
+    const beginSolve = () => {
+      if (cancelled || startTime !== null) return;
+      startTime = performance.now();
+    };
+
+    const fontTimeout = window.setTimeout(beginSolve, 500);
+    if ('fonts' in document) {
+      document.fonts.ready.then(beginSolve);
+    } else {
+      beginSolve();
+    }
+
+    const frame = (now: number) => {
+      if (cancelled) return;
+
+      if (startTime === null) {
+        if (now - lastTick >= 45) {
+          lastTick = now;
+          setState({ revealed: 0, scrambled: scrambleString(0), done: false });
+        }
+        rafId = requestAnimationFrame(frame);
+        return;
+      }
+
+      const elapsed = now - startTime;
+      if (elapsed < delayMs) {
+        if (now - lastTick >= 45) {
+          lastTick = now;
+          setState({ revealed: 0, scrambled: scrambleString(0), done: false });
+        }
+        rafId = requestAnimationFrame(frame);
+        return;
+      }
+
+      const progress = Math.min(1, (elapsed - delayMs) / durationMs);
+      const revealed = Math.floor(progress * text.length);
+
+      if (progress >= 1) {
+        setState({ revealed: text.length, scrambled: text, done: true });
+        return;
+      }
+
+      if (now - lastTick >= 40) {
+        lastTick = now;
+        setState({ revealed, scrambled: scrambleString(revealed), done: false });
+      }
+      rafId = requestAnimationFrame(frame);
+    };
+
+    rafId = requestAnimationFrame(frame);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fontTimeout);
+      cancelAnimationFrame(rafId);
+    };
+  }, [text, delayMs, durationMs]);
+
+  if (state.done) {
+    return <span className={className}>{text}</span>;
+  }
+
+  const resolvedPart = state.scrambled.slice(0, state.revealed);
+  const frontierChar = state.scrambled[state.revealed] ?? '';
+  const remainingPart = state.scrambled.slice(state.revealed + 1);
+
+  return (
+    <span className={className} aria-label={text}>
+      <span aria-hidden="true">
+        {resolvedPart}
+        {frontierChar && frontierChar !== ' ' ? (
+          <span className="text-[#F03A2A]">{frontierChar}</span>
+        ) : (
+          frontierChar
+        )}
+        {remainingPart}
+      </span>
+    </span>
+  );
+}
+
 // Hero Illustration
 export function HeroIllustration() {
   return (
@@ -105,7 +223,7 @@ export default function HeroSection({
           </a>
           <a
             href="mailto:sukamcdev@gmail.com"
-            className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] transition-all min-h-11"
+            className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-[#F03A2A] text-[#F0E8D8] hover:bg-[#14181F] border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] transition-all min-h-11"
           >
             <Mail size={13} />
             <span className="hidden xs:inline">CONTACT</span>
@@ -115,11 +233,16 @@ export default function HeroSection({
 
       <div className="relative z-10 w-full my-auto py-4 sm:py-6 flex flex-col justify-center">
         <h1 className="font-display font-extrabold uppercase text-3xl sm:text-5xl md:text-7xl lg:text-[5.8vw] leading-[0.92] tracking-[-0.04em] text-[#1c1c21]">
-          ARCHITECTING
+          <ScrambleLine text="ARCHITECTING" delayMs={120} durationMs={850} />
           <br />
-          ROBUST SYSTEMS
+          <ScrambleLine text="ROBUST SYSTEMS" delayMs={320} durationMs={950} />
           <br />
-          <span className="font-light italic text-[#58554f]">& CRAFTING DIGITAL DEPTH</span>
+          <ScrambleLine
+            text="& CRAFTING DIGITAL DEPTH"
+            delayMs={560}
+            durationMs={1100}
+            className="font-light italic text-[#58554f]"
+          />
         </h1>
 
         <div className="w-full mt-4 sm:mt-10 pt-4 sm:pt-6 border-t border-[#1c1c21]/15 flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6">
@@ -139,7 +262,7 @@ export default function HeroSection({
                     onNavigateWorks();
                   }
                 }}
-                className="px-4 sm:px-5 py-2.5 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] transition-all font-mono-stack text-xs tracking-wider uppercase flex items-center gap-2 group border border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] cursor-pointer min-h-11"
+                className="px-4 sm:px-5 py-2.5 bg-[#F03A2A] text-[#F0E8D8] hover:bg-[#14181F] transition-all font-mono-stack text-xs font-bold tracking-wider uppercase flex items-center gap-2 group border border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] cursor-pointer min-h-11"
               >
                 <span>VIEW WORKS</span>
                 <ArrowDown size={13} className="transition-transform group-hover:translate-y-0.5" />

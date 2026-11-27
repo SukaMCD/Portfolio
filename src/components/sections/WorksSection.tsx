@@ -67,7 +67,7 @@ export default function WorksSection({
           </div>
           <a
             href="/projects"
-            className="group inline-flex items-center px-3 py-1 bg-[#1c1c21] text-[#E2DFD2] hover:bg-[#58554f] font-mono-stack text-[10px] sm:text-[11px] font-bold tracking-wider border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:shadow-[3px_3px_0px_#1c1c21] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-11"
+            className="group inline-flex items-center px-3 py-1 bg-[#F03A2A] text-[#F0E8D8] hover:bg-[#14181F] font-mono-stack text-[10px] sm:text-[11px] font-bold tracking-wider border border-[#1c1c21] shadow-[2px_2px_0px_#1c1c21] hover:shadow-[3px_3px_0px_#1c1c21] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer min-h-11"
           >
             <span>VIEW ALL</span>
           </a>
@@ -107,14 +107,13 @@ export default function WorksSection({
       <div
         ref={carouselRef}
         onScroll={handleScroll}
-        data-lenis-prevent="true"
-        className="flex items-center sm:items-stretch overflow-x-auto snap-x snap-mandatory py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 gap-3.5 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 sm:gap-3 lg:gap-3.5 flex-1 min-h-0 my-auto no-scrollbar"
+        className="w-full flex items-center sm:items-stretch overflow-x-auto snap-x snap-mandatory py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 gap-3.5 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 sm:gap-3 lg:gap-3.5 flex-1 min-h-0 my-auto no-scrollbar"
       >
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="w-[84vw] max-w-[320px] h-fit sm:h-full shrink-0 snap-center self-center sm:self-auto border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] bg-[#E2DFD2] animate-pulse flex flex-col justify-start sm:justify-between overflow-hidden min-h-0"
+                className="w-[84vw] max-w-[320px] sm:w-full sm:max-w-none h-fit sm:h-full shrink-0 sm:shrink snap-center self-center sm:self-auto border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] bg-[#E2DFD2] animate-pulse flex flex-col justify-start sm:justify-between overflow-hidden min-h-0"
               >
                 <div className="aspect-16/10 sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 bg-[#1c1c21]/8 border-b-2 border-[#1c1c21]/15" />
                 <div className="p-2.5 sm:p-3 shrink-0 space-y-2">
@@ -140,7 +139,7 @@ export default function WorksSection({
               return (
                 <article
                   key={project.id}
-                  className="w-[84vw] max-w-[320px] h-fit sm:h-full shrink-0 snap-center self-center sm:self-auto group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] bg-[#E2DFD2] overflow-hidden flex flex-col justify-start sm:justify-between transition-all duration-200 min-h-0"
+                  className="w-[84vw] max-w-[320px] sm:w-full sm:max-w-none h-fit sm:h-full shrink-0 sm:shrink snap-center self-center sm:self-auto group border-[2.5px] sm:border-[3px] border-[#1c1c21] shadow-[3px_3px_0px_#1c1c21] hover:shadow-[5px_5px_0px_#1c1c21] bg-[#E2DFD2] overflow-hidden flex flex-col justify-start sm:justify-between transition-all duration-200 min-h-0"
                 >
                   <div className="relative aspect-16/10 sm:aspect-auto sm:flex-1 sm:min-h-0 w-full shrink-0 overflow-hidden border-b-2 border-[#1c1c21] bg-[#1c1c21]/5">
                     <img

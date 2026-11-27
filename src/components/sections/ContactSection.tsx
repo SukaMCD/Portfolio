@@ -267,7 +267,7 @@ export default function ContactSection({
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full flex items-center justify-between px-5 py-3.5 bg-[#E2DFD2] text-[#1c1c21] font-mono-stack text-[11px] font-bold tracking-widest uppercase hover:bg-[#E2DFD2]/90 active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer"
+                  className="w-full flex items-center justify-between px-5 py-3.5 bg-[#F03A2A] text-[#F0E8D8] font-mono-stack text-[11px] font-bold tracking-widest uppercase hover:bg-[#F0E8D8] hover:text-[#14181F] active:scale-[0.99] transition-all disabled:opacity-40 cursor-pointer"
                 >
                   <span>{sending ? 'DISPATCHING TRANSMISSION...' : 'SEND MESSAGE'}</span>
                   {sending ? (

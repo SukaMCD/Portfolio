@@ -58,7 +58,7 @@ const schemaData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="author" content="Fabian Rizky Pratama" />
-    <meta name="theme-color" content="#E2DFD2" />
+    <meta name="theme-color" content="#F0E8D8" />
     <meta name="robots" content="index, follow" />
 
     <!-- Theme Initializer -->
@@ -69,7 +69,7 @@ const schemaData = {
           if (saved === 'dark') {
             document.documentElement.classList.add('dark');
             const meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', '#1c1c21');
+            if (meta) meta.setAttribute('content', '#14181F');
           }
         } catch (e) {}
       })();
@@ -106,21 +106,11 @@ const schemaData = {
     <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
     <link rel="dns-prefetch" href="https://firebase.googleapis.com" />
 
-    <!-- Non-blocking Google Fonts (avoids render-blocking) -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap"
-    />
+    <!-- Google Fonts -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap"
-      media="print"
-      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@300;600;700&display=swap"
     />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" />
-    </noscript>
 
     <!-- Preload LCP image -->
     <link rel="preload" as="image" href="/image/hiura.webp" fetchpriority="high" />

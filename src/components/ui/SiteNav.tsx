@@ -70,7 +70,7 @@ export default function SiteNav({
           aria-hidden="true"
         />
         <div
-          className={`absolute right-0 top-0 w-px ${isInverted ? 'bg-[#E2DFD2]/70' : 'bg-[#1c1c21]/50'} transition-all duration-150 ease-linear`}
+          className="absolute right-0 top-0 w-[1.5px] bg-[#F03A2A] transition-all duration-150 ease-linear"
           style={{ height: `${scrollPct}%` }}
           aria-hidden="true"
         />
@@ -112,10 +112,8 @@ export default function SiteNav({
                   }`}
                 >
                   <span
-                    className={`w-1 h-1 rounded-full transition-all duration-200 ${
-                      isInverted ? 'bg-[#E2DFD2]' : 'bg-[#1c1c21]'
-                    } ${
-                      isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0 group-hover:opacity-40 group-hover:scale-75'
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-200 bg-[#F03A2A] ${
+                      isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0 group-hover:opacity-60 group-hover:scale-75'
                     }`}
                   />
                   <span>{item.label}</span>

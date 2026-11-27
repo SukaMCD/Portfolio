@@ -41,7 +41,7 @@ export default function ThemeTransition() {
     isAnimating.current = true;
     cancelAnimationFrame(rafRef.current);
 
-    const fillColor = targetTheme === 'dark' ? '#1c1c21' : '#E2DFD2';
+    const fillColor = targetTheme === 'dark' ? '#14181F' : '#F0E8D8';
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const dx = Math.max(x, vw - x);

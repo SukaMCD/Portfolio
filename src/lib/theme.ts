@@ -24,7 +24,7 @@ export function setTheme(theme: Theme) {
   } catch {}
   const metaTheme = document.querySelector('meta[name="theme-color"]');
   if (metaTheme) {
-    metaTheme.setAttribute('content', theme === 'dark' ? '#1c1c21' : '#E2DFD2');
+    metaTheme.setAttribute('content', theme === 'dark' ? '#14181F' : '#F0E8D8');
   }
   window.dispatchEvent(new CustomEvent('theme-change', { detail: theme }));
 }

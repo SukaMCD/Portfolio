@@ -22,12 +22,12 @@ export default function DossierSection({
         id="dossier-tab"
         type="button"
         onClick={onNavigateDossier}
-        className="hidden md:block group absolute -top-8.5 left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
+        className="hidden md:block group absolute -top-[34px] left-3 sm:left-10 md:left-14 select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 z-10"
       >
-        <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-          <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
-            <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
-            <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
+        <div className="bg-[#1c1c21] pt-[3px] pl-[3px] pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+          <div className="h-[31px] bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F03A2A] shrink-0" />
+            <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#F03A2A] text-[#F0E8D8] group-hover:bg-[#1c1c21] group-hover:text-[#F0E8D8] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
               01
             </span>
             <span className="font-mono-stack text-[10px] font-bold tracking-widest text-[#1c1c21] whitespace-nowrap">
@@ -39,6 +39,7 @@ export default function DossierSection({
             </span>
           </div>
         </div>
+        <div className="absolute -bottom-[2px] left-[3px] right-[6px] h-[4px] bg-[#E2DFD2] pointer-events-none" />
       </button>
 
       <header className="w-full flex items-center justify-between pb-2.5 sm:pb-3.5 border-b border-[#1c1c21]/15 gap-2 sm:gap-4 shrink-0">
@@ -84,7 +85,6 @@ export default function DossierSection({
                   decoding="async"
                   className="w-full h-full object-cover object-top filter grayscale contrast-110"
                 />
-                <div className="absolute inset-0 scan-beam pointer-events-none" />
               </div>
               <div className="border-t-2 border-[#1c1c21] bg-[#1c1c21] text-[#E2DFD2] font-mono-stack text-[9px] font-bold text-center py-1 tracking-wider flex items-center justify-center shrink-0">
                 <span>FABIAN RIZKY PRATAMA</span>

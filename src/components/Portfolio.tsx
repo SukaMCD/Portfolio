@@ -30,13 +30,14 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState(0);
 
   const isAnimatingRef = useRef(false);
+  const animTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
       duration: 0.85,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
-      smoothWheel: true,
+      smoothWheel: false,
       wheelMultiplier: 0.9,
     });
     lenisRef.current = lenis;
@@ -152,6 +153,16 @@ export default function Portfolio() {
       return 5;
     };
 
+    const scheduleUnlock = (delay: number) => {
+      if (animTimerRef.current !== null) {
+        window.clearTimeout(animTimerRef.current);
+      }
+      animTimerRef.current = window.setTimeout(() => {
+        isAnimatingRef.current = false;
+        animTimerRef.current = null;
+      }, delay);
+    };
+
     const goToSection = (sectionIndex: number) => {
       if (isAnimatingRef.current) return;
       isAnimatingRef.current = true;
@@ -164,30 +175,51 @@ export default function Portfolio() {
       else if (sectionIndex === 5) target = '#contact';
       else target = 0;
 
+      scheduleUnlock(1200);
+
       lenis.scrollTo(target, {
         duration: 0.9,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         onComplete: () => {
-          setTimeout(() => {
-            isAnimatingRef.current = false;
-          }, 240);
+          scheduleUnlock(240);
         },
       });
+    };
 
-      setTimeout(() => {
-        isAnimatingRef.current = false;
-      }, 1200);
+    const canScrollElementVertically = (el: HTMLElement, deltaY: number): boolean => {
+      let current: HTMLElement | null = el;
+      while (current && current !== document.body) {
+        if (current.getAttribute('data-lenis-prevent') === 'true') {
+          const style = window.getComputedStyle(current);
+          const isScrollableY = style.overflowY === 'auto' || style.overflowY === 'scroll';
+          if (isScrollableY && current.scrollHeight > current.clientHeight + 1) {
+            if (deltaY > 0 && current.scrollTop + current.clientHeight < current.scrollHeight - 1) {
+              return true;
+            }
+            if (deltaY < 0 && current.scrollTop > 1) {
+              return true;
+            }
+          }
+        }
+        current = current.parentElement;
+      }
+      return false;
     };
 
     const handleWheel = (e: WheelEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (target?.closest('[data-lenis-prevent="true"]')) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         return;
       }
 
+      const target = e.target as HTMLElement | null;
+      if (target && canScrollElementVertically(target, e.deltaY)) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
       if (isAnimatingRef.current) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
         return;
       }
 
@@ -196,78 +228,36 @@ export default function Portfolio() {
       const section = getActiveSection();
 
       if (section === 0) {
-        if (e.deltaY > 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(1);
-        } else {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-        }
+        if (e.deltaY > 0) goToSection(1);
         return;
       }
 
       if (section === 1) {
-        if (e.deltaY > 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(2);
-        } else if (e.deltaY < 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(0);
-        }
+        if (e.deltaY > 0) goToSection(2);
+        else if (e.deltaY < 0) goToSection(0);
         return;
       }
 
       if (section === 2) {
-        if (e.deltaY > 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(3);
-        } else if (e.deltaY < 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(1);
-        }
+        if (e.deltaY > 0) goToSection(3);
+        else if (e.deltaY < 0) goToSection(1);
         return;
       }
 
       if (section === 3) {
-        if (e.deltaY > 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(4);
-        } else if (e.deltaY < 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(2);
-        }
+        if (e.deltaY > 0) goToSection(4);
+        else if (e.deltaY < 0) goToSection(2);
         return;
       }
 
       if (section === 4) {
-        if (e.deltaY > 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(5);
-        } else if (e.deltaY < 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(3);
-        }
+        if (e.deltaY > 0) goToSection(5);
+        else if (e.deltaY < 0) goToSection(3);
         return;
       }
 
       if (section === 5) {
-        if (e.deltaY < 0) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          goToSection(4);
-        } else {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-        }
+        if (e.deltaY < 0) goToSection(4);
         return;
       }
     };
@@ -401,6 +391,9 @@ export default function Portfolio() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      if (animTimerRef.current !== null) {
+        window.clearTimeout(animTimerRef.current);
+      }
       window.removeEventListener('wheel', handleWheel, { capture: true } as any);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
@@ -413,9 +406,21 @@ export default function Portfolio() {
 
   const smoothNavigateTo = (target: string | number) => {
     isAnimatingRef.current = true;
+    if (animTimerRef.current !== null) {
+      window.clearTimeout(animTimerRef.current);
+    }
+    animTimerRef.current = window.setTimeout(() => {
+      isAnimatingRef.current = false;
+      animTimerRef.current = null;
+    }, 1200);
+
     const onDone = () => {
-      setTimeout(() => {
+      if (animTimerRef.current !== null) {
+        window.clearTimeout(animTimerRef.current);
+      }
+      animTimerRef.current = window.setTimeout(() => {
         isAnimatingRef.current = false;
+        animTimerRef.current = null;
       }, 240);
     };
 
@@ -514,12 +519,12 @@ export default function Portfolio() {
         <button
           type="button"
           onClick={handleNavigateWorks}
-          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block"
+          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block relative"
         >
-          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
-              <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
-              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
+          <div className="bg-[#1c1c21] pt-[3px] pl-[3px] pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-[31px] bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F03A2A] shrink-0" />
+              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#F03A2A] text-[#F0E8D8] group-hover:bg-[#1c1c21] group-hover:text-[#F0E8D8] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 02
               </span>
               <span className="font-mono-stack text-[10px] font-bold tracking-widest text-[#1c1c21] whitespace-nowrap">
@@ -531,6 +536,7 @@ export default function Portfolio() {
               </span>
             </div>
           </div>
+          <div className="absolute -bottom-[2px] left-[3px] right-[6px] h-[4px] bg-[#E2DFD2] pointer-events-none" />
         </button>
       </div>
 
@@ -543,12 +549,12 @@ export default function Portfolio() {
         <button
           type="button"
           onClick={handleNavigateCredentials}
-          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block"
+          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block relative"
         >
-          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
-              <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
-              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
+          <div className="bg-[#1c1c21] pt-[3px] pl-[3px] pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-[31px] bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F03A2A] shrink-0" />
+              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#F03A2A] text-[#F0E8D8] group-hover:bg-[#1c1c21] group-hover:text-[#F0E8D8] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 03
               </span>
               <span className="font-mono-stack text-[10px] font-bold tracking-widest text-[#1c1c21] whitespace-nowrap">
@@ -560,6 +566,7 @@ export default function Portfolio() {
               </span>
             </div>
           </div>
+          <div className="absolute -bottom-[2px] left-[3px] right-[6px] h-[4px] bg-[#E2DFD2] pointer-events-none" />
         </button>
       </div>
 
@@ -572,12 +579,12 @@ export default function Portfolio() {
         <button
           type="button"
           onClick={handleNavigateExperience}
-          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block"
+          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.1)] hover:-translate-y-0.5 transition-transform duration-150 block relative"
         >
-          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
-              <span className="w-1.5 h-1.5 rounded-full border border-[#1c1c21] bg-[#1c1c21]/20 shrink-0" />
-              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
+          <div className="bg-[#1c1c21] pt-[3px] pl-[3px] pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-[31px] bg-[#E2DFD2] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F03A2A] shrink-0" />
+              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#1c1c21] bg-[#F03A2A] text-[#F0E8D8] group-hover:bg-[#1c1c21] group-hover:text-[#F0E8D8] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 04
               </span>
               <span className="font-mono-stack text-[10px] font-bold tracking-widest text-[#1c1c21] whitespace-nowrap">
@@ -589,6 +596,7 @@ export default function Portfolio() {
               </span>
             </div>
           </div>
+          <div className="absolute -bottom-[2px] left-[3px] right-[6px] h-[4px] bg-[#E2DFD2] pointer-events-none" />
         </button>
       </div>
 
@@ -601,12 +609,12 @@ export default function Portfolio() {
         <button
           type="button"
           onClick={handleNavigateContact}
-          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.15)] hover:-translate-y-0.5 transition-transform duration-150 block"
+          className="group select-none cursor-pointer filter drop-shadow-[0px_-2px_0px_rgba(28,28,33,0.15)] hover:-translate-y-0.5 transition-transform duration-150 block relative"
         >
-          <div className="bg-[#1c1c21] pt-0.75 pl-0.75 pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
-            <div className="h-7.75 bg-[#1c1c21] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)] border-t-[3px] border-l-[3px] border-[#E2DFD2]/25">
-              <span className="w-1.5 h-1.5 rounded-full border border-[#E2DFD2]/60 bg-[#E2DFD2]/20 shrink-0" />
-              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#E2DFD2] bg-[#E2DFD2] text-[#1c1c21] group-hover:bg-[#1c1c21] group-hover:text-[#E2DFD2] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
+          <div className="bg-[#1c1c21] pt-[3px] pl-[3px] pb-0 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_100%,0_100%)]">
+            <div className="h-[31px] bg-[#1c1c21] pl-3 pr-5 flex items-center gap-2 [clip-path:polygon(0_0,calc(100%-17.5px)_0,calc(100%-4.5px)_100%,0_100%)] border-t-[3px] border-l-[3px] border-[#E2DFD2]/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F03A2A] shrink-0" />
+              <span className="w-5 h-4.25 flex items-center justify-center rounded-xs border-[1.5px] border-[#F03A2A] bg-[#F03A2A] text-[#F0E8D8] group-hover:bg-[#F0E8D8] group-hover:text-[#14181F] font-mono-stack text-[9px] font-bold tracking-wider leading-none transition-colors">
                 05
               </span>
               <span className="font-mono-stack text-[10px] font-bold tracking-widest text-[#E2DFD2] whitespace-nowrap">
@@ -618,6 +626,7 @@ export default function Portfolio() {
               </span>
             </div>
           </div>
+          <div className="absolute -bottom-[2px] left-[3px] right-[6px] h-[4px] bg-[#1c1c21] pointer-events-none" />
         </button>
       </div>
     </div>
